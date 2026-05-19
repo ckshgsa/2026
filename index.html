@@ -2,18 +2,16 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>2026 建功人請回答！！畢業限定心理測驗</title>
-    <!-- 保留原本的 PDF 輸出套件 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <!-- 【升級】新增 Confetti 撒花特效套件 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     
     <style>
         :root {
             --primary-color: #4a5568;
-            --bg-gradient: linear-gradient(135deg, #f3f4f6 0%, #e2e8f0 100%);
-            --card-bg: #ffffff;
+            /* 將卡片背景改為半透明，配合背景圖產生毛玻璃效果 */
+            --card-bg: rgba(255, 255, 255, 0.85); 
             --sticker-color: rgba(203, 213, 224, 0.4);
         }
         
@@ -21,7 +19,6 @@
 
         body {
             font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
-            background: var(--bg-gradient);
             color: #2d3748;
             margin: 0;
             padding: 15px;
@@ -30,6 +27,12 @@
             align-items: center;
             min-height: 100vh;
             min-height: 100dvh;
+            /* 【升級】套用你的背景圖 */
+            background-image: url('背景.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
         }
 
         .container {
@@ -37,16 +40,19 @@
             width: 100%;
             background: var(--card-bg);
             border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
             padding: 35px 30px;
             box-sizing: border-box;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.6);
             position: relative;
             overflow: hidden;
+            /* 毛玻璃濾鏡 */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
 
-        /* 【升級】頁面平滑轉場動畫 */
+        /* 頁面平滑轉場動畫 */
         .page-transition {
             animation: fadeInSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
@@ -64,13 +70,13 @@
         }
 
         .subtitle {
-            color: #4a5568;
+            color: #334155;
             font-size: 15px;
             line-height: 1.7;
             margin-bottom: 30px;
             text-align: justify;
-            padding: 0 10px;
-            font-weight: 500;
+            padding: 0 5px;
+            font-weight: 600;
         }
 
         .hidden { display: none !important; }
@@ -81,13 +87,13 @@
             border-radius: 16px;
             margin-bottom: 25px;
             overflow: hidden;
-            border: 1px solid #e2e8f0;
+            border: 2px solid rgba(255,255,255,0.8);
             background: #f8fafc;
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
-            box-shadow: inset 0 2px 10px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
 
         .image-box img {
@@ -114,8 +120,8 @@
             width: 100%;
             padding: 16px;
             border-radius: 14px;
-            border: 2px solid #e2e8f0;
-            background: #f8fafc;
+            border: 2px solid rgba(255,255,255,0.8);
+            background: rgba(255, 255, 255, 0.9);
             color: #1a202c;
             font-size: 16px;
             margin-bottom: 25px;
@@ -123,6 +129,7 @@
             transition: all 0.3s ease;
             text-align: center;
             font-weight: bold;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
         }
         .name-input:focus {
             border-color: #4a5568;
@@ -138,10 +145,10 @@
             justify-content: center;
             gap: 16px;
             margin: 15px 0 25px 0;
-            padding: 25px 20px;
-            background: #fafafa;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.5);
             border-radius: 20px;
-            border: 2px dashed #cbd5e1;
+            border: 2px dashed rgba(203, 213, 224, 0.8);
         }
 
         .sticker-btn {
@@ -159,19 +166,19 @@
         }
 
         .silver { 
-            background: linear-gradient(135deg, rgba(226, 232, 240, 0.9), rgba(203, 213, 224, 0.9));
+            background: linear-gradient(135deg, rgba(226, 232, 240, 0.95), rgba(203, 213, 224, 0.95));
             color: #4a5568; 
             transform: rotate(-3deg);
             box-shadow: 2px 4px 0px #94a3b8, 4px 8px 15px rgba(0,0,0,0.1);
         }
         .gold { 
-            background: linear-gradient(135deg, rgba(254, 226, 226, 0.9), rgba(254, 240, 138, 0.9));
+            background: linear-gradient(135deg, rgba(254, 226, 226, 0.95), rgba(254, 240, 138, 0.95));
             color: #713f12; 
             transform: rotate(2deg);
             box-shadow: -2px 4px 0px #ca8a04, -4px 8px 15px rgba(0,0,0,0.1);
         }
         .purple { 
-            background: linear-gradient(135deg, rgba(224, 242, 254, 0.9), rgba(233, 213, 255, 0.9));
+            background: linear-gradient(135deg, rgba(224, 242, 254, 0.95), rgba(233, 213, 255, 0.95));
             color: #5b21b6; 
             transform: rotate(-1.5deg);
             box-shadow: 3px 3px 0px #7c3aed, 5px 8px 15px rgba(0,0,0,0.1);
@@ -183,9 +190,8 @@
             z-index: 10;
         }
 
-        #quiz-page { padding: 10px 0; }
+        #quiz-page { padding: 5px 0; }
 
-        /* 【升級】進度條佈局設計 */
         .quiz-header-wrapper {
             margin-bottom: 25px;
         }
@@ -197,14 +203,14 @@
         }
         .progress-text {
             font-size: 14px;
-            color: #64748b;
+            color: #475569;
             font-weight: 800;
             letter-spacing: 0.5px;
         }
         .progress-bar-bg {
             width: 100%;
             height: 10px;
-            background: #e2e8f0;
+            background: rgba(226, 232, 240, 0.8);
             border-radius: 5px;
             overflow: hidden;
             position: relative;
@@ -219,7 +225,7 @@
         }
 
         .back-btn {
-            background: #f1f5f9;
+            background: rgba(241, 245, 249, 0.8);
             color: #4a5568;
             border: 1px solid #cbd5e1;
             padding: 6px 14px;
@@ -248,25 +254,25 @@
         }
 
         .option-btn {
-            background: #ffffff;
-            border: 2px solid #e2e8f0;
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid rgba(226, 232, 240, 0.8);
             padding: 20px 22px;
             border-radius: 14px;
             text-align: left;
             font-size: 16.5px;
-            font-weight: 600;
+            font-weight: 700;
             color: #334155;
             cursor: pointer;
             transition: all 0.2s ease-in-out;
             position: relative;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.03);
         }
 
         .option-btn:hover {
-            background: #f8fafc;
+            background: #ffffff;
             border-color: #cbd5e1;
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.08);
         }
 
         .option-btn.selected {
@@ -296,17 +302,19 @@
             100% { transform: translateY(-50%) scale(1); opacity: 1; }
         }
 
+        /* 確保匯出區塊背景為純白，避免透明度影響圖檔質感 */
         #export-area {
             background: #ffffff;
-            padding: 15px;
+            padding: 20px;
             border-radius: 20px;
+            margin: 0 auto;
         }
 
         .profile-card {
             background: #ffffff;
             border: 3px solid #1e293b;
             border-radius: 16px;
-            padding: 28px;
+            padding: 25px;
             text-align: left;
             position: relative;
             box-shadow: 6px 6px 0px #1e293b;
@@ -374,7 +382,7 @@
 
         .profile-name {
             font-size: 26px;
-            font-weight: 800;
+            font-weight: 900;
             color: #0f172a;
             margin: 0;
         }
@@ -382,7 +390,7 @@
         .profile-name span {
             font-size: 15px;
             color: #64748b;
-            font-weight: 600;
+            font-weight: 700;
             display: block;
             margin-top: 6px;
         }
@@ -401,7 +409,7 @@
 
         .meta-item { line-height: 1.5; }
         .meta-label { font-weight: bold; color: #64748b; }
-        .meta-val { color: #334155; font-weight: 700; }
+        .meta-val { color: #334155; font-weight: 800; }
 
         .profile-body {
             font-size: 15.5px;
@@ -415,7 +423,7 @@
             border-left: 5px solid #475569;
             padding: 14px 20px;
             font-style: italic;
-            font-weight: 600;
+            font-weight: 700;
             margin-top: 22px;
             border-radius: 0 10px 10px 0;
             font-size: 15.5px;
@@ -441,7 +449,7 @@
         .action-buttons {
             display: flex;
             gap: 16px;
-            margin-top: 30px;
+            margin-top: 25px;
             width: 100%;
         }
 
@@ -450,8 +458,8 @@
             padding: 16px 20px;
             border-radius: 12px;
             cursor: pointer;
-            font-size: 16px;
-            font-weight: 800;
+            font-size: 16.5px;
+            font-weight: 900;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
             letter-spacing: 0.5px;
@@ -463,11 +471,11 @@
         }
 
         .restart-btn {
-            background: #ffffff;
+            background: rgba(255, 255, 255, 0.9);
             color: #1e293b;
             border: 2px solid #1e293b;
         }
-        .restart-btn:hover { background: #f8fafc; }
+        .restart-btn:hover { background: #ffffff; }
 
         .pdf-btn {
             background: #1e293b;
@@ -482,12 +490,27 @@
         }
 
         footer {
-            margin-top: 40px;
+            margin-top: 35px;
             font-size: 13px;
-            font-weight: 600;
-            color: #94a3b8;
+            font-weight: 700;
+            color: #475569;
             line-height: 1.8;
             text-align: center;
+            text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+        }
+
+        /* 【升級】手機端專屬響應式優化 */
+        @media (max-width: 500px) {
+            .container { padding: 25px 20px; border-radius: 20px; }
+            h1 { font-size: 24px; }
+            .image-box { height: 200px; }
+            .profile-header { flex-direction: column; text-align: center; gap: 15px; }
+            .profile-avatar-box { margin-left: 0; width: 100px; height: 100px; }
+            .profile-meta { grid-template-columns: 1fr; gap: 8px; text-align: center; }
+            .action-buttons { flex-direction: column; gap: 12px; }
+            #export-area { padding: 10px; }
+            .profile-card { padding: 20px; }
+            .sticker-btn { width: 100%; max-width: 250px; }
         }
     </style>
     
@@ -516,11 +539,11 @@
                 const imgTag = document.getElementById('welcome-img');
                 if(!imgTag) return;
                 imgTag.style.display = 'block';
-                imgTag.src = '主視覺.jpeg';
+                imgTag.src = '主視覺.png'; // 依據截圖，改先抓 主視覺.png
                 imgTag.onerror = function() {
                     this.onerror = function() { 
                         this.onerror = function() { this.style.display = 'none'; };
-                        this.src = '主視覺.png'; 
+                        this.src = '主視覺.jpeg'; 
                     };
                     this.src = '主視覺.jpg';
                 };
@@ -532,7 +555,7 @@
             selectedScores: [],
             userName: "",
             
-            // 【保留】所有題目與選項完全不變
+            // 所有題目與選項完全保留不變
             questions: [
                 {
                     title: "明天要考試，今天晚上我會選擇...",
@@ -576,7 +599,7 @@
                 }
             ],
 
-            // 【保留】所有角色結果完全不變
+            // 所有角色結果完全保留不變
             results: {
                 "A": {
                     badge: "2026 頂峰執行者檔案",
@@ -624,15 +647,13 @@
                 }
             },
 
-            // 【升級】自定義平滑轉場控制函式
             switchPage: function(hideId, showId) {
                 document.getElementById(hideId).classList.add('hidden');
                 const showEl = document.getElementById(showId);
                 showEl.classList.remove('hidden');
                 
-                // 強制重啟 CSS 動畫，讓轉場每次都生效
                 showEl.style.animation = 'none';
-                showEl.offsetHeight; /* trigger reflow */
+                showEl.offsetHeight; 
                 showEl.style.animation = null;
                 showEl.classList.add('page-transition');
             },
@@ -648,14 +669,13 @@
                 const root = document.documentElement;
                 let textColor = '#fff';
                 
-                if (type === 'silver') { root.style.setProperty('--sticker-color', 'rgba(203, 213, 224, 0.85)'); textColor = '#4a5568'; }
-                else if (type === 'gold') { root.style.setProperty('--sticker-color', 'rgba(236, 201, 75, 0.85)'); textColor = '#744210'; }
-                else if (type === 'purple') { root.style.setProperty('--sticker-color', 'rgba(159, 122, 234, 0.85)'); textColor = '#ffffff'; }
+                if (type === 'silver') { root.style.setProperty('--sticker-color', 'rgba(203, 213, 224, 0.9)'); textColor = '#4a5568'; }
+                else if (type === 'gold') { root.style.setProperty('--sticker-color', 'rgba(236, 201, 75, 0.9)'); textColor = '#744210'; }
+                else if (type === 'purple') { root.style.setProperty('--sticker-color', 'rgba(159, 122, 234, 0.9)'); textColor = '#ffffff'; }
                 
                 root.style.setProperty('--sticker-text', textColor);
                 
                 setTimeout(() => {
-                    // 使用升級的轉場切換
                     this.switchPage('start-page', 'quiz-page');
                     this.showQuestion();
                 }, 300);
@@ -670,7 +690,6 @@
                 const q = this.questions[this.currentQuestionIndex];
                 document.getElementById('progress').innerText = `QUESTION ${this.currentQuestionIndex + 1} / ${this.questions.length}`;
                 
-                // 【升級】動態更新進度條寬度
                 const progressFill = document.getElementById('progress-fill');
                 const percentage = ((this.currentQuestionIndex + 1) / this.questions.length) * 100;
                 progressFill.style.width = percentage + '%';
@@ -702,7 +721,6 @@
                     this.currentQuestionIndex--;
                     this.selectedScores.pop();
                     
-                    // 【升級】讓進度條也具備返回動畫
                     const showEl = document.getElementById('quiz-page');
                     showEl.style.animation = 'none';
                     showEl.offsetHeight; 
@@ -726,7 +744,6 @@
             },
 
             showResult: function() {
-                // 使用升級的轉場切換
                 this.switchPage('quiz-page', 'result-page');
 
                 const counts = {};
@@ -756,7 +773,7 @@
                             </h2>
                         </div>
                         <div class="profile-avatar-box">
-                            <img id="avatar-img" src="${finalResult.characterName}.jpeg" alt="${finalResult.name}">
+                            <img id="avatar-img" src="${finalResult.characterName}.jpg" alt="${finalResult.name}">
                             <div id="avatar-svg-box" class="avatar-svg-fallback">${finalResult.avatarSvg}</div>
                         </div>
                     </div>
@@ -788,21 +805,19 @@
                 avImg.onerror = function() {
                     this.onerror = function() {
                         this.onerror = function() { this.style.display = 'none'; };
-                        this.src = `${finalResult.characterName}.png`;
+                        this.src = `${finalResult.characterName}.jpeg`;
                     };
-                    this.src = `${finalResult.characterName}.jpg`;
+                    this.src = `${finalResult.characterName}.png`;
                 };
 
-                // 【升級】依據動物角色啟動對應色彩的 Confetti 撒花特效
                 const confettiColorMap = {
-                    "A": ["#dc2626", "#ef4444", "#fee2e2"], // 蠻牛局長（紅）
-                    "B": ["#ca8a04", "#eab308", "#fef9c3"], // 兔子茱蒂（黃）
-                    "C": ["#9333ea", "#a855f7", "#fae8ff"], // 狐狸尼克（紫）
-                    "D": ["#16a34a", "#22c55e", "#dcfce7"]  // 樹懶快俠（綠）
+                    "A": ["#dc2626", "#ef4444", "#fee2e2"],
+                    "B": ["#ca8a04", "#eab308", "#fef9c3"],
+                    "C": ["#9333ea", "#a855f7", "#fae8ff"],
+                    "D": ["#16a34a", "#22c55e", "#dcfce7"]
                 };
                 const burstColors = confettiColorMap[maxScore] || ['#4a5568', '#a0aec0'];
                 
-                // 延遲一點點讓轉場動畫先跑，再噴發碎紙花效果更好
                 setTimeout(() => {
                     confetti({
                         particleCount: 150,
@@ -814,16 +829,29 @@
                 }, 300);
             },
 
-            exportPDF: function() {
+            // 【升級】改為匯出高品質 PNG 圖片
+            exportPNG: function() {
                 const element = document.getElementById('export-area');
-                const opt = {
-                    margin:       15,
-                    filename:     `${this.userName}_建功畢業生專屬檔案.pdf`,
-                    image:        { type: 'jpeg', quality: 0.98 },
-                    html2canvas:  { scale: 3, useCORS: true, letterRendering: true, windowWidth: 800, logging: false },
-                    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-                };
-                html2pdf().set(opt).from(element).save();
+                
+                // 暫時修改樣式以確保截圖完美
+                element.style.padding = '30px'; 
+                element.style.borderRadius = '0'; // 去除圓角避免白邊
+                element.style.background = '#ffffff';
+
+                html2canvas(element, {
+                    scale: 3, // 高畫質匯出
+                    useCORS: true, 
+                    backgroundColor: '#ffffff'
+                }).then(canvas => {
+                    // 恢復原本樣式
+                    element.style.padding = '20px';
+                    element.style.borderRadius = '20px';
+
+                    const link = document.createElement('a');
+                    link.download = `${this.userName}_建功畢業生專屬檔案.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                });
             },
 
             resetQuiz: function() {
@@ -832,7 +860,6 @@
                 this.userName = "";
                 document.getElementById('user-name').value = '';
                 
-                // 使用升級的轉場切換回到首頁
                 this.switchPage('result-page', 'start-page');
                 ImageEngine.setWelcomeImage();
             }
@@ -867,7 +894,7 @@
     <div id="start-page" class="page-transition">
         <h1>2026 建功人請回答！！</h1>
         <div class="image-box">
-            <img id="welcome-img" src="主視覺.jpeg" alt="建功心測主視覺">
+            <img id="welcome-img" src="主視覺.png" alt="建功心測主視覺">
         </div>
         <p class="subtitle">
             這個測驗是畢聯會為建功人設計的，準備好迎接即將到來的畢業典禮嗎！快來看看你在建功動物城是什麼角色吧！希望大家可以透過一些小問題面對更真實的自己~~
@@ -884,14 +911,12 @@
         </div>
     </div>
 
-    <!-- 測驗頁面 -->
     <div id="quiz-page" class="hidden">
         <div class="quiz-header-wrapper">
             <div class="quiz-header-top">
                 <div id="progress" class="progress-text"></div>
                 <button id="back-btn" class="back-btn hidden" onclick="window.jgQuiz.goBack()">← 上一題</button>
             </div>
-            <!-- 【升級】視覺化動態進度條 HTML 結構 -->
             <div class="progress-bar-bg">
                 <div id="progress-fill" class="progress-bar-fill"></div>
             </div>
@@ -905,7 +930,6 @@
         <div class="options-container" id="options-box"></div>
     </div>
 
-    <!-- 結果頁面 -->
     <div id="result-page" class="hidden">
         <div style="font-size: 15px; font-weight: 800; color: #64748b; margin-bottom: 12px; text-align: left;">▸ 畢聯會大數據精密 analysis：</div>
         
@@ -915,7 +939,7 @@
         
         <div class="action-buttons">
             <button class="action-btn restart-btn" onclick="window.jgQuiz.resetQuiz()">再測一次</button>
-            <button class="action-btn pdf-btn" onclick="window.jgQuiz.exportPDF()">📥 匯出 PDF</button>
+            <button class="action-btn pdf-btn" onclick="window.jgQuiz.exportPNG()">📥 儲存結果圖</button>
         </div>
     </div>
 
