@@ -10,21 +10,20 @@
            ============================== */
         :root {
             --primary-color: #4a5568;
-            --bg-color: #f1f5f9; /* 柔和舒適的紀念牆底色 */
-            --card-bg: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.12); /* 🌟 調低透明度，讓你的背景圖透出來 */
             --sticker-color: #cbd5e0;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
+            --text-main: #ffffff; /* 🌟 配合手繪背景，主要字體改為白色提升對比度 */
+            --text-muted: #e2e8f0;
         }
         
         * {
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent; /* 消除手機點擊陰影 */
+            -webkit-tap-highlight-color: transparent; 
         }
 
         body {
             font-family: 'PingFang TC', 'SF Pro TC', 'Microsoft JhengHei', sans-serif;
-            background-color: var(--bg-color);
+            background-color: #1a1a1a;
             color: var(--text-main);
             margin: 0;
             padding: 16px;
@@ -35,26 +34,47 @@
             line-height: 1.5;
         }
 
-        /* 記憶板主容器 */
+        /* 🌆 全螢幕滿版背景圖：對應你同目錄下的 背景.jpeg */
+        #quiz-container {
+            width: 100vw;
+            height: 100vh;
+            background-image: url('背景.jpeg'); 
+            background-size: cover;      
+            background-position: center;  
+            background-repeat: no-repeat;
+            position: fixed;
+            top: 0; left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            z-index: 1;
+        }
+
+        /* 🔮 磨砂玻璃卡片（輕透果凍感） */
         .container {
             max-width: 500px;
             width: 100%;
             background: var(--card-bg);
             border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.06);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
             padding: 28px 24px;
             text-align: center;
-            border: 1px solid rgba(226, 232, 240, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
             position: relative;
+            z-index: 2;
         }
 
         h1 {
-            color: #0f172a;
+            color: #ffffff;
             font-size: 24px;
             font-weight: 900;
             margin-top: 5px;
             margin-bottom: 12px;
             letter-spacing: 0.5px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.4);
         }
 
         .subtitle {
@@ -63,13 +83,14 @@
             line-height: 1.6;
             margin-bottom: 28px;
             text-align: justify;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.3);
         }
 
         .hidden {
             display: none !important;
         }
 
-        /* ─── 🖼️ 插圖容器優化 ─── */
+        /* ─── 🖼️ 插圖容器 ─── */
         .welcome-illustration, .scene-illustration {
             width: 100%;
             height: 160px;
@@ -78,17 +99,17 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            border: 1px solid #edf2f7;
+            border: 1px solid rgba(255,255,255,0.2);
             overflow: hidden;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .welcome-illustration {
-            background: linear-gradient(135deg, #e0f2fe, #f0fdf4);
+            background: rgba(255, 255, 255, 0.85); /* 讓 SVG 在歡迎頁面清晰保持原色 */
         }
 
         .scene-illustration {
-            background: #ffffff;
+            background: rgba(255, 255, 255, 0.9); /* 讓題目 SVG 有白底更易讀 */
             animation: fadeIn 0.35s ease-out;
         }
 
@@ -109,32 +130,28 @@
             font-size: 16px;
             cursor: pointer;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
             text-align: center;
-            position: relative;
         }
 
         .sticker-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.08);
-        }
-
-        .sticker-btn:active {
-            transform: translateY(0);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.25);
         }
 
         .silver { background: linear-gradient(135deg, #f1f5f9, #cbd5e1); color: #334155; border: 1px solid #cbd5e1; }
         .gold { background: linear-gradient(135deg, #fef08a, #eab308); color: #713f12; border: 1px solid #eab308; }
-        .purple { background: linear-gradient(135deg, #e9d5ff, #a855f7); color: #ffffff; }
+        .purple { background: linear-gradient(135deg, #c084fc, #a855f7); color: #ffffff; }
 
         /* ─── 🖊️ 題目區與互動選項 ─── */
         .question-title {
             font-size: 19px;
             font-weight: 800;
             margin-bottom: 24px;
-            color: #0f172a;
+            color: #ffffff;
             line-height: 1.4;
             text-align: left;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.3);
         }
 
         .options-container {
@@ -144,14 +161,14 @@
         }
 
         .option-btn {
-            background: #f8fafc;
-            border: 2px solid #f1f5f9;
+            background: rgba(255, 255, 255, 0.85); /* 輕微透光的白底選項，兼顧字體易讀性 */
+            border: 1px solid rgba(255,255,255,0.4);
             padding: 16px 20px;
             border-radius: 14px;
             text-align: left;
             font-size: 15px;
-            font-weight: 600;
-            color: #334155;
+            font-weight: 700;
+            color: #1e293b;
             cursor: pointer;
             transition: all 0.2s ease;
             position: relative;
@@ -159,9 +176,8 @@
         }
 
         .option-btn:hover {
-            background: #f1f5f9;
-            border-color: #cbd5e1;
-            color: #0f172a;
+            background: #ffffff;
+            transform: translateY(-1px);
         }
 
         /* 已選取貼紙蓋章特效 */
@@ -177,7 +193,7 @@
             border-radius: 50px;
             font-size: 12px;
             font-weight: bold;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
             animation: stamp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
 
@@ -200,6 +216,7 @@
             text-align: left;
             position: relative;
             box-shadow: 6px 6px 0px #0f172a;
+            color: #1e293b; /* 報告內容使用深色字確保像紙張卡片 */
         }
 
         .profile-header {
@@ -307,25 +324,26 @@
             font-weight: bold;
             border: 1px solid #0f172a;
             box-shadow: 1px 1px 0px #0f172a;
+            color: #0f172a;
         }
 
         .restart-btn {
-            background: #0f172a;
-            color: #ffffff;
-            border: none;
+            background: #ffffff;
+            color: #0f172a;
+            border: 2px solid #ffffff;
             padding: 14px 32px;
             border-radius: 12px;
             cursor: pointer;
             font-size: 15px;
             font-weight: bold;
             margin-top: 28px;
-            width: 100%; /* 手機上滿版更好點擊 */
-            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+            width: 100%; 
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             transition: all 0.2s;
         }
 
         .restart-btn:hover { 
-            background: #1e293b; 
+            background: rgba(255,255,255,0.9);
             transform: translateY(-1px);
         }
 
@@ -337,66 +355,71 @@
         footer {
             margin-top: 32px;
             font-size: 11px;
-            color: #94a3b8;
+            color: rgba(255,255,255,0.6);
             line-height: 1.6;
             font-weight: 500;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div id="start-page">
-        <h1>2026 建功人請回答！！</h1>
-        <div class="welcome-illustration">
-            <svg viewBox="0 0 200 100" width="100%" height="100%">
-                <defs>
-                    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stop-color="#bae6fd"/>
-                        <stop offset="100%" stop-color="#f0fdf4"/>
-                    </linearGradient>
-                </defs>
-                <rect width="200" height="100" fill="url(#sky)" rx="12"/>
-                <path d="M 0,85 L 200,85" stroke="#cbd5e1" stroke-width="4"/>
-                <rect x="20" y="45" width="40" height="40" fill="#cbd5e0" rx="2"/>
-                <rect x="32" y="55" width="16" height="30" fill="#94a3b8"/>
-                <circle cx="150" cy="40" r="12" fill="#f87171" opacity="0.8"/>
-                <circle cx="162" cy="48" r="10" fill="#fbbf24" opacity="0.8"/>
-                <circle cx="142" cy="52" r="11" fill="#60a5fa" opacity="0.8"/>
-                <path d="M150,52 Q152,70 155,85 M162,58 Q160,72 157,85 M142,63 Q146,75 154,85" stroke="#94a3b8" stroke-width="1" fill="none"/>
-                <path d="M 90,30 L 105,25 L 120,30 L 105,35 Z" fill="#1e293b"/>
-                <rect x="101" y="32" width="8" height="6" fill="#1e293b"/>
-                <path d="M 109,35 Q 114,42 115,46" stroke="#fbbf24" stroke-width="1" fill="none"/>
-            </svg>
+<div id="quiz-container">
+
+    <div class="container">
+        <div id="start-page">
+            <h1>2026 建功人請回答！！</h1>
+            <div class="welcome-illustration">
+                <svg viewBox="0 0 200 100" width="100%" height="100%">
+                    <defs>
+                        <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#bae6fd"/>
+                            <stop offset="100%" stop-color="#f0fdf4"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="200" height="100" fill="url(#sky)" rx="12"/>
+                    <path d="M 0,85 L 200,85" stroke="#cbd5e1" stroke-width="4"/>
+                    <rect x="20" y="45" width="40" height="40" fill="#cbd5e0" rx="2"/>
+                    <rect x="32" y="55" width="16" height="30" fill="#94a3b8"/>
+                    <circle cx="150" cy="40" r="12" fill="#f87171" opacity="0.8"/>
+                    <circle cx="162" cy="48" r="10" fill="#fbbf24" opacity="0.8"/>
+                    <circle cx="142" cy="52" r="11" fill="#60a5fa" opacity="0.8"/>
+                    <path d="M150,52 Q152,70 155,85 M162,58 Q160,72 157,85 M142,63 Q146,75 154,85" stroke="#94a3b8" stroke-width="1" fill="none"/>
+                    <path d="M 90,30 L 105,25 L 120,30 L 105,35 Z" fill="#1e293b"/>
+                    <rect x="101" y="32" width="8" height="6" fill="#1e293b"/>
+                    <path d="M 109,35 Q 114,42 115,46" stroke="#fbbf24" stroke-width="1" fill="none"/>
+                </svg>
+            </div>
+            <p class="subtitle">
+                這面牆是畢聯會為建功人設計的互動板，準備迎接即將到來的畢業典禮。以下問題請各位如實回答，不計分也無獎喔，希望大家可以透過這面牆面對更真實的自己~~
+            </p>
+            <p style="font-size: 14.5px; font-weight: bold; color: #ffffff; margin-bottom: 16px;">請先選取你的貼紙身份：</p>
+            <div class="identity-container">
+                <button class="sticker-btn silver" onclick="window.jgQuiz.selectIdentity('silver')">銀色貼紙：國中生</button>
+                <button class="sticker-btn gold" onclick="window.jgQuiz.selectIdentity('gold')">金色貼紙：高中生</button>
+                <button class="sticker-btn purple" onclick="window.jgQuiz.selectIdentity('purple')">家長及外賓</button>
+            </div>
         </div>
-        <p class="subtitle">
-            這面牆是畢聯會為建功人設計的互動板，準備迎接即將到來的畢業典禮。以下問題請各位如實回答，不計分也無獎喔，希望大家可以透過這面牆面對更真實的自己~~
-        </p>
-        <p style="font-size: 14.5px; font-weight: bold; color: #334155; margin-bottom: 16px;">請先選取你的貼紙身份：</p>
-        <div class="identity-container">
-            <button class="sticker-btn silver" onclick="window.jgQuiz.selectIdentity('silver')">銀色貼紙：國中生</button>
-            <button class="sticker-btn gold" onclick="window.jgQuiz.selectIdentity('gold')">金色貼紙：高中生</button>
-            <button class="sticker-btn purple" onclick="window.jgQuiz.selectIdentity('purple')">家長及外賓</button>
+
+        <div id="quiz-page" class="hidden">
+            <div id="progress" style="font-size: 12px; color: #e2e8f0; font-weight: bold; margin-bottom: 12px; text-align: left; letter-spacing: 0.5px;"></div>
+            <div class="scene-illustration" id="scene-img-box"></div>
+            <div class="question-title" id="question-text"></div>
+            <div class="options-container" id="options-box"></div>
         </div>
-    </div>
 
-    <div id="quiz-page" class="hidden">
-        <div id="progress" style="font-size: 12px; color: #94a3b8; font-weight: bold; margin-bottom: 12px; text-align: left; letter-spacing: 0.5px;"></div>
-        <div class="scene-illustration" id="scene-img-box"></div>
-        <div class="question-title" id="question-text"></div>
-        <div class="options-container" id="options-box"></div>
-    </div>
+        <div id="result-page" class="hidden">
+            <div style="font-size: 14px; font-weight: bold; color: #e2e8f0; margin-bottom: 10px; text-align: left;">▸ 畢聯會大數據精密分析：</div>
+            <div class="profile-card" id="profile-card-box"></div>
+            <button class="restart-btn" onclick="window.jgQuiz.resetQuiz()">重新建檔 / 再測一次</button>
+        </div>
 
-    <div id="result-page" class="hidden">
-        <div style="font-size: 14px; font-weight: bold; color: #64748b; margin-bottom: 10px; text-align: left;">▸ 畢聯會大數據精密分析：</div>
-        <div class="profile-card" id="profile-card-box"></div>
-        <button class="restart-btn" onclick="window.jgQuiz.resetQuiz()">重新建檔 / 再測一次</button>
+        <footer>
+            新竹市立建功高級中學 X 2026建功畢聯會<br>
+            Hsinchu Municipal Chien Kang Senior High School
+        </footer>
     </div>
-
-    <footer>
-        新竹市立建功高級中學 X 2026建功畢聯會<br>
-        Hsinchu Municipal Chien Kang Senior High School
-    </footer>
+    
 </div>
 
 <script>
