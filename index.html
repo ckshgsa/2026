@@ -3,406 +3,259 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zootopia 職涯鑑定特區 | 心理測驗</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-    
+    <title>Zootopia 心靈鑑定特區</title>
     <style>
         :root {
-            --primary: #2575fc;      /* 茱蒂警政藍 */
-            --secondary: #ff7675;    /* 尼克狂野橘 */
-            --accent: #f1c40f;       /* 閃耀金黃 */
-            --bg-glass: rgba(255, 255, 255, 0.85);
-            --card-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            --color-primary: #3498db; /* 哈茱蒂藍 */
+            --color-secondary: #e67e22; /* 胡尼克橘 */
+            --color-bg: #f0f4f8;
+            --color-card: #ffffff;
         }
 
-        * {
-            box-sizing: border-box;
-            font-family: 'Noto Sans TC', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
+        * { box-sizing: border-box; font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif; }
+        
         body {
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
+            background-color: var(--color-bg);
+            color: #333;
+            display: flex; justify-content: center; align-items: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            /* 酷炫背景：高級都市天際線 */
-            background-image: linear-gradient(rgba(44, 62, 80, 0.6), rgba(0, 0, 0, 0.75)), 
-                              url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=1920');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
         }
 
-        /* 輕量級毛玻璃容器 */
-        .glass-container {
-            width: 90%;
-            max-width: 600px;
-            background: var(--bg-glass);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+        /* 滿版容器 */
+        .container {
+            width: 100%; max-width: 600px;
+            padding: 20px;
+        }
+
+        /* 測驗卡片底座 */
+        .card {
+            background: var(--color-card);
             border-radius: 24px;
-            padding: 40px 30px;
-            box-shadow: var(--card-shadow);
-            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 35px 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
             text-align: center;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s ease;
         }
 
-        /* ==============================
-           🌇 首頁 UI 設計
-           ============================== */
-        .logo-area {
-            margin-bottom: 30px;
-        }
-
-        .logo-title {
-            font-size: 3.5rem;
-            font-weight: 900;
-            letter-spacing: 4px;
-            margin: 0;
-            background: linear-gradient(45deg, #fff, var(--accent), #fff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
-        }
-
-        .logo-subtitle {
-            font-size: 1.2rem;
-            color: #4a5568;
-            font-weight: 500;
-            margin-top: 10px;
-            letter-spacing: 2px;
-        }
-
-        .badge-icon {
-            font-size: 4rem;
-            color: var(--accent);
-            animation: float 3s ease-in-out infinite;
-            margin-bottom: 15px;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .btn-modern {
-            background: linear-gradient(135deg, #ff7675 0%, #ef5350 100%);
-            color: white;
-            border: none;
-            padding: 16px 45px;
-            font-size: 1.25rem;
-            font-weight: 700;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 10px 25px rgba(239, 83, 80, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .btn-modern:hover {
-            transform: scale(1.05) translateY(-2px);
-            box-shadow: 0 15px 30px rgba(239, 83, 80, 0.6);
-        }
-
-        /* ==============================
-           📊 進度條與題目區 UI 
-           ============================== */
-        .progress-container {
-            width: 100%;
-            height: 6px;
-            background: #e2e8f0;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            overflow: hidden;
-        }
-
-        .progress-bar {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), #00c6ff);
-            transition: width 0.4s ease;
-        }
-
-        .step-text {
-            font-size: 0.9rem;
-            color: #718096;
-            font-weight: bold;
-            text-align: right;
-            margin-top: -25px;
-            margin-bottom: 25px;
-        }
-
-        .question-text {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #1a202c;
-            margin-bottom: 25px;
-            text-align: left;
-            line-height: 1.5;
-        }
-
-        /* 選項極致動態 */
-        .option-card {
-            display: flex;
-            align-items: center;
-            background: white;
-            border: 2px solid #edf2f7;
+        /* 圖片泛用樣式 */
+        .quiz-img {
+            width: 100%; max-height: 250px;
+            object-fit: cover;
             border-radius: 16px;
-            padding: 18px 20px;
-            margin-bottom: 14px;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            text-align: left;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
-        .option-card:hover {
-            border-color: var(--primary);
-            background: #f7fafc;
-            transform: translateX(5px);
+        /* 頁面切換動畫 */
+        .page { display: none; animation: fadeIn 0.4s ease-in-out forwards; }
+        .page.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .option-card.selected {
-            border-color: var(--primary);
-            background: #edf2ff;
-            box-shadow: 0 8px 20px rgba(37, 117, 252, 0.15);
+        /* 首頁酷炫樣式 */
+        .main-title { font-size: 2.4rem; font-weight: 900; color: #2c3e50; margin: 10px 0; }
+        .subtitle { font-size: 1.1rem; color: #7f8c8d; margin-bottom: 30px; }
+        
+        .start-btn {
+            width: 100%; padding: 18px;
+            background: linear-gradient(45deg, var(--color-primary), #2980b9);
+            color: white; border: none; border-radius: 50px;
+            font-size: 1.3rem; font-weight: bold; cursor: pointer;
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.3);
+            transition: 0.3s;
+        }
+        .start-btn:hover { transform: scale(1.02); }
+
+        /* 進度條 */
+        .progress-container {
+            width: 100%; height: 6px; background: #e0e0e0;
+            border-radius: 3px; margin-bottom: 30px; overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%; width: 0%;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+            transition: width 0.3s ease;
         }
 
-        .option-dot {
-            width: 20px;
-            height: 20px;
-            border: 2px solid #cbd5e0;
-            border-radius: 50%;
-            margin-right: 15px;
-            flex-shrink: 0;
-            position: relative;
-            transition: all 0.2s;
+        /* 題目樣式 */
+        .question-text { font-size: 1.3rem; font-weight: bold; color: #2c3e50; margin-bottom: 25px; text-align: left; }
+        
+        /* 選項按鈕化 */
+        .option-btn {
+            display: block; width: 100%; text-align: left;
+            padding: 16px 20px; margin-bottom: 12px;
+            background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 14px;
+            font-size: 1.05rem; cursor: pointer; transition: all 0.2s ease;
+        }
+        .option-btn:hover {
+            background: #eaf2f8; border-color: var(--color-primary);
+            transform: translateX(5px); color: #2980b9;
         }
 
-        .option-card.selected .option-dot {
-            border-color: var(--primary);
-            background: var(--primary);
+        /* 結果頁面樣式 */
+        .result-header { font-size: 1.2rem; color: #7f8c8d; }
+        .result-title { font-size: 2.2rem; font-weight: 900; color: var(--color-secondary); margin: 10px 0 20px 0; }
+        .result-desc { text-align: left; line-height: 1.8; background: #fff9f4; padding: 20px; border-left: 5px solid var(--color-secondary); border-radius: 8px; margin-bottom: 30px; }
+        
+        .retry-btn {
+            padding: 12px 35px; background: #95a5a6; color: white;
+            border: none; border-radius: 8px; cursor: pointer; font-size: 1rem;
         }
-
-        .option-card.selected .option-dot::after {
-            content: '';
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: white;
-            border-radius: 50%;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .option-label {
-            font-size: 1.05rem;
-            color: #4a5568;
-            font-weight: 500;
-        }
-
-        /* ==============================
-           🏆 結果頁面 UI
-           ============================== */
-        .result-animal-badge {
-            font-size: 5rem;
-            margin-bottom: 10px;
-        }
-
-        .result-title {
-            font-size: 2.2rem;
-            font-weight: 900;
-            color: #1a202c;
-            margin: 10px 0 20px 0;
-        }
-
-        .result-box {
-            background: rgba(255, 255, 255, 0.7);
-            border-left: 6px solid var(--secondary);
-            padding: 25px;
-            border-radius: 12px;
-            text-align: left;
-            line-height: 1.8;
-            color: #4a5568;
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
-        }
-
-        /* 隱藏與動畫 */
-        .hide { display: none !important; }
-        .fade { animation: fadeEffect 0.5s rgba(0,0,0,1); }
-        @keyframes fadeEffect {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
+        .retry-btn:hover { background: #7f8c8d; }
     </style>
 </head>
 <body>
 
-    <div id="home-panel" class="glass-container fade">
-        <div class="logo-area">
-            <i class="fa-solid fa-shield-halved badge-icon"></i>
-            <h1 class="logo-title">ZOOTOPIA</h1>
-            <div class="logo-subtitle">第一分局 · 心靈特性鑑定</div>
-        </div>
-        <p style="color: #718096; font-size: 1.1rem; margin-bottom: 40px;">想知道你在動物方城市中，會被分配到哪種動物市民的人格嗎？</p>
-        <button class="btn-modern" onclick="nextPanel('home-panel', 'quiz-panel')">
-            <i class="fa-solid fa-fingerprint" style="margin-right: 8px;"></i> 開始鑑定
-        </button>
-    </div>
+<div class="container">
+    <div class="card">
 
-    <div id="quiz-panel" class="glass-container hide">
-        <div class="progress-container">
-            <div id="p-bar" class="progress-bar"></div>
+        <div id="page-0" class="page active">
+            <img class="quiz-img" src="https://via.placeholder.com/600x300/34495e/ffffff?text=Zootopia+Welcome+Image" alt="首頁圖片">
+            <h1 class="main-title">ZOOTOPIA</h1>
+            <p class="subtitle">動物本性鑑定特區 ・ 測出你是哪種動物？</p>
+            <button class="start-btn" onclick="nextPage(1)">開始鑑定 🐾</button>
         </div>
-        <div id="step-num" class="step-text">1 / 5</div>
-        
-        <div id="question-container">
-            </div>
-    </div>
 
-    <div id="result-panel" class="glass-container hide">
-        <div class="result-header" style="color: var(--primary); font-weight: bold; letter-spacing: 1px;"><i class="fa-solid fa-square-poll-vertical"></i> 鑑定報告已生成</div>
-        <div id="res-avatar" class="result-animal-badge">🐰</div>
-        <h2 id="res-name" class="result-title">哈茱蒂</h2>
-        <div id="res-desc" class="result-box"></div>
-        <button class="btn-modern" style="background: linear-gradient(135deg, #718096, #4a5568); box-shadow: 0 10px 25px rgba(74,85,104,0.3);" onclick="restartQuiz()">
-            <i class="fa-solid fa-rotate-right"></i> 重新鑑定
-        </button>
+        <div id="progress-section" style="display: none;">
+            <div class="progress-container"><div class="progress-bar" id="bar"></div></div>
+        </div>
+
+        <div id="page-1" class="page">
+            <img class="quiz-img" src="https://via.placeholder.com/600x250/3498db/ffffff?text=Question+1+Image" alt="題目一圖片">
+            <div class="question-text">1. 終於到了週末，你通常會怎麼安排你的休息時間？</div>
+            <button class="option-btn" onclick="selectAnswer('A')">A. 安排滿滿計畫！去戶外運動、探索新地點。</button>
+            <button class="option-btn" onclick="selectAnswer('B')">B. 在街頭商圈閒晃，發掘有趣事物與隱藏美食。</button>
+            <button class="option-btn" onclick="selectAnswer('C')">C. 待在舒適室內，準備滿滿零食，追愛豆或影集。</button>
+            <button class="option-btn" onclick="selectAnswer('D')">D. 處理未完成代辦事項或整理房間，保持井然有序。</button>
+            <button class="option-btn" onclick="selectAnswer('E')">E. 睡到自然醒，然後慢⋯慢⋯享⋯受⋯早⋯餐⋯</button>
+        </div>
+
+        <div id="page-2" class="page">
+            <img class="quiz-img" src="https://via.placeholder.com/600x250/e67e22/ffffff?text=Question+2+Image" alt="題目二圖片">
+            <div class="question-text">2. 當遇到一個看起來「不可能解決」的難題時，你的第一反應是？</div>
+            <button class="option-btn" onclick="selectAnswer('A')">A. 燃起鬥志！絕對不放棄，想盡辦法證明自己能做到。</button>
+            <button class="option-btn" onclick="selectAnswer('B')">B. 轉個彎思考，找個聰明（甚至有點取巧）的捷徑搞定它。</button>
+            <button class="option-btn" onclick="selectAnswer('C')">C. 感到有點焦慮，先找朋友訴苦，或者吃個甜點壓驚。</button>
+            <button class="option-btn" onclick="selectAnswer('D')">D. 依照過往經驗、規定和 SOP 穩紮穩打處理。</button>
+            <button class="option-btn" onclick="selectAnswer('E')">E. 不⋯著⋯急⋯，船⋯到⋯橋⋯頭⋯自⋯然⋯直⋯</button>
+        </div>
+
+        <div id="page-3" class="page">
+            <img class="quiz-img" src="https://via.placeholder.com/600x250/2ecc71/ffffff?text=Question+3+Image" alt="題目三圖片">
+            <div class="question-text">3. 在你的朋友圈裡，大家通常怎麼形容你？</div>
+            <button class="option-btn" onclick="selectAnswer('A')">A. 充滿熱情、正義感爆棚的行動派。</button>
+            <button class="option-btn" onclick="selectAnswer('B')">B. 幽默、嘴砲、看起來漫不經心但其實很講義氣。</button>
+            <button class="option-btn" onclick="selectAnswer('C')">C. 超級友善、沒心機，是大家眼中的開心果。</button>
+            <button class="option-btn" onclick="selectAnswer('D')">D. 嚴肅、有威嚴、出問題時總是可以依靠的領導者。</button>
+            <button class="option-btn" onclick="selectAnswer('E')">E. 脾氣超級好、但生活節奏似乎總是跟別人不太一樣。</button>
+        </div>
+
+        <div id="page-4" class="page">
+            <img class="quiz-img" src="https://via.placeholder.com/600x250/9b59b6/ffffff?text=Question+4+Image" alt="題目四圖片">
+            <div class="question-text">4. 你心目中最理想的工作環境或生活狀態是什麼樣子？</div>
+            <button class="option-btn" onclick="selectAnswer('A')">A. 充滿挑戰，能夠發揮影響力，甚至「讓世界變得更美好」！</button>
+            <button class="option-btn" onclick="selectAnswer('B')">B. 自由不受拘束，不用看別人臉色，自己掌握步調。</button>
+            <button class="option-btn" onclick="selectAnswer('C')">C. 氣氛輕鬆溫馨，同事朋友好相處，最重要是有吃不完的點心。</button>
+            <button class="option-btn" onclick="selectAnswer('D')">D. 制度分明，大家各司其職，有明確的規矩和升遷管道。</button>
+            <button class="option-btn" onclick="selectAnswer('E')">E. 步⋯調⋯平⋯緩⋯，不⋯需⋯要⋯每⋯天⋯趕⋯時⋯間⋯</button>
+        </div>
+
+        <div id="page-5" class="page">
+            <img class="quiz-img" src="https://via.placeholder.com/600x250/f1c40f/ffffff?text=Question+5+Image" alt="題目五圖片">
+            <div class="question-text">5. 走在路上，你突然看到前面的人錢包掉了，你會怎麼做？</div>
+            <button class="option-btn" onclick="selectAnswer('A')">A. 立刻撿起來，不管多遠都狂奔追上去還給對方！</button>
+            <button class="option-btn" onclick="selectAnswer('B')">B. 撿起來掂掂重量，笑著跟對方搭話開個玩笑後再還給他。</button>
+            <button class="option-btn" onclick="selectAnswer('C')">C. 驚呼一聲，趕快撿起來，四處張望尋找失主。</button>
+            <button class="option-btn" onclick="selectAnswer('D')">D. 撿起來，然後直接依照程序交到最近的警察局。</button>
+            <button class="option-btn" onclick="selectAnswer('E')">E. 等⋯我⋯走⋯到⋯那⋯邊⋯，錢⋯包⋯已⋯被⋯人⋯撿⋯走⋯了⋯</button>
+        </div>
+
+        <div id="page-result" class="page">
+            <div class="result-header">鑑定完成！你的隱藏動物人格是：</div>
+            <img id="result-img" class="quiz-img" src="" alt="結果動物圖片">
+            <h2 class="result-title" id="result-name"></h2>
+            <div class="result-desc" id="result-desc"></div>
+            <button class="retry-btn" onclick="restartQuiz()">再鑑定一次 🔄</button>
+        </div>
+
     </div>
+</div>
 
 <script>
-    // 🧠 心理測驗題目與結果資料庫
-    const quizData = [
-        {
-            title: "1. 終於到了週末，你通常會怎麼安排你的休息時間？",
-            options: [
-                { text: "安排滿滿的計畫！去戶外運動、探索新地點。", val: "A" },
-                { text: "在街頭或商圈閒晃，發掘一些隱藏版美食。", val: "B" },
-                { text: "待在舒適的室內，準備滿滿零食追最愛的影集。", val: "C" },
-                { text: "處理本週未完成的代辦事項，保持一切井然有序。", val: "D" },
-                { text: "睡到自然醒，然後慢⋯慢⋯享⋯受⋯早⋯餐⋯", val: "E" }
-            ]
-        },
-        {
-            title: "2. 當你在生活中遇到一個看起來「不可能解決」的難題時？",
-            options: [
-                { text: "燃起鬥志！絕對不放棄，想盡辦法證明自己能做到。", val: "A" },
-                { text: "轉個彎思考，找個聰明（甚至取巧）的捷徑搞定它。", val: "B" },
-                { text: "感到有點焦慮，先找朋友訴苦或吃點心壓驚。", val: "C" },
-                { text: "依照過往的經驗與 SOP 穩紮穩打處理，容不得錯。", val: "D" },
-                { text: "不⋯著⋯急⋯，船⋯到⋯橋⋯頭⋯自⋯然⋯直⋯", val: "E" }
-            ]
-        },
-        {
-            title: "3. 在你的朋友圈裡，大家通常怎麼形容你的性格？",
-            options: [
-                { text: "充滿熱情、正義感爆棚的鐵血行動派。", val: "A" },
-                { text: "幽默嘴砲、看起來漫不經心但其实很講義氣。", val: "B" },
-                { text: "超級友善、沒心機，大家眼中的開心果與溫暖擔當。", val: "C" },
-                { text: "嚴肅、有威嚴、出問題時總是可以依靠的領導者。", val: "D" },
-                { text: "脾氣超級好、但生活節奏似乎總是跟別人不太一樣。", val: "E" }
-            ]
-        },
-        {
-            title: "4. 你心目中最理想的工作環境或生活狀態是什麼樣子？",
-            options: [
-                { text: "充滿挑戰，能發揮影響力，讓世界變得更美好！", val: "A" },
-                { text: "自由不受拘束，不用看人臉色，完全掌握自主權。", val: "B" },
-                { text: "氣氛輕鬆溫馨，同事好相處，最重要是有吃不完的點心。", val: "C" },
-                { text: "制度分明，大家各司其職，有明確的規矩和升遷管道。", val: "D" },
-                { text: "步⋯調⋯平⋯緩⋯，不⋯需⋯要⋯每⋯天⋯趕⋯時⋯間⋯", val: "E" }
-            ]
-        },
-        {
-            title: "5. 走在路上，你突然看到前面的人錢包掉了，你會？",
-            options: [
-                { text: "立刻撿起來，不管多遠都狂奔追上去還給對方！", val: "A" },
-                { text: "撿起來掂掂重量，笑著跟對方搭話開個玩笑後還他。", val: "B" },
-                { text: "驚呼一聲趕快撿起，四處張望尋找失主或請警衛幫忙。", val: "C" },
-                { text: "撿起來，然後直接依照正牌程序交到最近的警察局。", val: "D" },
-                { text: "等⋯我⋯走⋯到⋯那⋯邊⋯，錢⋯包⋯已⋯被⋯別⋯人⋯撿⋯走⋯", val: "E" }
-            ]
-        }
-    ];
-
-    const animalResults = {
-        'A': { emoji: "🐰", name: "哈茱蒂 (Judy Hopps)", desc: "充滿熱情的理想主義者！你就像茱蒂一樣，是個充滿活力、永不言敗的樂天派。你有著強烈的正義感和目標，一旦下定決心，沒有任何困難能阻擋你。你相信只要努力，就能讓世界變得更好！" },
-        'B': { emoji: "🦊", name: "胡尼克 (Nick Wilde)", desc: "聰明機智的街頭生存專家！你擁有極高的情商和靈活的腦袋。你看透了社會的運作規則，懂得用幽默和圓滑來保護自己。表面玩世不恭，但其實你內心柔軟，對認定的朋友絕對挺到底。" },
-        'C': { emoji: "🐆", name: "洪金豹 (Clawhauser)", desc: "溫暖友善的氣氛製造機！你是大家眼中的小天使，性格溫和、熱情且超級友善。在你身邊總能感到放鬆和快樂，雖然有時候容易分心，但你絕對是團隊中最不可或缺的潤滑劑。" },
-        'D': { emoji: "🐃", name: "蠻牛局長 (Chief Bogo)", desc: "務實可靠的霸氣領導者！你做事講求效率、重視規則與秩序。有時候會讓人覺得有點嚴肅，但這都是因為你對自己和團隊有著極高的責任感。在危機時刻，你總是最能扛起重責大任的那個人。" },
-        'E': { emoji: "🦥", name: "快俠 (Flash)", desc: "佛系生活的慢活大師！在這個急躁的世界裡，你擁有屬於自己的獨特節奏。你性格溫和、情緒穩定，幾乎沒有什麼事能讓你大發脾氣。其實你把一切都看在眼裡，可能還有著跌破眾人眼鏡的狂野嗜好！" }
-    };
-
-    let currentStep = 0;
+    let currentPage = 0;
     let userAnswers = [];
 
-    // 面板切換
-    function nextPanel(fromId, toId) {
-        document.getElementById(fromId).classList.add('hide');
-        const toPanel = document.getElementById(toId);
-        toPanel.classList.remove('hide');
-        toPanel.classList.add('fade');
+    // 結果資料庫（包含各個動物的專屬圖片位置，你可以直接替換裡面的 img 網址）
+    const resultData = {
+        'A': { 
+            name: "🐰 哈茱蒂 (Judy Hopps)", 
+            img: "https://via.placeholder.com/600x300/3498db/ffffff?text=🐰+Judy+Hopps+Image", // 👈 放哈茱蒂的圖
+            desc: "充滿熱情的理想主義者！你就像茱蒂一樣，是個充滿活力、永不言敗的樂天派。你有著強烈的正義感和目標，一旦下定決心，沒有任何困難能阻擋你。你相信只要努力，就能讓世界變得更好！" 
+        },
+        'B': { 
+            name: "🦊 胡尼克 (Nick Wilde)", 
+            img: "https://via.placeholder.com/600x300/e67e22/ffffff?text=🦊+Nick+Wilde+Image", // 👈 放胡尼克的圖
+            desc: "聰明機智的街頭生存專家！你擁有極高的情商和靈活的腦袋。你看透了社會的運作規則，懂得用幽默和圓滑來保護自己。表面玩世不恭，但其實你內心柔軟，對認定的朋友絕對挺到底。" 
+        },
+        'C': { 
+            name: "🐆 洪金豹 (Benjamin Clawhauser)", 
+            img: "https://via.placeholder.com/600x300/e74c3c/ffffff?text=🐆+Clawhauser+Image", // 👈 放洪金豹的圖
+            desc: "溫慢友善的氣氛製造機！你是大家眼中的小天使，性格溫和、熱情且超級友善。在你身邊總能感到放鬆和快樂，雖然有時候容易分心，但你絕對是團隊表中最不可或缺的潤滑劑。" 
+        },
+        'D': { 
+            name: "🐃 蠻牛局長 (Chief Bogo)", 
+            img: "https://via.placeholder.com/600x300/2c3e50/ffffff?text=🐃+Chief+Bogo+Image", // 👈 放蠻牛局長的圖
+            desc: "務實可靠的霸氣領導者！你做事講求效率、重視規則與秩序。有時候會讓人覺得有點嚴肅，但這都是因為你對自己和團隊有著極高的責任感。在危機時刻，你總是最能扛起重責大任的那個人。" 
+        },
+        'E': { 
+            name: "🦥 快俠 (Flash)", 
+            img: "https://via.placeholder.com/600x300/95a5a6/ffffff?text=🦥+Flash+Image", // 👈 放快俠的圖
+            desc: "佛系生活的慢活大師！在這個急躁的世界裡，你擁有屬於自己的獨特節奏。你性格溫和、情緒穩定，幾乎沒有什麼事能讓你大發脾氣。其實你把一切都看在眼裡，可能還有著跌破眾人眼鏡的狂野嗜好！" 
+        }
+    };
+
+    // 翻頁控制邏輯
+    function nextPage(pageNumber) {
+        // 隱藏目前頁面
+        document.getElementById(`page-${currentPage}`).classList.remove('active');
         
-        if(toId === 'quiz-panel') {
-            renderQuestion();
+        currentPage = pageNumber;
+
+        // 顯示進度條控制
+        if (currentPage >= 1 && currentPage <= 5) {
+            document.getElementById('progress-section').style.display = 'block';
+            document.getElementById('bar').style.width = `${(currentPage / 5) * 100}%`;
+        } else {
+            document.getElementById('progress-section').style.display = 'none';
+        }
+
+        // 顯示下一頁
+        if (currentPage === 'result') {
+            document.getElementById('page-result').classList.add('active');
+        } else {
+            document.getElementById(`page-${currentPage}`).classList.add('active');
         }
     }
 
-    // 渲染單個題目 (UIUX 核心：不一次展現全部)
-    function renderQuestion() {
-        const qData = quizData[currentStep];
+    // 選擇答案並自動進下一題
+    function selectAnswer(letter) {
+        userAnswers.push(letter);
         
-        // 更新進度條
-        const progressPercent = ((currentStep) / quizData.length) * 100;
-        document.getElementById('p-bar').style.width = `${progressPercent}%`;
-        document.getElementById('step-num').innerText = `${currentStep + 1} / ${quizData.length}`;
-
-        let html = `<div class="question-text">${qData.title}</div>`;
-        
-        qData.options.forEach(opt => {
-            html += `
-                <div class="option-card" onclick="selectOption(this, '${opt.val}')">
-                    <div class="option-dot"></div>
-                    <div class="option-label">${opt.text}</div>
-                </div>
-            `;
-        });
-
-        document.getElementById('question-container').innerHTML = html;
+        if (currentPage < 5) {
+            nextPage(currentPage + 1);
+        } else {
+            calculateFinalResult();
+        }
     }
 
-    // 選擇答案後的微互動與自動下一題
-    function selectOption(element, value) {
-        // 高亮選中項
-        document.querySelectorAll('.option-card').forEach(el => el.classList.remove('selected'));
-        element.classList.add('selected');
-
-        userAnswers[currentStep] = value;
-
-        // 延遲 350 毫秒切換，讓使用者看清點擊反饋，提升 UI 體驗
-        setTimeout(() => {
-            currentStep++;
-            if (currentStep < quizData.length) {
-                renderQuestion();
-            } else {
-                showResult();
-            }
-        }, 350);
-    }
-
-    // 計算並展示結果
-    function showResult() {
-        document.getElementById('p-bar').style.width = `100%`;
-        
+    // 計算最終高分結果
+    function calculateFinalResult() {
         let scores = { 'A': 0, 'B': 0, 'C': 0, 'D': 0, 'E': 0 };
+        
         userAnswers.forEach(ans => scores[ans]++);
 
         let maxChar = 'A';
@@ -414,20 +267,20 @@
             }
         }
 
-        const result = animalResults[maxChar];
-        
-        document.getElementById('res-avatar').innerText = result.emoji;
-        document.getElementById('res-name').innerText = result.name;
-        document.getElementById('res-desc').innerText = result.desc;
+        // 填入對應的結果資料與圖片
+        document.getElementById('result-img').src = resultData[maxChar].img;
+        document.getElementById('result-name').innerText = resultData[maxChar].name;
+        document.getElementById('result-desc').innerText = resultData[maxChar].desc;
 
-        nextPanel('quiz-panel', 'result-panel');
+        nextPage('result');
     }
 
     // 重新開始
     function restartQuiz() {
-        currentStep = 0;
+        document.getElementById('page-result').classList.remove('active');
         userAnswers = [];
-        nextPanel('result-panel', 'home-panel');
+        currentPage = 0;
+        document.getElementById('page-0').classList.add('active');
     }
 </script>
 
