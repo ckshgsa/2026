@@ -32,12 +32,12 @@
             background-attachment: fixed;
             color: var(--text-main);
             margin: 0;
-            padding: 12px; /* 📱 縮小外邊距適應手機 */
+            padding: 16px;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            line-height: 1.4;
+            line-height: 1.5;
         }
 
         #quiz-container {
@@ -46,17 +46,16 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 10px 0;
+            padding: 20px 0;
         }
 
-        /* 📱 緊湊優化：縮減 Padding 與間距，防止手機畫面過長 */
         .container {
-            max-width: 440px;
+            max-width: 500px;
             width: 100%;
             background: var(--card-bg);
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.1);
-            padding: 20px 16px; /* 🌟 縮減上下內距 */
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+            padding: 30px 24px;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.5);
             backdrop-filter: blur(12px);
@@ -66,18 +65,18 @@
 
         h1 {
             color: #0f172a;
-            font-size: 21px;
+            font-size: 24px;
             font-weight: 900;
-            margin-top: 2px;
-            margin-bottom: 8px;
+            margin-top: 5px;
+            margin-bottom: 12px;
             letter-spacing: 0.5px;
         }
 
         .subtitle {
             color: var(--text-muted);
-            font-size: 13px;
-            line-height: 1.5;
-            margin-bottom: 18px;
+            font-size: 13.5px;
+            line-height: 1.6;
+            margin-bottom: 26px;
             text-align: justify;
         }
 
@@ -85,12 +84,31 @@
             display: none !important;
         }
 
-        /* ─── 🖼️ 圖片外框手機優化 ─── */
+        /* ─── ⌨️ 暱稱輸入框設計 ─── */
+        .name-input-box {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 16px;
+            font-weight: 600;
+            border: 2px solid #cbd5e1;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+            outline: none;
+            transition: all 0.2s;
+            background: #f8fafc;
+        }
+        .name-input-box:focus {
+            border-color: #4f46e5;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
         .image-box {
             width: 100%;
-            height: 140px; /* 🌟 縮小插圖高度，騰出垂直空間 */
-            border-radius: 12px;
-            margin-bottom: 16px;
+            height: 180px; 
+            border-radius: 16px;
+            margin-bottom: 24px;
             overflow: hidden;
             border: 1px solid rgba(226, 232, 240, 0.8);
             background: #f8fafc;
@@ -105,114 +123,184 @@
             object-fit: contain; 
         }
 
-        .name-input-box {
-            width: 100%;
-            padding: 11px 14px;
-            font-size: 15px;
-            font-weight: 600;
-            border: 2px solid #cbd5e1;
-            border-radius: 10px;
-            margin-bottom: 14px;
-            text-align: center;
-            outline: none;
-            background: #f8fafc;
-        }
-
-        /* ─── 🔙 上一頁頂部列 ─── */
+        /* ─── 🔙 上一頁功能頂部列 ─── */
         .quiz-top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
         .back-btn {
-            background: none; border: none; color: #4f46e5;
-            font-size: 13px; font-weight: 700; cursor: pointer;
-            padding: 4px 0; display: flex; align-items: center; gap: 4px;
+            background: none;
+            border: none;
+            color: #4f46e5;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 5px 0;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: opacity 0.2s;
             visibility: hidden;
         }
+        .back-btn:hover { opacity: 0.7; }
 
         .identity-container {
-            display: flex; flex-direction: column; gap: 10px;
-            margin: 10px 0; padding: 14px;
-            background: rgba(248, 250, 252, 0.6); border-radius: 14px; border: 2px dashed #cbd5e1;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 14px;
+            margin: 10px 0 10px 0;
+            padding: 20px 14px;
+            background: rgba(248, 250, 252, 0.6);
+            border-radius: 16px;
+            border: 2px dashed #cbd5e1;
         }
 
         .sticker-btn {
-            padding: 11px 20px; border: 2px solid #ffffff; border-radius: 10px;
-            font-weight: 800; font-size: 14.5px; cursor: pointer;
-            transition: all 0.2s ease; text-align: center;
+            padding: 12px 22px;
+            border: 2.5px solid #ffffff;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-block;
+            letter-spacing: 0.5px;
         }
-        .silver { background: linear-gradient(135deg, #f1f5f9, #cbd5e1); color: #334155; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .gold { background: linear-gradient(135deg, #fffbeb, #fef08a); color: #713f12; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .purple { background: linear-gradient(135deg, #f3e8ff, #e9d5ff); color: #5b21b6; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+
+        .silver { background: linear-gradient(135deg, #f1f5f9, #cbd5e1); color: #334155; transform: rotate(-2.5deg); box-shadow: 2px 3px 0px #94a3b8, 2px 5px 10px rgba(0,0,0,0.06); }
+        .gold { background: linear-gradient(135deg, #fffbeb, #fef08a); color: #713f12; transform: rotate(2deg); box-shadow: -2px 3px 0px #d97706, -2px 5px 10px rgba(0,0,0,0.06); }
+        .purple { background: linear-gradient(135deg, #f3e8ff, #e9d5ff); color: #5b21b6; transform: rotate(-1.5deg); box-shadow: 2px 2px 0px #7c3aed, 3px 4px 10px rgba(0,0,0,0.06); }
+
+        .sticker-btn:hover { transform: scale(1.06) rotate(0deg) translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); z-index: 10; }
+        .sticker-btn:active { transform: scale(0.98); }
 
         .question-title {
-            font-size: 17px; font-weight: 800; margin-bottom: 16px;
-            color: #0f172a; line-height: 1.4; text-align: left;
+            font-size: 19px;
+            font-weight: 800;
+            margin-top: 5px;
+            margin-bottom: 22px;
+            color: #0f172a;
+            line-height: 1.4;
+            text-align: left;
         }
 
-        .options-container { display: flex; flex-direction: column; gap: 10px; }
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
 
         .option-btn {
-            background: #f8fafc; border: 2px solid #edf2f7; padding: 14px 16px;
-            border-radius: 12px; text-align: left; font-size: 14.5px; font-weight: 600;
-            color: #334155; cursor: pointer; position: relative; line-height: 1.3;
+            background: #f8fafc;
+            border: 2px solid #edf2f7;
+            padding: 16px 20px;
+            border-radius: 14px;
+            text-align: left;
+            font-size: 15.5px;
+            font-weight: 600;
+            color: #334155;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            line-height: 1.4;
         }
+        .option-btn:hover { background: #f1f5f9; border-color: #cbd5e1; color: #0f172a; }
 
         .option-btn.selected::after {
-            content: '✓ 已貼上'; position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
-            background: var(--sticker-color); color: var(--sticker-text, #fff);
-            padding: 5px 10px; border-radius: 50px; font-size: 11px; font-weight: bold;
+            content: '✓ 已貼上';
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--sticker-color);
+            color: var(--sticker-text, #fff);
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: bold;
+            animation: stamp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
 
-        /* ─── 🏆 畢業結果卡片手機緊湊優化 ─── */
+        @keyframes stamp {
+            0% { transform: translateY(-50%) scale(3); opacity: 0; filter: blur(2px); }
+            100% { transform: translateY(-50%) scale(1); opacity: 1; filter: blur(0); }
+        }
+
+        /* ─── 🏆 檔案風格卡片 ─── */
         .profile-card {
-            background: #ffffff; border: 2px solid #0f172a; border-radius: 16px;
-            padding: 16px 14px; margin-top: 10px; text-align: left;
-            position: relative; box-shadow: 4px 4px 0px #0f172a;
+            background: #ffffff;
+            border: 2px solid #0f172a;
+            border-radius: 18px;
+            padding: 22px 20px;
+            margin-top: 15px;
+            text-align: left;
+            position: relative;
+            box-shadow: 6px 6px 0px #0f172a;
+            animation: fadeIn 0.4s ease-out;
         }
 
         .profile-header {
-            border-bottom: 2px dashed #cbd5e1; padding-bottom: 10px;
-            margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; gap: 10px;
+            border-bottom: 2px dashed #cbd5e1;
+            padding-bottom: 16px;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
         }
 
+        .profile-title-area { flex: 1; }
         .profile-avatar-box {
-            width: 64px; height: 64px; border-radius: 10px; border: 2px solid #0f172a;
-            overflow: hidden; background: #f8fafc; flex-shrink: 0; box-shadow: 1.5px 1.5px 0px #0f172a;
+            width: 80px; height: 80px; border-radius: 14px; border: 2px solid #0f172a;
+            overflow: hidden; background: #f8fafc; flex-shrink: 0; box-shadow: 2px 2px 0px #0f172a;
         }
         .profile-avatar-box img { width: 100%; height: 100%; object-fit: cover; }
-        .profile-badge { font-size: 10px; background: #0f172a; color: #fff; padding: 2px 8px; border-radius: 4px; font-weight: bold; margin-bottom: 4px; }
-        .profile-name { font-size: 18px; font-weight: 800; color: #0f172a; margin: 0; }
+        .profile-badge { font-size: 11px; background: #0f172a; color: #fff; padding: 3px 10px; border-radius: 6px; font-weight: bold; display: inline-block; margin-bottom: 6px; }
+        .profile-name { font-size: 21px; font-weight: 800; color: #0f172a; margin: 0; }
 
         .profile-meta {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px;
-            background: #f8fafc; padding: 10px; border-radius: 10px; margin-bottom: 12px; border: 1px solid #edf2f7;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 13px;
+            background: #f8fafc; padding: 14px; border-radius: 12px; margin-bottom: 18px; border: 1px solid #edf2f7;
         }
-        .meta-item { line-height: 1.4; }
-        .meta-label { font-weight: bold; color: #64748b; display: block; margin-bottom: 1px; }
+        .meta-item { line-height: 1.5; white-space: normal; word-break: break-all; }
+        .meta-label { font-weight: bold; color: #64748b; display: block; margin-bottom: 2px; }
         .meta-val { color: #334155; font-weight: 700; }
 
-        @media (max-width: 440px) { .profile-meta { grid-template-columns: 1fr; gap: 6px; } }
+        @media (max-width: 440px) { .profile-meta { grid-template-columns: 1fr; gap: 10px; } }
 
-        .profile-body { font-size: 13.5px; line-height: 1.6; color: #334155; text-align: justify; }
-        .profile-quote { background: #f1f5f9; border-left: 4px solid #475569; padding: 10px 12px; font-style: italic; font-weight: 700; margin-top: 12px; border-radius: 0 8px 8px 0; font-size: 13px; color: #1e293b; }
+        .profile-body { font-size: 14.5px; line-height: 1.7; color: #334155; text-align: justify; }
+        .profile-quote { background: #f1f5f9; border-left: 4px solid #475569; padding: 12px 16px; font-style: italic; font-weight: 700; margin-top: 18px; border-radius: 0 10px 10px 0; font-size: 14.5px; color: #1e293b; }
         
-        .tags-container { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
-        .trait-tag { font-size: 11px; padding: 3px 10px; border-radius: 50px; font-weight: bold; border: 1px solid #0f172a; box-shadow: 1px 1px 0px #0f172a; color: #0f172a; }
+        .tags-container { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+        .trait-tag { font-size: 12px; padding: 4px 12px; border-radius: 50px; font-weight: bold; border: 1px solid #0f172a; box-shadow: 1px 1px 0px #0f172a; color: #0f172a; }
 
-        .action-box { display: flex; flex-direction: column; gap: 10px; margin-top: 18px; }
-        .action-btn { border: none; padding: 12px 24px; border-radius: 10px; cursor: pointer; font-size: 14.5px; font-weight: bold; width: 100%; }
-        .export-btn { background: linear-gradient(45deg, #10b981, #059669); color: white; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.15); }
-        .restart-btn { background: #0f172a; color: white; }
+        /* 功能控制按鈕底座 */
+        .action-box {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 25px;
+        }
+        .action-btn {
+            border: none; padding: 14px 32px; border-radius: 12px; cursor: pointer;
+            font-size: 15px; font-weight: bold; width: 100%; transition: all 0.2s;
+        }
+        .export-btn { background: linear-gradient(45deg, #10b981, #059669); color: white; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2); }
+        .export-btn:hover { transform: translateY(-1px); filter: brightness(1.05); }
+        .restart-btn { background: #0f172a; color: white; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15); }
+        .restart-btn:hover { background: #1e293b; }
 
-        footer { margin-top: 20px; font-size: 10.5px; color: #94a3b8; font-weight: 500; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        footer { margin-top: 32px; font-size: 11px; color: #94a3b8; font-weight: 500; }
     </style>
 </head>
 <body>
 
     <div id="quiz-container">
+        
         <div class="container">
             
             <div id="start-page">
@@ -221,13 +309,13 @@
                     <img id="welcome-img" src="主視覺.jpeg" alt="建功心測主視覺">
                 </div>
                 <p class="subtitle">
-                    這個測驗是畢聯會為建功人設計的，快來看看你在建功動物城是什麼角色吧！希望大家可以透過一些小問題面對更真實的自己~~
+                    這個測驗是畢聯會為建功人設計的，準備好迎接即將到來的畢業典禮嗎！快來看看你在建功動物城是什麼角色吧！希望大家可以透過一些小問題面對更真實的自己~~
                 </p>
                 
-                <p style="font-size: 13.5px; font-weight: bold; color: #334155; margin-bottom: 6px;">填入你的畢業大名 / 暱稱：</p>
+                <p style="font-size: 14.5px; font-weight: bold; color: #334155; margin-bottom: 8px;">填入你的畢業大名 / 暱稱：</p>
                 <input type="text" id="user-name-input" class="name-input-box" placeholder="例如：萬年班長小明 (限8字)" maxlength="8">
 
-                <p style="font-size: 13.5px; font-weight: bold; color: #334155; margin-bottom: 5px;">撕下一張你的專屬貼紙身分：</p>
+                <p style="font-size: 14.5px; font-weight: bold; color: #334155; margin-bottom: 5px;">撕下一張你的專屬貼紙身分：</p>
                 <div class="identity-container">
                     <button class="sticker-btn silver" onclick="window.jgQuiz.selectIdentity('silver')">國中生</button>
                     <button class="sticker-btn gold" onclick="window.jgQuiz.selectIdentity('gold')">高中生</button>
@@ -238,7 +326,7 @@
             <div id="quiz-page" class="hidden">
                 <div class="quiz-top-bar">
                     <button id="back-btn" class="back-btn" onclick="window.jgQuiz.prevQuestion()">← 上一頁</button>
-                    <div id="progress" style="font-size: 11px; color: #94a3b8; font-weight: bold; letter-spacing: 0.5px;"></div>
+                    <div id="progress" style="font-size: 12px; color: #94a3b8; font-weight: bold; letter-spacing: 0.5px;"></div>
                 </div>
                 <div class="image-box">
                     <img id="quiz-img" src="" alt="問題插圖">
@@ -248,8 +336,10 @@
             </div>
 
             <div id="result-page" class="hidden">
-                <div id="result-header-text" style="font-size: 13px; font-weight: bold; color: #64748b; margin-bottom: 6px; text-align: left;"></div>
+                <div id="result-header-text" style="font-size: 13.5px; font-weight: bold; color: #64748b; margin-bottom: 8px; text-align: left;"></div>
+                
                 <div class="profile-card" id="profile-card-box"></div>
+                
                 <div class="action-box">
                     <button class="action-btn export-btn" onclick="window.jgQuiz.exportToImage()">📸 儲存鑑定報告 (JPEG檔案)</button>
                     <button class="action-btn restart-btn" onclick="window.jgQuiz.resetQuiz()">重新建檔 / 再測一次</button>
@@ -257,9 +347,11 @@
             </div>
 
             <footer>
-                新竹市立建功高級中學 X 2026建功畢聯會
+                新竹市立建功高級中學 X 2026建功畢聯會<br>
+                Hsinchu Municipal Chien Kang Senior High School
             </footer>
         </div>
+        
     </div>
 
 <script>
@@ -272,6 +364,7 @@
         { title: "面對未來的困難...", options: [{ text: "#放馬過來", score: "A" }, { text: "#放我一馬", score: "D" }] }
     ];
 
+    // 🌟 全域變數修復：把這個重要的資料庫放到 window 上，確保不管怎麼叫都絕對叫得到！
     window.quizResultsDatabase = {
         "A": { badge: "2026 頂峰執行者檔案", name: "蠻牛局長 × 風紀股長", characterName: "蠻牛局長", bg: "#fee2e2", meta: { code: "BOGO-BOSS-01", danger: "98%", place: "高三衝刺K書中心 / 糾察哨口", type: "鐵血行動派" }, traits: ["#放馬過來", "#想辦法捲死同學", "#氣場兩米八", "#高山流水遇知音"], desc: "你就是那個面對未知挑戰敢正面大喊「放馬過來」的絕對強者！在學校裡遇到競爭會瞬間激發滿滿的戰鬥力，實力上演捲死同學的戲碼。你目標明確、效率極高，擁有不可動搖的霸氣。畢業後絕對是社會上打破常規、開疆闢土的開路先鋒！", quote: "別擋路，我的目標只有頂峰。" },
         "B": { badge: "2026 活力夢想家檔案", name: "兔子茱蒂 × 體育股長", characterName: "兔子茱蒂", bg: "#fef9c3", meta: { code: "JUDY-SPORTS-26", danger: "15%", place: "操場跑道 / 體育器材室", type: "佛系熱血派" }, traits: ["#有來學校就很棒了", "#與周公約會", "#熱血滿點", "#元氣輸出"], desc: "你抱持著「有來學校就很棒了」的樂活達人態度，雖然昨晚可能還在跟周公進行深度約會，但點燃熱情的速度比誰都快！看似無害其實內心生命力爆棚。只要運動會或活動號角響起，你就是全班的動能核心！", quote: "生活要懂得放鬆，但好玩的事情我絕不缺席！" },
@@ -390,6 +483,7 @@
                 if (counts[score] > maxCount) { maxCount = counts[score]; maxScore = score; }
             });
 
+            // 🌟 修正：從穩定、公開的 window.quizResultsDatabase 中精確抓取結果
             const finalResult = window.quizResultsDatabase[maxScore];
             
             document.getElementById('result-header-text').innerText = `▸ 偵測 [${this.userName}] 的大數據精密 analysis：`;
@@ -422,14 +516,13 @@
                 <div class="profile-quote">
                     「${finalResult.quote}」
                 </div>
-                <div style="font-size:11px; font-weight:bold; color:#64748b; margin-top:10px; margin-bottom:5px;">▸ 偵測解鎖貼紙標籤：</div>
+                <div style="font-size:12px; font-weight:bold; color:#64748b; margin-top:15px; margin-bottom:6px;">▸ 偵測解鎖貼紙標籤：</div>
                 <div class="tags-container">
                     ${traitHtml}
                 </div>
             `;
         },
 
-        // 🌟 核心修正：大幅調深 Canvas 渲染色彩（高對比、鮮艷色調，防截圖過淡）
         exportToImage: function() {
             const targetNode = document.getElementById('profile-card-box');
             if(!targetNode) return;
@@ -437,32 +530,31 @@
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             
-            canvas.width = 540;
-            canvas.height = 760;
+            canvas.width = 500;
+            canvas.height = 700;
 
-            // 🎨 加深粉紫漸層背景，防止整體畫面發白
+            // 建立高畫質粉紫色漸層底色
             let gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-            gradient.addColorStop(0, "#fbcfe8"); // 🌟 加深粉色 (Pink 300)
-            gradient.addColorStop(1, "#e9d5ff"); // 🌟 加深紫色 (Purple 200)
+            gradient.addColorStop(0, "#fdf2f8"); 
+            gradient.addColorStop(1, "#f3e8ff"); 
             ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // 內層硬派純白實色卡片（厚重感底層）
+            // 卡片白框
             ctx.fillStyle = "#ffffff";
-            ctx.fillRect(25, 25, canvas.width - 50, canvas.height - 50);
-            ctx.lineWidth = 4; // 🌟 粗黑邊框
+            ctx.fillRect(20, 20, canvas.width - 40, canvas.height - 40);
+            ctx.lineWidth = 3;
             ctx.strokeStyle = "#0f172a";
-            ctx.strokeRect(25, 25, canvas.width - 50, canvas.height - 50);
+            ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
 
-            // 頂部大標題（使用最深黑色）
             ctx.fillStyle = "#0f172a";
-            ctx.font = "bold 22px sans-serif";
-            ctx.fillText(`⚡ ${this.userName} 的建功畢業生專屬檔案`, 50, 75);
+            ctx.font = "bold 20px sans-serif";
+            ctx.fillText(this.userName + " 的專屬報告檔案", 45, 65);
 
-            ctx.strokeStyle = "#94a3b8"; // 加深裁切虛線
-            ctx.lineWidth = 2.5;
-            ctx.setLineDash([8, 5]);
-            ctx.beginPath(); ctx.moveTo(50, 105); ctx.lineTo(490, 105); ctx.stroke();
+            ctx.strokeStyle = "#e2e8f0";
+            ctx.lineWidth = 2;
+            ctx.setLineDash([6, 4]);
+            ctx.beginPath(); ctx.moveTo(45, 95); ctx.lineTo(455, 95); ctx.stroke();
             ctx.setLineDash([]); 
 
             const pName = targetNode.querySelector('.profile-name')?.innerText || "";
@@ -470,28 +562,23 @@
             const pBody = targetNode.querySelector('.profile-body')?.innerText || "";
             const pQuote = targetNode.querySelector('.profile-quote')?.innerText || "";
 
-            // 徽章背景
-            ctx.fillStyle = "#1e293b";
-            ctx.fillRect(50, 130, 140, 24);
-            ctx.fillStyle = "#ffffff";
+            ctx.fillStyle = "#64748b";
             ctx.font = "bold 12px sans-serif";
-            ctx.fillText(pBadge.replace(" 檔案", ""), 60, 146);
+            ctx.fillText(pBadge, 45, 130);
             
-            // 角色大名
             ctx.fillStyle = "#0f172a";
-            ctx.font = "max(26px, sans-serif) bold";
-            ctx.font = "bold 28px sans-serif";
-            ctx.fillText(pName, 50, 195);
+            ctx.font = "bold 24px sans-serif";
+            ctx.fillText(pName, 45, 168);
 
-            // 資料網格底座：加深底色為輕微水泥灰
-            ctx.fillStyle = "#f1f5f9"; 
-            ctx.fillRect(50, 220, 440, 115);
+            // 基本資料表格
+            ctx.fillStyle = "#f8fafc";
+            ctx.fillRect(45, 195, 410, 110);
             ctx.strokeStyle = "#0f172a";
-            ctx.lineWidth = 2.5; // 🌟 框線加粗
-            ctx.strokeRect(50, 220, 440, 115);
+            ctx.lineWidth = 1.5;
+            ctx.strokeRect(45, 195, 410, 110);
 
-            ctx.fillStyle = "#1e293b"; // 🌟 文字全面改為極深灰
-            ctx.font = "bold 14px sans-serif";
+            ctx.fillStyle = "#4a5568";
+            ctx.font = "bold 13px sans-serif";
             
             const metaVals = targetNode.querySelectorAll('.meta-val');
             const val1 = metaVals[0]?.innerText || "";
@@ -499,20 +586,20 @@
             const val3 = metaVals[2]?.innerText || "";
             const val4 = metaVals[3]?.innerText || "";
 
-            ctx.fillText("📌 安全編號：" + val1, 65, 255);
-            ctx.fillText("💀 危險系數：" + val3, 65, 295);
-            ctx.fillText("🧬 特質歸屬：" + val2, 260, 255);
+            ctx.fillText("安全編號：" + val1, 60, 225);
+            ctx.fillText("危險系數：" + val3, 60, 255);
+            ctx.fillText("特質歸屬：" + val2, 60, 285);
             
-            // 處理出沒換行
-            ctx.fillText("📍 主要出沒：", 260, 295);
-            let pWord1 = val4.substring(0, 8);
-            let pWord2 = val4.substring(8);
-            ctx.fillText(pWord1, 345, 295);
-            if(pWord2) { ctx.fillText(pWord2, 345, 315); }
+            ctx.fillText("主要出沒：", 240, 225);
+            ctx.fillStyle = "#0f172a";
+            let placeWord1 = val4.substring(0, 10);
+            let placeWord2 = val4.substring(10);
+            ctx.fillText(placeWord1, 310, 225);
+            if(placeWord2) { ctx.fillText(placeWord2, 310, 245); }
 
-            // 本文描述（加粗、加深）
-            ctx.fillStyle = "#0f172a"; // 🌟 純黑字體，杜絕過淡問題
-            ctx.font = "bold 15.5px sans-serif"; // 🌟 微加粗字體
+            // 描述本文
+            ctx.fillStyle = "#1e293b";
+            ctx.font = "14px sans-serif";
             
             function wrapCanvasText(context, text, x, y, maxWidth, lineHeight) {
                 let chunks = text.split('');
@@ -528,35 +615,29 @@
                 context.fillText(currentLine, x, y);
                 return y;
             }
-            let textEndY = wrapCanvasText(ctx, pBody, 50, 375, 435, 25);
+            let textEndY = wrapCanvasText(ctx, pBody, 45, 345, 400, 24);
 
-            // 語錄對話框底座（加深灰色底）
-            ctx.fillStyle = "#e2e8f0";
-            ctx.fillRect(50, textEndY + 20, 440, 48);
+            // 引言區
+            ctx.fillStyle = "#f1f5f9";
+            ctx.fillRect(45, textEndY + 20, 410, 45);
             ctx.fillStyle = "#0f172a";
-            ctx.font = "italic bold 15px sans-serif"; // 🌟 字體加粗
-            ctx.fillText(pQuote, 65, textEndY + 49);
+            ctx.font = "italic bold 13.5px sans-serif";
+            ctx.fillText(pQuote, 60, textEndY + 47);
 
-            // 標籤貼紙效果模擬
-            ctx.fillStyle = "#cbd5e1";
-            ctx.font = "bold 12px sans-serif";
-            ctx.fillText("▸ 解鎖貼紙：", 50, textEndY + 95);
-            
-            // 浮水印章（調深顏色）
-            ctx.strokeStyle = "rgba(15, 23, 42, 0.25)"; // 🌟 提高印章透明度到 0.25
-            ctx.lineWidth = 3.5;
-            ctx.beginPath(); ctx.arc(440, textEndY + 120, 32, 0, 2 * Math.PI); ctx.stroke();
-            ctx.fillStyle = "rgba(15, 23, 42, 0.25)";
+            // 印章
+            ctx.strokeStyle = "rgba(15,23,42,0.1)";
+            ctx.lineWidth = 3;
+            ctx.beginPath(); ctx.arc(400, 620, 32, 0, 2 * Math.PI); ctx.stroke();
+            ctx.fillStyle = "rgba(15,23,42,0.1)";
             ctx.font = "bold 10px sans-serif";
-            ctx.fillText("PASSED", 421, textEndY + 124);
+            ctx.fillText("PASSED", 382, 624);
 
             // 頁尾
-            ctx.fillStyle = "#64748b";
-            ctx.font = "bold 11px sans-serif";
-            ctx.fillText("新竹市立建功高級中學 X 2026建功畢聯會 認證存檔", 50, 720);
+            ctx.fillStyle = "#94a3b8";
+            ctx.font = "10px sans-serif";
+            ctx.fillText("新竹市立建功高級中學 X 2026建功畢聯會", 45, 665);
 
-            // 下載
-            const dataURL = canvas.toDataURL('image/jpeg', 1.0); // 🌟 畫質拉滿到 1.0 最高畫質
+            const dataURL = canvas.toDataURL('image/jpeg', 0.95);
             const downloadLink = document.createElement('a');
             downloadLink.href = dataURL;
             downloadLink.download = `${this.userName}_建功畢業鑑定報告.jpg`;
