@@ -8,9 +8,8 @@
     <style>
         :root {
             --primary-color: #4a5568;
-            --bg-color: #f3f4f6;
-            --card-bg: #ffffff;
-            --sticker-color: rgba(203, 213, 224, 0.4); /* 調整為半透明 */
+            --card-bg: #ffffff; /* 修正：改回純白不透明底色，徹底解決背景吃字與覆蓋內容的問題 */
+            --sticker-color: rgba(203, 213, 224, 0.4);
         }
         
         * {
@@ -19,15 +18,19 @@
 
         body {
             font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
-            background-color: var(--bg-color);
-            color: #2d3748;
             margin: 0;
             padding: 15px;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            min-height: 100dvh; /* 2. 行動裝置視覺高度優化 */
+            
+            /* 背景圖片設定 */
+            background-image: url('背景.jpeg');
+            background-size: cover;         
+            background-position: center;     
+            background-repeat: no-repeat;    
+            background-attachment: fixed;    
         }
 
         .container {
@@ -35,11 +38,15 @@
             width: 100%;
             background: var(--card-bg);
             border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2); /* 加深陰影，讓白色卡片在背景前層次更分明 */
             padding: 30px;
             box-sizing: border-box;
             text-align: center;
-            border: 1px solid #e5e7eb;
+            border: 1px solid rgba(229, 231, 235, 0.8);
+            
+            /* 修正關鍵：設定定位與 z-index，強迫整個內容容器浮在背景的最上層 */
+            position: relative;
+            z-index: 10;
         }
 
         h1 {
@@ -47,6 +54,8 @@
             font-size: 26px;
             margin-bottom: 12px;
             letter-spacing: 1px;
+            position: relative;
+            z-index: 12;
         }
 
         /* 引言字維持清晰的深黑色 */
@@ -58,6 +67,8 @@
             text-align: justify;
             padding: 0 10px;
             font-weight: 500;
+            position: relative;
+            z-index: 12;
         }
 
         .hidden {
@@ -77,6 +88,7 @@
             justify-content: center;
             align-items: center;
             position: relative;
+            z-index: 11;
         }
 
         .image-box img {
@@ -86,7 +98,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            z-index: 2;
+            z-index: 5;
         }
 
         /* 內嵌備用 SVG 容器 */
@@ -96,7 +108,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            z-index: 1;
+            z-index: 2;
         }
 
         /* ─── 📝 姓名輸入框設計 ─── */
@@ -113,6 +125,8 @@
             transition: all 0.3s ease;
             text-align: center;
             font-weight: bold;
+            position: relative;
+            z-index: 12;
         }
         .name-input:focus {
             border-color: #4a5568;
@@ -122,7 +136,7 @@
             color: #a0aec0;
         }
 
-        /* ─── 擬真貼紙排版區域 ─── */
+        /* ─── 貼紙排版區域 ─── */
         .identity-container {
             display: flex;
             flex-wrap: wrap;
@@ -130,12 +144,14 @@
             gap: 16px;
             margin: 15px 0 25px 0;
             padding: 20px;
-            background: #fafafa;
+            background: #f8fafc; /* 修正：這裡也改用純色背景，避免透明度交疊出錯 */
             border-radius: 16px;
-            border: 2px dashed #e2e8f0;
+            border: 2px dashed #cbd5e1;
+            position: relative;
+            z-index: 12;
         }
 
-        /* 修正：加回半透明果凍質感與立體陰影 */
+        /* 貼紙按鈕 */
         .sticker-btn {
             padding: 14px 24px;
             border: 2px solid rgba(255, 255, 255, 0.8);
@@ -147,23 +163,23 @@
             display: inline-block;
             letter-spacing: 0.5px;
             position: relative;
-            backdrop-filter: blur(2px);
+            z-index: 13;
         }
 
         .silver { 
-            background: linear-gradient(135deg, rgba(226, 232, 240, 0.8), rgba(203, 213, 224, 0.8));
+            background: linear-gradient(135deg, #e2e8f0, #cbd5e1); 
             color: #4a5568; 
             transform: rotate(-3deg);
             box-shadow: 2px 3px 0px #94a3b8, 4px 6px 10px rgba(0,0,0,0.08);
         }
         .gold { 
-            background: linear-gradient(135deg, rgba(254, 226, 226, 0.85), rgba(254, 240, 138, 0.85));
+            background: linear-gradient(135deg, #fee2e2, #fef08a); 
             color: #713f12; 
             transform: rotate(2deg);
             box-shadow: -2px 3px 0px #ca8a04, -4px 6px 10px rgba(0,0,0,0.08);
         }
         .purple { 
-            background: linear-gradient(135deg, rgba(224, 242, 254, 0.8), rgba(233, 213, 255, 0.8));
+            background: linear-gradient(135deg, #e0f2fe, #e9d5ff); 
             color: #5b21b6; 
             transform: rotate(-1.5deg);
             box-shadow: 3px 2px 0px #7c3aed, 5px 5px 10px rgba(0,0,0,0.08);
@@ -172,11 +188,13 @@
         .sticker-btn:hover {
             transform: scale(1.05) rotate(0deg);
             box-shadow: 0 8px 16px rgba(0,0,0,0.12);
-            z-index: 10;
+            z-index: 20;
         }
 
         #quiz-page {
             padding: 10px 0;
+            position: relative;
+            z-index: 12;
         }
 
         .quiz-header {
@@ -235,6 +253,7 @@
             cursor: pointer;
             transition: all 0.2s;
             position: relative;
+            z-index: 12;
         }
 
         .option-btn:hover {
@@ -254,15 +273,13 @@
             border-radius: 20px;
             font-size: 13px;
             font-weight: bold;
-            backdrop-filter: blur(2px);
+            z-index: 15;
             animation: stamp 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
 
         @keyframes stamp {
-            0% { transform: translateY(-50%) scale(2.5);
-            opacity: 0; }
-            100% { transform: translateY(-50%) scale(1);
-            opacity: 1; }
+            0% { transform: translateY(-50%) scale(2.5); opacity: 0; }
+            100% { transform: translateY(-50%) scale(1); opacity: 1; }
         }
 
         /* ─── 🏆 PDF 擷取目標範圍 ─── */
@@ -270,6 +287,8 @@
             background: #ffffff;
             padding: 12px;
             border-radius: 16px;
+            position: relative;
+            z-index: 12;
         }
 
         /* 人物檔案風格卡片 */
@@ -283,6 +302,7 @@
             box-shadow: 5px 5px 0px #1e293b;
             animation: fadeIn 0.4s ease-out;
             color: #1e293b !important;
+            z-index: 13;
         }
 
         .profile-header {
@@ -312,6 +332,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            z-index: 14;
         }
 
         .profile-avatar-box img {
@@ -321,7 +342,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            z-index: 3;
+            z-index: 5;
         }
 
         .profile-avatar-box .avatar-svg-fallback {
@@ -415,6 +436,8 @@
             gap: 14px;
             margin-top: 30px;
             width: 100%;
+            position: relative;
+            z-index: 12;
         }
 
         .action-btn {
@@ -434,7 +457,7 @@
             border: 2px solid #1e293b;
         }
         .restart-btn:hover { 
-            background: #f1f5f9;
+            background: #f1f5f9; 
         }
 
         .pdf-btn {
@@ -443,21 +466,22 @@
             border: none;
         }
         .pdf-btn:hover { 
-            background: #0f172a;
+            background: #0f172a; 
         }
 
         @keyframes fadeIn {
-            from { opacity: 0;
-            transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         footer {
             margin-top: 35px;
             font-size: 11.5px;
-            color: #94a3b8;
+            color: #334155; /* 修正：將頁尾改為較深的深灰色，確保在亮色背景圖上文字清晰可見 */
+            font-weight: bold;
             line-height: 1.6;
+            position: relative;
+            z-index: 12;
         }
     </style>
     
@@ -471,6 +495,7 @@
                 const qNum = index + 1;
                 imgTag.style.display = 'block';
                 imgTag.src = `問題${qNum}.png`;
+                
                 imgTag.onerror = function() {
                     this.onerror = function() {
                         this.onerror = function() { 
@@ -491,8 +516,7 @@
                 imgTag.src = '主視覺.jpeg';
                 imgTag.onerror = function() {
                     this.onerror = function() { 
-                        this.onerror = function() { this.style.display = 'none';
-                        };
+                        this.onerror = function() { this.style.display = 'none'; };
                         this.src = '主視覺.png'; 
                     };
                     this.src = '主視覺.jpg';
@@ -603,22 +627,19 @@
                     return;
                 }
                 this.userName = nameInput.value.trim();
+
                 const root = document.documentElement;
                 let textColor = '#fff';
                 
-                // 設定點擊選項後的半透明章效果底色與字體色
-                if (type === 'silver') { root.style.setProperty('--sticker-color', 'rgba(203, 213, 224, 0.7)'); textColor = '#4a5568'; }
-                else if (type === 'gold') { root.style.setProperty('--sticker-color', 'rgba(236, 201, 75, 0.7)'); textColor = '#744210'; }
-                else if (type === 'purple') { root.style.setProperty('--sticker-color', 'rgba(159, 122, 234, 0.7)'); textColor = '#ffffff'; }
+                if (type === 'silver') { root.style.setProperty('--sticker-color', 'rgba(148, 163, 184, 0.9)'); textColor = '#4a5568'; }
+                else if (type === 'gold') { root.style.setProperty('--sticker-color', 'rgba(234, 179, 8, 0.9)'); textColor = '#744210'; }
+                else if (type === 'purple') { root.style.setProperty('--sticker-color', 'rgba(168, 85, 247, 0.9)'); textColor = '#ffffff'; }
                 
                 root.style.setProperty('--sticker-text', textColor);
-                
-                // 5. 貼紙 UX 優化：延遲 300 毫秒跳轉，讓使用者有視覺回饋
-                setTimeout(() => {
-                    document.getElementById('start-page').className = 'hidden';
-                    document.getElementById('quiz-page').className = '';
-                    this.showQuestion();
-                }, 300);
+
+                document.getElementById('start-page').className = 'hidden';
+                document.getElementById('quiz-page').className = '';
+                this.showQuestion();
             },
 
             showQuestion: function() {
@@ -639,6 +660,7 @@
                 }
 
                 ImageEngine.setQuestionImage(this.currentQuestionIndex);
+
                 const optionsBox = document.getElementById('options-box');
                 optionsBox.innerHTML = '';
 
@@ -666,9 +688,10 @@
 
                 this.selectedScores.push(score);
                 this.currentQuestionIndex++;
+
                 setTimeout(() => {
                     this.showQuestion();
-                }, 400);
+                }, 400); 
             },
 
             showResult: function() {
@@ -678,6 +701,7 @@
                 const counts = {};
                 let maxScore = "B";
                 let maxCount = 0;
+
                 this.selectedScores.forEach(score => {
                     counts[score] = (counts[score] || 0) + 1;
                     if (counts[score] > maxCount) {
@@ -685,6 +709,7 @@
                         maxScore = score;
                     }
                 });
+
                 const finalResult = this.results[maxScore];
                 const cardBox = document.getElementById('profile-card-box');
                 
@@ -692,6 +717,7 @@
                 finalResult.traits.forEach(t => {
                     traitHtml += `<span class="trait-tag" style="background:${finalResult.bg}">${t}</span>`;
                 });
+
                 cardBox.innerHTML = `
                     <div class="profile-header">
                         <div class="profile-title-area">
@@ -743,13 +769,12 @@
             },
 
             exportPDF: function() {
-                const element = document.getElementById('export-area');
+                const element = document.getElementById('export-area'); 
                 const opt = {
                     margin:       15,
                     filename:     `${this.userName}_建功畢業生專屬檔案.pdf`,
                     image:        { type: 'jpeg', quality: 0.98 },
-                    // 3. PDF 匯出防呆與解析度強化
-                    html2canvas:  { scale: 3, useCORS: true, letterRendering: true, windowWidth: 800, logging: false },
+                    html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
                     jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
                 };
                 html2pdf().set(opt).from(element).save();
@@ -769,25 +794,6 @@
 
         window.onload = function() {
             ImageEngine.setWelcomeImage();
-            
-            // 4. 資源路徑圖片預載 (Preload)，防止切題白畫面
-            const preloadImages = [
-                '主視覺.jpeg', '主視覺.png', '主視覺.jpg',
-                '問題1.png', '問題1.jpg', '問題1.jpeg',
-                '問題2.png', '問題2.jpg', '問題2.jpeg',
-                '問題3.png', '問題3.jpg', '問題3.jpeg',
-                '問題4.png', '問題4.jpg', '問題4.jpeg',
-                '問題5.png', '問題5.jpg', '問題5.jpeg',
-                '蠻牛局長.jpeg', '蠻牛局長.png', '蠻牛局長.jpg',
-                '兔子茱蒂.jpeg', '兔子茱蒂.png', '兔子茱蒂.jpg',
-                '狐狸尼克.jpeg', '狐狸尼克.png', '狐狸尼克.jpg',
-                '樹懶快俠.jpeg', '樹懶快俠.png', '樹懶快俠.jpg'
-            ];
-            
-            preloadImages.forEach(src => {
-                const img = new Image();
-                img.src = src;
-            });
         };
     </script>
 </head>
@@ -828,7 +834,7 @@
     </div>
 
     <div id="result-page" class="hidden">
-        <div style="font-size: 14px; font-weight: bold; color: #64748b; margin-bottom: 8px; text-align: left;">▸ 畢聯會大數據精密 analysis：</div>
+        <div style="font-size: 14px; font-weight: bold; color: #475569; margin-bottom: 8px; text-align: left;">▸ 畢聯會大數據精密分析：</div>
         
         <div id="export-area">
             <div class="profile-card" id="profile-card-box"></div>
