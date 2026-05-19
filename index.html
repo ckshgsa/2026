@@ -3,309 +3,662 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zootopia 心靈鑑定特區</title>
+    <title>2026 建功人請回答！！畢業限定心理測驗</title>
     <style>
         /* ==============================
-           🎨 核心樣式：滿版自訂背景與玻璃擬態 (手機優化)
+           🎨 全域設計系統與現代配色
            ============================== */
         :root {
-            --color-primary: #3498db;   /* 哈茱蒂藍 */
-            --color-secondary: #e67e22; /* 胡尼克橘 */
-            --color-dark: #2c3e50;      /* 深色文字 */
-        }
-
-        * { 
-            box-sizing: border-box; 
-            font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif; 
+            --primary-color: #4a5568;
+            --bg-color: #f1f5f9; /* 柔和舒適的紀念牆底色 */
+            --card-bg: #ffffff;
+            --sticker-color: #cbd5e0;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
         }
         
-        body {
-            margin: 0; 
-            padding: 0;
-            background-color: #1a1a1a; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center;
-            min-height: 100vh;
-            overflow-x: hidden; 
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent; /* 消除手機點擊陰影 */
         }
 
-        /* 🌆 全螢幕背景：直接讀取你上傳的 背景.jpeg */
-        #quiz-container {
-            width: 100vw;
-            height: 100vh;
-            background-image: url('背景.jpeg'); 
-            background-size: cover;      /* 完美填滿螢幕不留白 */
-            background-position: center;  /* 居中對齊 */
-            background-repeat: no-repeat;
-            position: fixed;
-            top: 0; left: 0;
+        body {
+            font-family: 'PingFang TC', 'SF Pro TC', 'Microsoft JhengHei', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 16px;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            min-height: 100vh;
+            line-height: 1.5;
         }
 
-        /* 🔮 磨砂玻璃卡片（讓你的背景圖能隱約透出來） */
-        .card {
+        /* 記憶板主容器 */
+        .container {
+            max-width: 500px;
             width: 100%;
-            max-width: 420px;
-            background: rgba(255, 255, 255, 0.25); 
-            border-radius: 28px;
-            padding: 30px 24px;
-            border: 1px solid rgba(255, 255, 255, 0.4); 
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            background: var(--card-bg);
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.06);
+            padding: 28px 24px;
             text-align: center;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            position: relative;
         }
 
-        /* 🖼️ 你自己畫的每題插圖顯示區域 */
-        .quiz-img {
+        h1 {
+            color: #0f172a;
+            font-size: 24px;
+            font-weight: 900;
+            margin-top: 5px;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* ─── 🖼️ 插圖容器優化 ─── */
+        .welcome-illustration, .scene-illustration {
             width: 100%;
-            height: 200px;
-            object-fit: contain; /* 完整顯示你的畫作，不裁剪擠壓 */
+            height: 160px;
             border-radius: 16px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #edf2f7;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
         }
 
-        /* 🔄 頁面淡入翻頁動畫 */
-        .page { display: none; animation: fadeIn 0.4s ease-in-out forwards; }
-        .page.active { display: block; }
+        .welcome-illustration {
+            background: linear-gradient(135deg, #e0f2fe, #f0fdf4);
+        }
+
+        .scene-illustration {
+            background: #ffffff;
+            animation: fadeIn 0.35s ease-out;
+        }
+
+        /* ─── 🏷️ 身分貼紙按鈕區 ─── */
+        .identity-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .sticker-btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 14px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+            text-align: center;
+            position: relative;
+        }
+
+        .sticker-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+        }
+
+        .sticker-btn:active {
+            transform: translateY(0);
+        }
+
+        .silver { background: linear-gradient(135deg, #f1f5f9, #cbd5e1); color: #334155; border: 1px solid #cbd5e1; }
+        .gold { background: linear-gradient(135deg, #fef08a, #eab308); color: #713f12; border: 1px solid #eab308; }
+        .purple { background: linear-gradient(135deg, #e9d5ff, #a855f7); color: #ffffff; }
+
+        /* ─── 🖊️ 題目區與互動選項 ─── */
+        .question-title {
+            font-size: 19px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            color: #0f172a;
+            line-height: 1.4;
+            text-align: left;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            background: #f8fafc;
+            border: 2px solid #f1f5f9;
+            padding: 16px 20px;
+            border-radius: 14px;
+            text-align: left;
+            font-size: 15px;
+            font-weight: 600;
+            color: #334155;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            line-height: 1.4;
+        }
+
+        .option-btn:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+            color: #0f172a;
+        }
+
+        /* 已選取貼紙蓋章特效 */
+        .option-btn.selected::after {
+            content: '✓ 已貼上';
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--sticker-color);
+            color: var(--sticker-text, #fff);
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: bold;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            animation: stamp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes stamp {
+            0% { transform: translateY(-50%) scale(3); opacity: 0; filter: blur(2px); }
+            100% { transform: translateY(-50%) scale(1); opacity: 1; filter: blur(0); }
+        }
+
+        /* ─── 🏆 畢業結果頁面排版 ─── */
+        .result-card {
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .profile-card {
+            background: #ffffff;
+            border: 2px solid #0f172a;
+            border-radius: 18px;
+            padding: 22px 20px;
+            margin-top: 15px;
+            text-align: left;
+            position: relative;
+            box-shadow: 6px 6px 0px #0f172a;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border-bottom: 2px dashed #e2e8f0;
+            padding-bottom: 16px;
+            margin-bottom: 16px;
+        }
+
+        .profile-avatar {
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2.5px solid #0f172a;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .profile-title-block {
+            flex-grow: 1;
+        }
+
+        .profile-badge {
+            font-size: 11px;
+            background: #0f172a;
+            color: #ffffff;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        .profile-name {
+            font-size: 21px;
+            font-weight: 800;
+            color: #0f172a;
+            margin: 0;
+        }
+
+        .profile-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            font-size: 13px;
+            background: #f8fafc;
+            padding: 14px;
+            border-radius: 12px;
+            margin-bottom: 18px;
+            border: 1px solid #edf2f7;
+        }
+
+        .meta-item {
+            line-height: 1.5;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .meta-label {
+            font-weight: bold;
+            color: #64748b;
+        }
+
+        .meta-val {
+            color: #334155;
+            font-weight: 700;
+        }
+
+        .profile-body {
+            font-size: 14.5px;
+            line-height: 1.7;
+            color: #334155;
+            text-align: justify;
+        }
+
+        .profile-quote {
+            background: #f1f5f9;
+            border-left: 4px solid #475569;
+            padding: 12px 16px;
+            font-style: italic;
+            font-weight: 700;
+            margin-top: 18px;
+            border-radius: 0 10px 10px 0;
+            color: #1e293b;
+        }
+
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 12px;
+        }
+
+        .trait-tag {
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-weight: bold;
+            border: 1px solid #0f172a;
+            box-shadow: 1px 1px 0px #0f172a;
+        }
+
+        .restart-btn {
+            background: #0f172a;
+            color: #ffffff;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            margin-top: 28px;
+            width: 100%; /* 手機上滿版更好點擊 */
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+            transition: all 0.2s;
+        }
+
+        .restart-btn:hover { 
+            background: #1e293b; 
+            transform: translateY(-1px);
+        }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
+            from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 文字樣式 */
-        .main-title { font-size: 2.8rem; font-weight: 900; color: #ffffff; margin: 10px 0 5px 0; letter-spacing: 3px; text-shadow: 0 2px 8px rgba(0,0,0,0.3); }
-        .subtitle { font-size: 1.1rem; color: rgba(255,255,255,0.95); margin-bottom: 30px; font-weight: bold; text-shadow: 0 1px 4px rgba(0,0,0,0.3); }
-        
-        /* 按鈕樣式 */
-        .start-btn {
-            width: 100%; 
-            padding: 16px;
-            background: linear-gradient(45deg, var(--color-primary), #2980b9);
-            color: white; border: none; border-radius: 50px;
-            font-size: 1.3rem; font-weight: bold; cursor: pointer;
-            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
-            transition: 0.2s;
+        footer {
+            margin-top: 32px;
+            font-size: 11px;
+            color: #94a3b8;
+            line-height: 1.6;
+            font-weight: 500;
         }
-        .start-btn:hover { transform: scale(1.02); }
-
-        /* 📊 手機進度條 */
-        .progress-container {
-            width: 100%; height: 6px; background: rgba(255,255,255,0.3);
-            border-radius: 3px; margin-bottom: 25px; overflow: hidden;
-        }
-        .progress-bar {
-            height: 100%; width: 0%;
-            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
-            transition: width 0.3s ease;
-        }
-
-        /* 題目與選項 */
-        .question-text { font-size: 1.25rem; font-weight: bold; color: #ffffff; margin-bottom: 25px; text-align: left; line-height: 1.5; text-shadow: 0 1px 4px rgba(0,0,0,0.3); }
-        
-        .option-btn {
-            display: block; width: 100%; text-align: left;
-            padding: 15px 18px; margin-bottom: 12px;
-            background: rgba(255, 255, 255, 0.88); /* 高白底確保文字在任何背景下都好讀 */
-            border: 1px solid rgba(255,255,255,0.5); border-radius: 14px;
-            font-size: 1rem; cursor: pointer; transition: all 0.2s ease;
-            color: #2c3e50; font-weight: bold; line-height: 1.4;
-        }
-        .option-btn:hover {
-            background: #ffffff;
-            border-color: var(--color-primary);
-            color: #1d4ed8; transform: scale(1.01);
-        }
-
-        /* 結果頁面 */
-        .result-header { font-size: 1.1rem; color: rgba(255,255,255,0.95); font-weight: bold; }
-        .result-title { font-size: 2.2rem; font-weight: 900; color: #ffd32a; margin: 10px 0 15px 0; text-shadow: 0 2px 6px rgba(0,0,0,0.3); }
-        .result-desc { text-align: left; line-height: 1.7; background: rgba(255, 255, 255, 0.92); padding: 18px; border-left: 5px solid var(--color-secondary); border-radius: 8px; margin-bottom: 25px; font-size: 0.95rem; color: #2c3e50; font-weight: 500; }
-        
-        .retry-btn {
-            width: 100%; padding: 14px; background: rgba(0,0,0,0.4); color: white;
-            border: 1px solid rgba(255,255,255,0.3); border-radius: 50px; cursor: pointer; font-size: 1.1rem; font-weight: bold;
-            backdrop-filter: blur(5px);
-        }
-        .retry-btn:hover { background: rgba(0,0,0,0.6); }
     </style>
 </head>
 <body>
 
-<div id="quiz-container">
-    <div class="card">
-
-        <div id="page-0" class="page active">
-            <img class="quiz-img" src="welcome.png" onerror="this.style.display='none'" alt="首頁圖">
-            <h1 class="main-title">ZOOTOPIA</h1>
-            <p class="subtitle">動物本性鑑定特區 ・ 測出你是誰？</p>
-            <button class="start-btn" onclick="nextPage(1)">開始鑑定 🐾</button>
+<div class="container">
+    <div id="start-page">
+        <h1>2026 建功人請回答！！</h1>
+        <div class="welcome-illustration">
+            <svg viewBox="0 0 200 100" width="100%" height="100%">
+                <defs>
+                    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#bae6fd"/>
+                        <stop offset="100%" stop-color="#f0fdf4"/>
+                    </linearGradient>
+                </defs>
+                <rect width="200" height="100" fill="url(#sky)" rx="12"/>
+                <path d="M 0,85 L 200,85" stroke="#cbd5e1" stroke-width="4"/>
+                <rect x="20" y="45" width="40" height="40" fill="#cbd5e0" rx="2"/>
+                <rect x="32" y="55" width="16" height="30" fill="#94a3b8"/>
+                <circle cx="150" cy="40" r="12" fill="#f87171" opacity="0.8"/>
+                <circle cx="162" cy="48" r="10" fill="#fbbf24" opacity="0.8"/>
+                <circle cx="142" cy="52" r="11" fill="#60a5fa" opacity="0.8"/>
+                <path d="M150,52 Q152,70 155,85 M162,58 Q160,72 157,85 M142,63 Q146,75 154,85" stroke="#94a3b8" stroke-width="1" fill="none"/>
+                <path d="M 90,30 L 105,25 L 120,30 L 105,35 Z" fill="#1e293b"/>
+                <rect x="101" y="32" width="8" height="6" fill="#1e293b"/>
+                <path d="M 109,35 Q 114,42 115,46" stroke="#fbbf24" stroke-width="1" fill="none"/>
+            </svg>
         </div>
-
-        <div id="progress-section" style="display: none;">
-            <div class="progress-container"><div class="progress-bar" id="bar"></div></div>
+        <p class="subtitle">
+            這面牆是畢聯會為建功人設計的互動板，準備迎接即將到來的畢業典禮。以下問題請各位如實回答，不計分也無獎喔，希望大家可以透過這面牆面對更真實的自己~~
+        </p>
+        <p style="font-size: 14.5px; font-weight: bold; color: #334155; margin-bottom: 16px;">請先選取你的貼紙身份：</p>
+        <div class="identity-container">
+            <button class="sticker-btn silver" onclick="window.jgQuiz.selectIdentity('silver')">銀色貼紙：國中生</button>
+            <button class="sticker-btn gold" onclick="window.jgQuiz.selectIdentity('gold')">金色貼紙：高中生</button>
+            <button class="sticker-btn purple" onclick="window.jgQuiz.selectIdentity('purple')">家長及外賓</button>
         </div>
-
-        <div id="page-1" class="page">
-            <img class="quiz-img" src="q1.png" onerror="this.style.display='none'" alt="第一題插圖">
-            <div class="question-text">1. 終於到了週末，你通常會怎麼安排你的休息時間？</div>
-            <button class="option-btn" onclick="selectAnswer('A')">A. 安排滿滿計畫！去戶外運動、探索新地點。</button>
-            <button class="option-btn" onclick="selectAnswer('B')">B. 在街頭商圈閒晃，發掘有趣事物與隱藏美食。</button>
-            <button class="option-btn" onclick="selectAnswer('C')">C. 待在舒適室內，準備滿滿零食，追愛豆或影集。</button>
-            <button class="option-btn" onclick="selectAnswer('D')">D. 處理未完成事項或整理房間，保持一切井然有序。</button>
-            <button class="option-btn" onclick="selectAnswer('E')">E. 睡到自然醒，然後慢⋯慢⋯享⋯受⋯早⋯餐⋯</button>
-        </div>
-
-        <div id="page-2" class="page">
-            <img class="quiz-img" src="q2.png" onerror="this.style.display='none'" alt="第二題插圖">
-            <div class="question-text">2. 當遇到一個看起來「不可能解決」的難題時，你的第一反應是？</div>
-            <button class="option-btn" onclick="selectAnswer('A')">A. 燃起鬥志！絕對不放棄，想盡辦法證明自己能做到。</button>
-            <button class="option-btn" onclick="selectAnswer('B')">B. 轉個彎思考，找個聰明（甚至有點取巧）的捷徑搞定它。</button>
-            <button class="option-btn" onclick="selectAnswer('C')">C. 感到有點焦慮，先找朋友訴苦，或者吃個甜點壓驚。</button>
-            <button class="option-btn" onclick="selectAnswer('D')">D. 依照過往經驗、規定和 SOP 穩紮穩打地處理。</button>
-            <button class="option-btn" onclick="selectAnswer('E')">E. 不⋯著⋯急⋯，船⋯到⋯橋⋯頭⋯自⋯然⋯直⋯</button>
-        </div>
-
-        <div id="page-3" class="page">
-            <img class="quiz-img" src="q3.png" onerror="this.style.display='none'" alt="第三題插圖">
-            <div class="question-text">3. 在你的朋友圈裡，大家通常怎麼形容你？</div>
-            <button class="option-btn" onclick="selectAnswer('A')">A. 充滿熱情、正義感爆棚的行動派。</button>
-            <button class="option-btn" onclick="selectAnswer('B')">B. 幽默、嘴砲、看起來漫不經心但其實很講義氣。</button>
-            <button class="option-btn" onclick="selectAnswer('C')">C. 超級友善、沒心機，是大家眼中的開心果。</button>
-            <button class="option-btn" onclick="selectAnswer('D')">D. 嚴肅、有威嚴、出問題時總是可以依靠的領導者。</button>
-            <button class="option-btn" onclick="selectAnswer('E')">E. 脾氣超級好、但生活節奏似乎總是跟別人不一樣。</button>
-        </div>
-
-        <div id="page-4" class="page">
-            <img class="quiz-img" src="q4.png" onerror="this.style.display='none'" alt="第四題插圖">
-            <div class="question-text">4. 你心目中最理想的工作環境或生活狀態是什麼樣子？</div>
-            <button class="option-btn" onclick="selectAnswer('A')">A. 充滿挑戰，能夠發揮影響力，甚至「讓世界變得更美好」！</button>
-            <button class="option-btn" onclick="selectAnswer('B')">B. 自由不受拘束，不用看別人臉色，自己掌握步調。</button>
-            <button class="option-btn" onclick="selectAnswer('C')">C. 氣氛輕鬆溫馨，同事好相處，最重要是有吃不完的點心。</button>
-            <button class="option-btn" onclick="selectAnswer('D')">D. 制度分明，大家各司其職，有明確的規矩和升遷管道。</button>
-            <button class="option-btn" onclick="selectAnswer('E')">E. 步⋯調⋯平⋯緩⋯，不⋯需⋯要⋯每⋯天⋯趕⋯時⋯間⋯</button>
-        </div>
-
-        <div id="page-5" class="page">
-            <img class="quiz-img" src="q5.png" onerror="this.style.display='none'" alt="第五題插圖">
-            <div class="question-text">5. 走在路上，你突然看到前面的人錢包掉了，你會怎麼做？</div>
-            <button class="option-btn" onclick="selectAnswer('A')">A. 立刻撿起來，不管多遠都狂奔追上去還給對方！</button>
-            <button class="option-btn" onclick="selectAnswer('B')">B. 撿起來掂掂重量，笑著跟對方搭話開個玩笑後再還給他。</button>
-            <button class="option-btn" onclick="selectAnswer('C')">C. 驚呼一聲，趕快撿起來，四處張望尋找失主或請人幫忙。</button>
-            <button class="option-btn" onclick="selectAnswer('D')">D. 撿起來，然後直接依照程序交到最近的警察局或招領處。</button>
-            <button class="option-btn" onclick="selectAnswer('E')">E. 等⋯我⋯走⋯到⋯那⋯邊⋯，錢⋯包⋯已⋯被⋯人⋯撿⋯走⋯了⋯</button>
-        </div>
-
-        <div id="page-result" class="page">
-            <div class="result-header">鑑定完成！你的隱藏動物屬性是：</div>
-            <img id="result-img" class="quiz-img" src="" alt="結果動物圖片">
-            <h2 class="result-title" id="result-name"></h2>
-            <div class="result-desc" id="result-desc"></div>
-            <button class="retry-btn" onclick="restartQuiz()">再鑑定一次 🔄</button>
-        </div>
-
     </div>
+
+    <div id="quiz-page" class="hidden">
+        <div id="progress" style="font-size: 12px; color: #94a3b8; font-weight: bold; margin-bottom: 12px; text-align: left; letter-spacing: 0.5px;"></div>
+        <div class="scene-illustration" id="scene-img-box"></div>
+        <div class="question-title" id="question-text"></div>
+        <div class="options-container" id="options-box"></div>
+    </div>
+
+    <div id="result-page" class="hidden">
+        <div style="font-size: 14px; font-weight: bold; color: #64748b; margin-bottom: 10px; text-align: left;">▸ 畢聯會大數據精密分析：</div>
+        <div class="profile-card" id="profile-card-box"></div>
+        <button class="restart-btn" onclick="window.jgQuiz.resetQuiz()">重新建檔 / 再測一次</button>
+    </div>
+
+    <footer>
+        新竹市立建功高級中學 X 2026建功畢聯會<br>
+        Hsinchu Municipal Chien Kang Senior High School
+    </footer>
 </div>
 
 <script>
-    let currentPage = 0;
-    let userAnswers = [];
+(function() {
+    const questions = [
+        {
+            title: "明天要考試，今天晚上我會選擇...",
+            sceneSvg: `<svg viewBox="0 0 200 100" width="100%" height="100%">
+                <rect width="200" height="100" fill="#0f172a" rx="12"/>
+                <path d="M 100,0 L 40,100 L 160,100 Z" fill="#fef08a" opacity="0.15"/>
+                <rect x="85" y="75" width="30" height="15" fill="#f1f5f9" rx="2"/>
+                <line x1="88" y1="80" x2="112" y2="80" stroke="#cbd5e1" stroke-width="2"/>
+                <line x1="88" y1="85" x2="105" y2="85" stroke="#cbd5e1" stroke-width="2"/>
+                <path d="M135,90 L165,90 L160,82 L140,82 Z" fill="#64748b"/>
+                <path d="M138,82 L162,82 L158,74 L142,74 Z" fill="#475569"/>
+                <circle cx="100" cy="25" r="8" fill="#fef08a"/>
+                <path d="M92,25 Q100,10 100,0 M108,25 Q100,10 100,0" stroke="#94a3b8" stroke-width="2" fill="none"/>
+            </svg>`,
+            options: [
+                { text: "#想辦法捲死同學", score: "A" },
+                { text: "#與周公約會", score: "B" }
+            ]
+        },
+        {
+            title: "考前我更願意相信...",
+            sceneSvg: `<svg viewBox="0 0 200 100" width="100%" height="100%">
+                <rect width="200" height="100" fill="#faf5ff" rx="12"/>
+                <circle cx="60" cy="50" r="18" fill="#e9d5ff" stroke="#9333ea" stroke-width="2"/>
+                <path d="M50,45 Q60,35 70,45 Q65,65 60,68 Z" fill="#c084fc"/>
+                <circle cx="60" cy="50" r="4" fill="#fff" opacity="0.8"/>
+                <polygon points="135,35 155,35 160,45 160,75 130,75 130,45" fill="#f87171" stroke="#dc2626" stroke-width="2"/>
+                <rect x="137" y="47" width="16" height="22" fill="#fef08a"/>
+                <text x="145" y="62" font-size="10" font-weight="bold" text-anchor="middle" fill="#b91c1c">必勝</text>
+                <path d="M145,35 L145,25" stroke="#fbbf24" stroke-width="2"/>
+            </svg>`,
+            options: [
+                { text: "#自己的智商", score: "C" },
+                { text: "#神明一定會幫助我的", score: "D" }
+            ]
+        },
+        {
+            title: "關於上學...",
+            sceneSvg: `<svg viewBox="0 0 200 100" width="100%" height="100%">
+                <rect width="200" height="100" fill="#f0fdf4" rx="12"/>
+                <rect x="20" y="10" width="160" height="40" fill="#14532d" rx="2"/>
+                <line x1="20" y1="47" x2="180" y2="47" stroke="#b45309" stroke-width="3"/>
+                <text x="100" y="32" font-size="11" fill="#f0fdf4" text-anchor="middle" font-family="monospace">KUANG CHIEN 2026</text>
+                <path d="M 60,85 L 140,85 L 130,65 L 70,65 Z" fill="#d97706"/>
+                <line x1="75" y1="65" x2="75" y2="85" stroke="#475569" stroke-width="3"/>
+                <line x1="125" y1="65" x2="125" y2="85" stroke="#475569" stroke-width="3"/>
+            </svg>`,
+            options: [
+                { text: "#上課有認真聽", score: "C" },
+                { text: "#有來學校就很棒了", score: "B" }
+            ]
+        },
+        {
+            title: "和朋友的相處...",
+            sceneSvg: `<svg viewBox="0 0 200 100" width="100%" height="100%">
+                <rect width="200" height="100" fill="#f0f9ff" rx="12"/>
+                <circle cx="40" cy="30" r="15" fill="#fff" opacity="0.7"/>
+                <circle cx="55" cy="32" r="12" fill="#fff" opacity="0.7"/>
+                <rect x="0" y="70" width="200" height="30" fill="#e2e8f0"/>
+                <line x1="0" y1="70" x2="200" y2="70" stroke="#94a3b8" stroke-width="2"/>
+                <circle cx="85" cy="50" r="6" fill="#38bdf8"/>
+                <path d="M85,56 Q85,70 82,70 M85,56 Q90,65 92,70" stroke="#38bdf8" stroke-width="4" stroke-linecap="round"/>
+                <circle cx="115" cy="48" r="6" fill="#34d399"/>
+                <path d="M115,54 Q112,70 110,70 M115,54 Q120,68 122,70" stroke="#34d399" stroke-width="4" stroke-linecap="round"/>
+            </svg>`,
+            options: [
+                { text: "#高山流水遇知音", score: "A" },
+                { text: "#低山臭水遇噪音", score: "D" }
+            ]
+        },
+        {
+            title: "面對未來的困難...",
+            sceneSvg: `<svg viewBox="0 0 200 100" width="100%" height="100%">
+                <rect width="200" height="100" fill="#fff7ed" rx="12"/>
+                <circle cx="100" cy="65" r="25" fill="#fed7aa" opacity="0.6"/>
+                <path d="M -20,80 L 70,50 L 140,80 Z" fill="#ffedd5"/>
+                <path d="M 60,80 L 130,45 L 230,80 Z" fill="#ffedd5" opacity="0.7"/>
+                <polygon points="85,100 115,100 103,65 97,65" fill="#cbd5e1"/>
+                <path d="M 40,25 Q 45,20 50,25 Q 55,20 60,25" stroke="#ea580c" stroke-width="2" fill="none" stroke-linecap="round"/>
+                <path d="M 140,35 Q 143,31 147,35 Q 151,31 154,35" stroke="#ea580c" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            </svg>`,
+            options: [
+                { text: "#放馬過來", score: "A" },
+                { text: "#放我一馬", score: "D" }
+            ]
+        }
+    ];
 
-    // 🌟 結果資料庫：預留好你未來的結果圖檔名 (直接上傳對應檔名到 GitHub 即可)
-    const resultData = {
-        'A': { 
-            name: "🐰 哈茱蒂 (Judy Hopps)", 
-            img: "judy.png", // 👈 未來哈茱蒂結果圖就命名為 judy.png 上傳
-            desc: "充滿熱情的理想主義者！你就像茱蒂一樣，是個充滿活力、永不言敗的樂天派。你有著強烈的正義感和目標，一旦下定決心，沒有任何困難能阻擋你。你相信只要努力，就能讓世界變得更好！" 
+    const results = {
+        "A": {
+            badge: "2026 頂峰執行者檔案",
+            name: "蠻牛局長 × 糾察隊長",
+            bg: "#fee2e2",
+            avatarSvg: `<svg viewBox="0 0 100 100" width="60" height="60"><circle cx="50" cy="42" r="20" fill="#dc2626"/><path d="M20 80c0-15 15-20 30-20s30 5 30 20z" fill="#dc2626"/><path d="M35 25l-10-8M65 25l10-8" stroke="#1e293b" stroke-width="4" stroke-linecap="round"/></svg>`,
+            meta: { code: "BOGO-BOSS-01", danger: "98% (極度危險)", place: "高三衝刺K書中心 / 糾察哨口", type: "鐵血行動派" },
+            traits: ["#放馬過來", "#想辦法捲死同學", "#氣場兩米八", "#高山流水遇知音"],
+            desc: "你就是那個面對未知挑戰敢正面大喊「放馬過來」的絕對強者！在學校裡遇到競爭會瞬間激發滿滿的戰鬥力，實力上演捲死同學的戲碼。你目標明確、效率極高，擁有不可動搖的霸氣。畢業後絕對是社會上打破常規、開疆闢土的開路先鋒！",
+            quote: "別擋路，我的目標只有頂峰。"
         },
-        'B': { 
-            name: "🦊 胡尼克 (Nick Wilde)", 
-            img: "nick.png", // 👈 未來胡尼克結果圖就命名為 nick.png 上傳
-            desc: "聰明機智的街頭生存專家！你擁有極高的情商和靈活的腦袋。你看透了社會的運作規則，懂得用幽默和圓滑來保護自己。表面玩世不恭，但其實你內心柔軟，對認定的朋友絕對挺到底。" 
+        "B": {
+            badge: "2026 活力夢想家檔案",
+            name: "兔子茱蒂 × 畢聯會會長",
+            bg: "#fef9c3",
+            avatarSvg: `<svg viewBox="0 0 100 100" width="60" height="60"><circle cx="50" cy="50" r="20" fill="#ca8a04"/><path d="M25 82c0-12 12-16 25-16s25 4 25 16z" fill="#ca8a04"/><path d="M42 32V12c0-3-4-3-4 0v20M58 32V12c0-3-4-3-4 0v20" fill="#ca8a04" stroke="#1e293b" stroke-width="2"/></svg>`,
+            meta: { code: "JUDY-HOPS-26", danger: "15% (人畜無害)", place: "畢聯會開會現場 / 體育館", type: "佛系熱血派" },
+            traits: ["#有來學校就很棒了", "#與周公約會", "#熱血滿點", "#元氣輸出"],
+            desc: "你抱持著「有來學校就很棒了」的樂活達人態度，雖然昨晚可能還在跟周公進行深度約會，但只要到了好玩的關鍵時刻，你點燃熱情的速度比誰都快！就像茱蒂兔一樣，看似無害其實內心生命力爆棚。這面打卡牆就是你這種性格的夥伴為大家精心打造的！",
+            quote: "生活要懂得放鬆，但好玩的事情我絕不缺席！"
         },
-        'C': { 
-            name: "🐆 洪金豹 (Benjamin Clawhauser)", 
-            img: "clawhauser.png", // 👈 未來洪金豹結果圖就命名為 clawhauser.png 上傳
-            desc: "溫慢友善的氣氛製造機！你是大家眼中的小天使，性格溫和、熱情且超級友善。在你身邊總能感到放鬆和快樂，雖然有時候容易分心，但你絕對是團隊中最不可或缺的潤滑劑。" 
+        "C": {
+            badge: "2026 智商天花板檔案",
+            name: "狐狸尼克 × 學生會學霸",
+            bg: "#fae8ff",
+            avatarSvg: `<svg viewBox="0 0 100 100" width="60" height="60"><circle cx="50" cy="45" r="18" fill="#9333ea"/><path d="M22 80c0-14 14-18 28-18s28 4 28 18z" fill="#9333ea"/><path d="M32 35l-10-10 4-2zM68 35l10-10-4-2z" fill="#9333ea" stroke="#1e293b" stroke-width="2"/></svg>`,
+            meta: { code: "NICK-WILD-99", danger: "65% (智商壓制)", place: "學生會辦公室 / 頒獎台中央", type: "從容智謀派" },
+            traits: ["#自己的智商", "#上課有認真聽", "#智商擔當", "#優雅省力"],
+            desc: "考前你絕對敢大膽貼上「相信自己智商」的標籤，因為你上課其實都有默默抓到核心重點，骨子裡自帶一種看透局勢的淡定。就像狐狸尼克一樣聰明、帶點讓人又愛又恨的小傲嬌，總能用最省力、最優雅且精準的方式把難題迎刃而解。",
+            quote: "實力擺在那裡，神明放假去也沒關係。"
         },
-        'D': { 
-            name: "🐃 蠻牛局長 (Chief Bogo)", 
-            img: "bogo.png", // 👈 未來蠻牛局長結果圖就命名為 bogo.png 上傳
-            desc: "務實可靠的霸氣領導者！你做事講求效率、重視規則與秩序。有時候會讓人樹得有點嚴肅，但這都是因為你對自己和團隊有著極高的責任感。在危機時刻，你總是最能扛起重責大任的那個人。" 
-        },
-        'E': { 
-            name: "🦥 快俠 (Flash)", 
-            img: "flash.png", // 👈 未來快俠結果圖就命名為 flash.png 上傳
-            desc: "佛系生活的慢活大師！在這個急躁的世界裡，你擁有屬於自己的獨特節奏。你性格溫和、情緒穩定，幾乎沒有什麼事能讓你大發脾氣。其實你把一切都看在眼裡，可能還有著跌破眾人眼鏡的狂野嗜好！" 
+        "D": {
+            badge: "2026 校園守護神檔案",
+            name: "樹懶快俠 × 合作社阿姨/叔叔",
+            bg: "#dcfce7",
+            avatarSvg: `<svg viewBox="0 0 100 100" width="60" height="60"><circle cx="50" cy="45" r="20" fill="#16a34a"/><path d="M20 82c0-12 15-17 30-17s30 5 30 17z" fill="#16a34a"/><circle cx="42" cy="42" r="4" fill="#fff"/><circle cx="58" cy="42" r="4" fill="#fff"/><path d="M40 55q10 5 20 0" stroke="#1e293b" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`,
+            meta: { code: "FLASH-SLOW-00", danger: "0% (療癒爆表)", place: "熱門合作社櫃檯 / 榕樹下", type: "療癒避風港" },
+            traits: ["#放我一馬", "#神明一定會幫助我的", "#低山臭水遇噪音", "#慢條斯理"],
+            desc: "面對壓力重重的日常，你只想高喊「放我一馬」，考前默默祈禱神明加持。即使生活中偶爾遇到人際關係像噪音一樣煩人，你也總能用強大的冷幽默和獨特的慢節奏將其化解。你就像樹懶快俠，是大家累了、煩了最想找來聊天依靠的溫慢神殿。",
+            quote: "沒事沒事，平安畢業，順其自然。"
         }
     };
 
-    // 翻頁控制
-    function nextPage(pageNumber) {
-        if (currentPage === 'result') {
-            document.getElementById('page-result').classList.remove('active');
-        } else {
-            document.getElementById(`page-${currentPage}`).classList.remove('active');
-        }
-        
-        currentPage = pageNumber;
+    let currentQuestionIndex = 0;
+    let selectedScores = [];
 
-        if (currentPage >= 1 && currentPage <= 5) {
-            document.getElementById('progress-section').style.display = 'block';
-            document.getElementById('bar').style.width = `${(currentPage / 5) * 100}%`;
-        } else {
-            document.getElementById('progress-section').style.display = 'none';
-        }
+    document.getElementById('quiz-page').className = 'hidden';
+    document.getElementById('result-page').className = 'hidden';
+    document.getElementById('start-page').className = '';
 
-        if (currentPage === 'result') {
-            document.getElementById('page-result').classList.add('active');
-        } else {
-            document.getElementById(`page-${currentPage}`).classList.add('active');
-        }
-    }
+    window.jgQuiz = {
+        selectIdentity: function(type) {
+            const root = document.documentElement;
+            let textColor = '#fff';
+            
+            if (type === 'silver') { root.style.setProperty('--sticker-color', '#cbd5e0'); textColor = '#4a5568'; }
+            else if (type === 'gold') { root.style.setProperty('--sticker-color', '#ecc94b'); textColor = '#744210'; }
+            else if (type === 'purple') { root.style.setProperty('--sticker-color', '#9f7aea'); textColor = '#ffffff'; }
+            
+            root.style.setProperty('--sticker-text', textColor);
 
-    // 點選答案
-    function selectAnswer(letter) {
-        userAnswers.push(letter);
-        if (currentPage < 5) {
-            nextPage(currentPage + 1);
-        } else {
-            calculateFinalResult();
-        }
-    }
+            document.getElementById('start-page').className = 'hidden';
+            document.getElementById('quiz-page').className = '';
+            this.showQuestion();
+        },
 
-    // 計算分數
-    function calculateFinalResult() {
-        let scores = { 'A': 0, 'B': 0, 'C': 0, 'D': 0, 'E': 0 };
-        userAnswers.forEach(ans => scores[ans]++);
-
-        let maxChar = 'A';
-        let maxScore = 0;
-        for (let char in scores) {
-            if (scores[char] > maxScore) {
-                maxScore = scores[char];
-                maxChar = char;
+        showQuestion: function() {
+            if (currentQuestionIndex >= questions.length) {
+                this.showResult();
+                return;
             }
+
+            const q = questions[currentQuestionIndex];
+            document.getElementById('progress').innerText = `QUESTION ${currentQuestionIndex + 1} / ${questions.length}`;
+            document.getElementById('question-text').innerText = q.title;
+            document.getElementById('scene-img-box').innerHTML = q.sceneSvg;
+
+            const optionsBox = document.getElementById('options-box');
+            optionsBox.innerHTML = '';
+
+            q.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt.text;
+                btn.onclick = () => this.selectOption(btn, opt.score);
+                optionsBox.appendChild(btn);
+            });
+        },
+
+        selectOption: function(element, score) {
+            element.classList.add('selected');
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach(b => b.style.pointerEvents = 'none');
+
+            selectedScores.push(score);
+            currentQuestionIndex++;
+
+            setTimeout(() => {
+                this.showQuestion();
+            }, 400); 
+        },
+
+        showResult: function() {
+            document.getElementById('quiz-page').className = 'hidden';
+            document.getElementById('result-page').className = 'result-card';
+
+            const counts = {};
+            let maxScore = "B";
+            let maxCount = 0;
+
+            selectedScores.forEach(score => {
+                counts[score] = (counts[score] || 0) + 1;
+                if (counts[score] > maxCount) {
+                    maxCount = counts[score];
+                    maxScore = score;
+                }
+            });
+
+            const finalResult = results[maxScore];
+            const cardBox = document.getElementById('profile-card-box');
+            
+            let traitHtml = '';
+            finalResult.traits.forEach(t => {
+                traitHtml += `<span class="trait-tag" style="background:${finalResult.bg}">${t}</span>`;
+            });
+
+            cardBox.innerHTML = `
+                <div class="profile-header">
+                    <div class="profile-avatar" style="background:${finalResult.bg}">
+                        ${finalResult.avatarSvg}
+                    </div>
+                    <div class="profile-title-block">
+                        <span class="profile-badge">${finalResult.badge}</span>
+                        <h2 class="profile-name">${finalResult.name}</h2>
+                    </div>
+                </div>
+                <div class="profile-meta">
+                    <div class="meta-item"><span class="meta-label">安全編號：</span><span class="meta-val">${finalResult.meta.code}</span></div>
+                    <div class="meta-item"><span class="meta-label">特質歸屬：</span><span class="meta-val">${finalResult.meta.type}</span></div>
+                    <div class="meta-item"><span class="meta-label">危險系數：</span><span class="meta-val">${finalResult.meta.danger}</span></div>
+                    <div class="meta-item"><span class="meta-label">主要出沒：</span><span class="meta-val">${finalResult.meta.place}</span></div>
+                </div>
+                <div class="profile-body">
+                    ${finalResult.desc}
+                </div>
+                <div class="profile-quote">
+                    「${finalResult.quote}」
+                </div>
+                <div style="font-size:12px; font-weight:bold; color:#64748b; margin-top:15px; margin-bottom:6px;">▸ 偵測解鎖貼紙標籤：</div>
+                <div class="tags-container">
+                    ${traitHtml}
+                </div>
+                <div style="position:absolute; right:15px; bottom:15px; opacity:0.12; pointer-events:none;">
+                    <svg width="60" height="60" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="45" fill="none" stroke="#000" stroke-width="5"/>
+                        <text x="50" y="55" font-size="12" font-weight="bold" text-anchor="middle" fill="#000">PASSED</text>
+                    </svg>
+                </div>
+            `;
+        },
+
+        resetQuiz: function() {
+            currentQuestionIndex = 0;
+            selectedScores = [];
+            document.getElementById('result-page').className = 'hidden';
+            document.getElementById('quiz-page').className = 'hidden';
+            document.getElementById('start-page').className = '';
         }
-
-        // 寫入結果
-        document.getElementById('result-img').src = resultData[maxChar].img;
-        document.getElementById('result-name').innerText = resultData[maxChar].name;
-        document.getElementById('result-desc').innerText = resultData[maxChar].desc;
-
-        nextPage('result');
-    }
-
-    // 重玩
-    function restartQuiz() {
-        userAnswers = [];
-        nextPage(0);
-    }
+    };
+})();
 </script>
 
 </body>
