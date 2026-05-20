@@ -609,51 +609,37 @@
             border-radius: 4px;
         }
 
-        
-       /* 移除原本的 flex 或 float，改用 Grid */
-.report-meta-row {
+        .report-meta-row {
     display: grid;
-    grid-template-columns: 40% 1fr; /* 嚴格限制圖片佔 40%，表格佔剩餘空間 */
-    gap: 12px;
+    /* 這裡 grid-template-columns 的比例是你版面的骨架，一定要鎖定 */
+    grid-template-columns: 40% 60%; 
+    gap: 10px;
     margin-bottom: 18px;
-    align-items: start; /* 保證兩者都從上方開始對齊 */
+    /* 確保 Android 不會因為內容撐開而變形 */
+    align-items: start; 
 }
 
-.report-photo-box {
-    width: 100%; /* 在 Grid 中填滿 40% 的格位 */
-}
-
+/* 確保表格內容嚴格遵守寬度 */
 .report-table {
-    width: 100%; /* 在 Grid 中填滿剩餘格位 */
-    border-collapse: collapse;
-    table-layout: fixed; /* 強制對齊 */
-    font-size: 12.5px;
-}
-
-/* 確保表格內容高度一致 */
-.report-table td {
-    border: 1px solid #000000;
-    padding: 8px 6px;
-    vertical-align: middle;
-    line-height: 1.2;
-}
-
-/* 如果圖片高度不夠，強制給定高度，讓它跟表格第一欄高度一致 */
-.report-photo {
     width: 100%;
-    aspect-ratio: 1 / 1;
-    border: 1px solid #000000;
-    background: var(--hero-bg, #f2f2f7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border-collapse: collapse;
+    table-layout: fixed; /* 這行非常重要，它會無視 Android 自動計算出的奇怪寬度 */
 }
 
-
-
-
-  
-
+        .report-photo-box {
+            flex: 0 0 40%;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .report-photo {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border: 1px solid #000000;
+            background: var(--hero-bg, #f2f2f7);
+            position: relative;
+            padding: 8px;
+        }
         .report-photo::before, .report-photo::after {
             content: "";
             position: absolute;
@@ -684,24 +670,20 @@
             background: transparent;
         }
 
-                .report-table {
-            flex: 1;
-            border-collapse: collapse;
-            width: 100%;
-            font-size: 12.5px;
-            /* 新增這行：確保表格內容垂直對齊基準一致 */
-            table-layout: fixed; 
+        
+        .report-table td {
+            border: 1px solid #000000;
+            padding: 8px 10px;
+            vertical-align: middle;
         }
-       .report-table td {
-    border: 1px solid #000000;
-    padding: 6px 8px; /* 稍微縮小 padding */
-    vertical-align: middle;
-    line-height: 1.1; /* 縮小行高避免文字撐開表格 */
-    word-wrap: break-word;
-}
-
-       
-
+        .report-table td:first-child {
+            width: 90px;
+            white-space: nowrap;
+            background: #f5f5f7;
+            font-weight: 700;
+            color: #333333;
+            text-align: center;
+        }
         .report-table .td-val {
             font-weight: 700;
             color: #000000;
