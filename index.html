@@ -458,6 +458,12 @@
             100% { opacity: 0; transform: translateY(110vh) rotate(720deg); }
         }
 
+        /* =========================================================
+           🪪 證件/識別證風格的結算卡
+           - 結構：上方 id-card-row (左大頭貼 + 右資料區) → 下方 description + quote + tags
+           - 平常瀏覽 (手機)：寬 100%，整體 ~620px 高，一個螢幕內
+           - 匯出 IG：套 .ig-story，540×960 (9:16)，scale 2 → 1080×1920
+           ========================================================= */
         .profile-card {
             background: #ffffff;
             border: 0.5px solid rgba(60, 60, 67, 0.12);
@@ -478,269 +484,417 @@
             100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        /* 🎨 角色英雄圖區（大圖融入卡片頂端） */
-        .profile-hero {
+        /* 證件頂部色帶 (Mac Finder 風的小圓點) */
+        .id-card-strip {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 18px;
+            background: linear-gradient(135deg, rgba(0,122,255,0.06), rgba(175,82,222,0.06));
+            border-bottom: 0.5px solid rgba(60,60,67,0.08);
             position: relative;
-            width: 100%;
-            aspect-ratio: 1 / 1;            /* 角色圖預設為方形 */
-            max-height: 420px;
+        }
+        .id-card-dots {
+            display: flex;
+            gap: 6px;
+        }
+        .id-card-dots span {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .id-card-dots span:nth-child(1) { background: #FF5F57; }
+        .id-card-dots span:nth-child(2) { background: #FEBC2E; }
+        .id-card-dots span:nth-child(3) { background: #28C840; }
+        .id-card-filename {
+            font-size: 11.5px;
+            font-weight: 600;
+            color: var(--label-tertiary);
+            letter-spacing: 0.04em;
+            font-family: 'SF Mono', Menlo, monospace;
+            flex: 1;
+            text-align: center;
+            margin-right: 46px;        /* 平衡左側 dots 寬度 */
+            white-space: nowrap;
             overflow: hidden;
-            background: var(--hero-bg, rgba(118, 118, 128, 0.08));
+            text-overflow: ellipsis;
         }
-        .profile-hero::after {
-            /* 底部漸層淡出，銜接下方白色內容區 */
-            content: "";
-            position: absolute;
-            left: 0; right: 0; bottom: 0;
-            height: 35%;
-            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.7) 70%, #ffffff 100%);
-            pointer-events: none;
+
+        /* 證件主體：橫向兩欄 */
+        .id-card-row {
+            display: flex;
+            gap: 14px;
+            padding: 16px 16px 14px;
+            align-items: stretch;
         }
-        .profile-hero img {
+        /* 左：大頭貼框 */
+        .id-photo {
+            flex: 0 0 38%;
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--hero-bg, #f2f2f7);
+            aspect-ratio: 3 / 4;            /* 證件大頭照標準直立比例 */
+            box-shadow:
+                inset 0 0 0 1px rgba(255,255,255,0.6),
+                0 1px 3px rgba(0,0,0,0.08),
+                0 4px 12px rgba(0,0,0,0.06);
+        }
+        .id-photo img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             object-position: center 30%;
-            animation: heroFloat 0.8s cubic-bezier(0.32, 0.72, 0, 1);
+            animation: heroFloat 0.7s cubic-bezier(0.32, 0.72, 0, 1);
         }
         @keyframes heroFloat {
-            0% { opacity: 0; transform: scale(1.08); }
+            0% { opacity: 0; transform: scale(1.06); }
             100% { opacity: 1; transform: scale(1); }
         }
-        .profile-hero-badge {
+        /* 大頭貼下角小水印 */
+        .id-photo::after {
+            content: "OFFICIAL 2026";
             position: absolute;
-            top: 14px;
-            left: 14px;
-            font-size: 11px;
-            background: rgba(0, 0, 0, 0.72);
-            color: #fff;
-            padding: 5px 12px;
+            bottom: 6px;
+            right: 6px;
+            font-size: 7.5px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.85);
+            background: rgba(0,0,0,0.45);
+            padding: 2px 6px;
             border-radius: 50px;
-            font-weight: 600;
-            letter-spacing: 0.02em;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            z-index: 2;
-        }
-        .profile-content-inner {
-            padding: 22px 22px 24px;
+            letter-spacing: 0.08em;
+            font-family: 'SF Mono', Menlo, monospace;
+            backdrop-filter: blur(8px);
         }
 
-        /* 角色名字區（取代 profile-header） */
-        .profile-name-block {
-            margin-bottom: 18px;
-            position: relative;
+        /* 右：資料欄 */
+        .id-info {
+            flex: 1;
+            min-width: 0;             /* 防 flex 撐爆 */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 8px;
+            padding-top: 2px;
         }
-        .profile-name {
-            font-size: 26px;
+        .id-badge {
+            display: inline-block;
+            font-size: 10.5px;
+            font-weight: 700;
+            color: #fff;
+            background: linear-gradient(135deg, var(--apple-pink), var(--apple-purple));
+            padding: 4px 10px;
+            border-radius: 50px;
+            letter-spacing: 0.03em;
+            box-shadow: 0 2px 8px rgba(175,82,222,0.3);
+            align-self: flex-start;
+            white-space: nowrap;
+        }
+        .id-name {
+            font-size: 19px;
             font-weight: 800;
-            color: var(--label-primary);
-            margin: 0 0 10px 0;
-            letter-spacing: -0.025em;
             line-height: 1.18;
-            background: linear-gradient(135deg, var(--label-primary) 0%, #4a4a4a 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
+            letter-spacing: -0.022em;
+            color: var(--label-primary);
+            margin: 4px 0 2px;
         }
-        .profile-name-divider {
-            width: 44px;
-            height: 4px;
+        .id-name-en {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--label-tertiary);
+            letter-spacing: 0.06em;
+            font-family: 'SF Mono', Menlo, monospace;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .id-name-divider {
+            width: 32px;
+            height: 3px;
             border-radius: 2px;
             background: linear-gradient(90deg, var(--apple-pink), var(--apple-purple), var(--apple-indigo));
-            box-shadow: 0 2px 8px rgba(175, 82, 222, 0.35);
+            margin-bottom: 6px;
         }
-        .profile-meta {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 13px;
-            background: rgba(118, 118, 128, 0.07); 
-            padding: 14px; 
-            border-radius: 14px; 
-            margin-bottom: 18px; 
+        .id-fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px 10px;
+            font-size: 11.5px;
         }
-        .meta-item { line-height: 1.45; white-space: normal; word-break: break-all; }
-        .meta-label { 
-            font-weight: 600; 
-            color: var(--label-tertiary); 
-            display: block; 
-            margin-bottom: 2px; 
-            font-size: 11px;
+        .id-field {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+        .id-field-label {
+            font-size: 9px;
+            font-weight: 700;
+            color: var(--label-tertiary);
             text-transform: uppercase;
-            letter-spacing: 0.04em;
+            letter-spacing: 0.06em;
+            margin-bottom: 1px;
         }
-        .meta-val { color: var(--label-primary); font-weight: 600; font-size: 13.5px; letter-spacing: -0.005em; }
-
-        @media (max-width: 440px) { 
-            .profile-meta { grid-template-columns: 1fr; gap: 8px; padding: 12px; }
-            .container { padding: 22px 18px; border-radius: 24px; }
-            h1 { font-size: 23px; }
-            .image-box { aspect-ratio: 16 / 9; margin-bottom: 16px; border-radius: 16px; }
-            .question-title { font-size: 18px; margin-bottom: 14px; }
-            .option-btn { padding: 13px 16px; font-size: 15px; }
-            .profile-card { padding: 0; }
-            .profile-content-inner { padding: 20px 18px 22px; }
-            .profile-hero { max-height: 380px; }
-            .profile-hero-badge { font-size: 10.5px; padding: 4px 10px; top: 12px; left: 12px; }
-            .profile-name { font-size: 22px; }
-            .profile-name-divider { width: 38px; height: 3px; }
-            .profile-name-block { margin-bottom: 14px; }
-            .subtitle { font-size: 13.5px; margin-bottom: 18px; }
-            .identity-container { padding: 14px 12px; gap: 10px; }
-            .sticker-btn { padding: 10px 18px; font-size: 14px; }
-            .profile-body { font-size: 14.5px; }
-            .action-btn { padding: 13px 24px; font-size: 15px; }
-            footer { margin-top: 20px; font-size: 10.5px; }
-            body { padding: 8px; }
-            #quiz-container { padding: 8px 0; }
+        .id-field-val {
+            font-size: 11.5px;
+            font-weight: 700;
+            color: var(--label-primary);
+            letter-spacing: -0.005em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .profile-body { 
-            font-size: 15px; 
-            line-height: 1.65; 
-            color: var(--label-secondary); 
-            text-align: justify; 
-            letter-spacing: -0.005em;
+        /* 證件下方：description + quote + tags（更緊湊） */
+        .id-body {
+            padding: 0 16px 16px;
         }
-        .profile-quote { 
-            background: rgba(118, 118, 128, 0.08); 
-            border-left: 3px solid var(--apple-indigo); 
-            padding: 12px 16px; 
-            font-style: italic; 
-            font-weight: 600; 
-            margin-top: 16px; 
-            border-radius: 0 12px 12px 0; 
-            font-size: 14.5px; 
-            color: var(--label-primary); 
-            letter-spacing: -0.005em;
+        .id-divider {
+            height: 0.5px;
+            background: rgba(60,60,67,0.12);
+            margin: 0 0 12px;
+            position: relative;
         }
-        
-        .tags-container { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
-        .trait-tag { 
-            font-size: 12px; 
-            padding: 5px 12px; 
-            border-radius: 50px; 
-            font-weight: 600; 
-            color: var(--label-primary); 
+        .id-divider::before, .id-divider::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: rgba(60,60,67,0.18);
+            transform: translateY(-50%);
+        }
+        .id-divider::before { left: -3px; }
+        .id-divider::after { right: -3px; }
+
+        .id-desc {
+            font-size: 13px;
+            line-height: 1.55;
+            color: var(--label-secondary);
+            text-align: justify;
+            letter-spacing: -0.005em;
+            margin-bottom: 10px;
+        }
+        .id-quote {
+            background: linear-gradient(135deg, rgba(88,86,214,0.06), rgba(175,82,222,0.06));
+            border-left: 3px solid var(--apple-indigo);
+            padding: 9px 12px;
+            font-style: italic;
+            font-weight: 600;
+            border-radius: 0 10px 10px 0;
+            font-size: 12.5px;
+            color: var(--label-primary);
+            letter-spacing: -0.005em;
+            margin-bottom: 10px;
+        }
+
+        .id-tags-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        .id-tag {
+            font-size: 10.5px;
+            padding: 3.5px 9px;
+            border-radius: 50px;
+            font-weight: 700;
+            color: var(--label-primary);
+            border: 0.5px solid rgba(60,60,67,0.1);
             animation: tagPop 0.5s cubic-bezier(0.32, 0.72, 0, 1.4) backwards;
             letter-spacing: -0.005em;
         }
-        .trait-tag:nth-child(1) { animation-delay: 0.1s; }
-        .trait-tag:nth-child(2) { animation-delay: 0.2s; }
-        .trait-tag:nth-child(3) { animation-delay: 0.3s; }
-        .trait-tag:nth-child(4) { animation-delay: 0.4s; }
+        .id-tag:nth-child(1) { animation-delay: 0.1s; }
+        .id-tag:nth-child(2) { animation-delay: 0.18s; }
+        .id-tag:nth-child(3) { animation-delay: 0.26s; }
+        .id-tag:nth-child(4) { animation-delay: 0.34s; }
         @keyframes tagPop {
             from { opacity: 0; transform: scale(0.5); }
             to { opacity: 1; transform: scale(1); }
         }
 
-        .tag-section-title {
-            font-size: 11px;
+        /* 證件底部條 (學校 + 浮水印) */
+        .id-footer-strip {
+            padding: 9px 16px;
+            background: linear-gradient(135deg, rgba(0,122,255,0.05), rgba(175,82,222,0.05));
+            border-top: 0.5px dashed rgba(60,60,67,0.16);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            font-size: 9.5px;
             font-weight: 600;
             color: var(--label-tertiary);
-            margin-top: 16px;
-            margin-bottom: 8px;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+        .id-footer-strip .id-stamp {
+            font-family: 'SF Mono', Menlo, monospace;
+            font-weight: 700;
+            color: var(--apple-indigo);
+            letter-spacing: 0.06em;
         }
 
-        /* 匯出時的浮水印（平常隱藏） */
-        .export-only { display: none; }
-        .profile-card.exporting .export-only {
-            display: block;
-            margin-top: 16px;
-            padding-top: 14px;
-            border-top: 0.5px dashed rgba(60, 60, 67, 0.18);
-            text-align: center;
-            font-size: 10.5px;
-            color: var(--label-tertiary);
-            font-weight: 500;
-            letter-spacing: 0.02em;
-            line-height: 1.5;
+        /* 手機（≤440px）微調，仍只在一個螢幕內 */
+        @media (max-width: 440px) {
+            .container { padding: 22px 18px; border-radius: 24px; }
+            h1 { font-size: 23px; }
+            .image-box { aspect-ratio: 16 / 9; margin-bottom: 16px; border-radius: 16px; }
+            .question-title { font-size: 18px; margin-bottom: 14px; }
+            .option-btn { padding: 13px 16px; font-size: 15px; }
+            .subtitle { font-size: 13.5px; margin-bottom: 18px; }
+            .identity-container { padding: 14px 12px; gap: 10px; }
+            .sticker-btn { padding: 10px 18px; font-size: 14px; }
+            .action-btn { padding: 13px 24px; font-size: 15px; }
+            footer { margin-top: 20px; font-size: 10.5px; }
+            body { padding: 8px; }
+            #quiz-container { padding: 8px 0; }
+
+            .id-card-row { padding: 14px 14px 12px; gap: 12px; }
+            .id-body { padding: 0 14px 14px; }
+            .id-name { font-size: 17.5px; }
+            .id-desc { font-size: 12.5px; line-height: 1.5; -webkit-line-clamp: 4; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
+            .id-quote { font-size: 12px; padding: 8px 11px; }
+            .id-tag { font-size: 10px; padding: 3px 8px; }
+            .id-fields { gap: 5px 8px; }
+            .id-field-val { font-size: 11px; }
+            .id-card-strip { padding: 10px 14px; }
+            .id-card-filename { font-size: 11px; margin-right: 42px; }
         }
+
+        /* 平常瀏覽時隱藏匯出專屬浮水印 */
+        .export-only { display: none; }
+        .profile-card.exporting .export-only { display: block; }
 
         /* =========================================================
-           📱 IG 限動 9:16 匯出模式（1080 × 1920，等比 540 × 960）
+           📱 IG 限動 9:16 匯出模式（540 × 960 → scale 2 → 1080 × 1920）
            匯出時動態為 #profile-card-box 加上 .ig-story
-           匯出完後再移除，所以平常瀏覽完全不受影響
            ========================================================= */
         .profile-card.ig-story {
             width: 540px;
-            height: 960px;            /* 9:16 */
+            height: 960px;
             border-radius: 0;
             border: none;
             display: flex;
             flex-direction: column;
-            background: var(--hero-bg, #fafafa);
+            background: #ffffff;
             position: relative;
             box-shadow: none;
             animation: none;
         }
-        .profile-card.ig-story .profile-hero {
-            aspect-ratio: auto;
-            max-height: none;
-            height: 440px;            /* 大圖佔上半 */
-            flex-shrink: 0;
-            background: transparent;
+        .profile-card.ig-story .id-card-strip {
+            padding: 20px 28px;
         }
-        .profile-card.ig-story .profile-hero::after {
-            height: 28%;
-            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, var(--hero-bg-translucent, rgba(255,255,255,0.6)) 60%, #ffffff 100%);
+        .profile-card.ig-story .id-card-dots span {
+            width: 14px; height: 14px;
         }
-        .profile-card.ig-story .profile-hero img {
-            object-position: center 25%;
+        .profile-card.ig-story .id-card-filename {
+            font-size: 15px;
+            margin-right: 64px;
         }
-        .profile-card.ig-story .profile-hero-badge {
-            top: 24px;
-            left: 24px;
-            font-size: 13px;
-            padding: 7px 16px;
+        .profile-card.ig-story .id-card-row {
+            padding: 28px 28px 22px;
+            gap: 22px;
+            flex: 0 0 auto;
         }
-        .profile-card.ig-story .profile-content-inner {
-            background: #ffffff;
-            flex: 1;
-            padding: 24px 30px 28px;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
+        .profile-card.ig-story .id-info {
+            justify-content: flex-start;
+            gap: 14px;
         }
-        .profile-card.ig-story .profile-name-block {
-            margin-bottom: 16px;
+        .profile-card.ig-story .id-photo {
+            flex: 0 0 200px;
+            aspect-ratio: 3 / 4;
         }
-        .profile-card.ig-story .profile-name {
+        .profile-card.ig-story .id-photo::after {
+            font-size: 10px;
+            padding: 3px 9px;
+            bottom: 10px; right: 10px;
+        }
+        .profile-card.ig-story .id-badge {
+            font-size: 14px;
+            padding: 6px 14px;
+        }
+        .profile-card.ig-story .id-name {
             font-size: 28px;
+            margin-top: 6px;
         }
-        .profile-card.ig-story .profile-name-divider {
+        .profile-card.ig-story .id-name-en {
+            font-size: 12px;
+        }
+        .profile-card.ig-story .id-name-divider {
             width: 48px;
             height: 4px;
         }
-        .profile-card.ig-story .profile-meta {
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            padding: 12px 14px;
-            font-size: 12.5px;
+        .profile-card.ig-story .id-fields {
+            gap: 8px 14px;
+            font-size: 14px;
+        }
+        .profile-card.ig-story .id-field-label {
+            font-size: 10.5px;
+        }
+        .profile-card.ig-story .id-field-val {
+            font-size: 14px;
+        }
+        .profile-card.ig-story .id-body {
+            padding: 0 28px 22px;
+            /* 不要 flex 撐滿，讓內容自然堆疊 */
+        }
+        /* IG 限動版：底部留白處的水印裝飾大字（中央偏下） */
+        .profile-card.ig-story::after {
+            content: "BUILT TO GRADUATE · 2026";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 130px;
+            text-align: center;
+            font-family: 'SF Mono', Menlo, monospace;
+            font-size: 17px;
+            font-weight: 800;
+            letter-spacing: 0.22em;
+            color: transparent;
+            background: linear-gradient(90deg,
+                rgba(255, 45, 85, 0.22),
+                rgba(175, 82, 222, 0.28),
+                rgba(88, 86, 214, 0.22));
+            -webkit-background-clip: text;
+            background-clip: text;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .profile-card.ig-story .id-divider {
+            margin-bottom: 18px;
+        }
+        .profile-card.ig-story .id-desc {
+            font-size: 15.5px;
+            line-height: 1.62;
+            margin-bottom: 16px;
+            /* IG 不裁切，全文顯示 */
+            display: block;
+            -webkit-line-clamp: unset;
+            overflow: visible;
+        }
+        .profile-card.ig-story .id-quote {
+            font-size: 15px;
+            padding: 13px 16px;
+            margin-bottom: 16px;
+        }
+        .profile-card.ig-story .id-tag {
+            font-size: 13px;
+            padding: 5px 12px;
+        }
+        .profile-card.ig-story .id-tags-row {
+            gap: 7px;
             margin-bottom: 14px;
         }
-        .profile-card.ig-story .meta-val { font-size: 13px; }
-        .profile-card.ig-story .meta-label { font-size: 10px; }
-        .profile-card.ig-story .profile-body {
-            font-size: 13.5px;
-            line-height: 1.6;
-        }
-        .profile-card.ig-story .profile-quote {
-            font-size: 13.5px;
-            padding: 11px 14px;
-            margin-top: 12px;
-        }
-        .profile-card.ig-story .tag-section-title {
-            margin-top: 12px;
-            margin-bottom: 6px;
-        }
-        .profile-card.ig-story .trait-tag {
-            font-size: 11.5px;
-            padding: 4px 11px;
+        .profile-card.ig-story .id-footer-strip {
+            padding: 14px 28px;
+            font-size: 12px;
+            margin-top: auto;
         }
         .profile-card.ig-story .export-only {
-            margin-top: auto;       /* 把浮水印推到最下方 */
-            padding-top: 14px;
-            border-top: 0.5px dashed rgba(60, 60, 67, 0.18);
+            text-align: center;
+            font-size: 11px;
+            color: var(--label-tertiary);
+            padding: 8px 28px 0;
+            font-weight: 500;
+            letter-spacing: 0.02em;
         }
 
         .action-box {
@@ -932,8 +1086,8 @@
                 
                 <div class="action-box">
                     <button id="export-btn-ig" class="action-btn export-btn" onclick="window.jgQuiz.exportToImage()">
-                        <span class="btn-icon">📱</span>
-                        <span class="btn-text">儲存 IG 限動鑑定報告</span>
+                        <span class="btn-icon">📲</span>
+                        <span class="btn-text">儲存到相簿 / 分享</span>
                         <span class="btn-tag">9:16</span>
                     </button>
                     <button class="action-btn restart-btn" onclick="window.jgQuiz.resetQuiz()">↻ 再測一次</button>
@@ -1166,39 +1320,52 @@
             document.getElementById('result-header-text').innerText = `▸ 偵測 [${this.userName}] 的大數據精密 analysis：`;
 
             const cardBox = document.getElementById('profile-card-box');
-            let traitHtml = '';
-            finalResult.traits.forEach(t => {
-                traitHtml += `<span class="trait-tag" style="background:${finalResult.bg}">${t}</span>`;
-            });
 
             cardBox.innerHTML = `
-                <div class="profile-hero" style="--hero-bg:${finalResult.bg}; background:${finalResult.bg};">
-                    <span class="profile-hero-badge">${finalResult.badge}</span>
-                    <img src="${finalResult.characterName}.jpeg" onerror="this.onerror=null; this.src='${finalResult.characterName}.jpg'; this.onerror=function(){ this.onerror=null; this.src='${finalResult.characterName}.png'; this.onerror=function(){ this.style.display='none'; }; };" alt="${finalResult.name}">
+                <div class="id-card-strip">
+                    <div class="id-card-dots"><span></span><span></span><span></span></div>
+                    <div class="id-card-filename">${this.userName}_鑑定報告.id</div>
                 </div>
-                <div class="profile-content-inner">
-                    <div class="profile-name-block">
-                        <h2 class="profile-name">${finalResult.name}</h2>
-                        <div class="profile-name-divider"></div>
+                <div class="id-card-row">
+                    <div class="id-photo" style="--hero-bg:${finalResult.bg}; background:${finalResult.bg};">
+                        <img src="${finalResult.characterName}.jpeg" onerror="this.onerror=null; this.src='${finalResult.characterName}.jpg'; this.onerror=function(){ this.onerror=null; this.src='${finalResult.characterName}.png'; this.onerror=function(){ this.style.display='none'; }; };" alt="${finalResult.name}">
                     </div>
-                    <div class="profile-meta">
-                        <div class="meta-item"><span class="meta-label">動物代碼</span><span class="meta-val">${finalResult.meta.code}</span></div>
-                        <div class="meta-item"><span class="meta-label">特質歸屬</span><span class="meta-val">${finalResult.meta.type}</span></div>
-                        <div class="meta-item"><span class="meta-label">危險系數</span><span class="meta-val">${finalResult.meta.danger}</span></div>
-                        <div class="meta-item"><span class="meta-label">主要出沒</span><span class="meta-val">${finalResult.meta.place}</span></div>
+                    <div class="id-info">
+                        <div>
+                            <span class="id-badge">${finalResult.badge}</span>
+                            <h2 class="id-name">${finalResult.name}</h2>
+                            <div class="id-name-en">${finalResult.meta.code}</div>
+                            <div class="id-name-divider"></div>
+                        </div>
+                        <div class="id-fields">
+                            <div class="id-field">
+                                <span class="id-field-label">類型</span>
+                                <span class="id-field-val">${finalResult.meta.type}</span>
+                            </div>
+                            <div class="id-field">
+                                <span class="id-field-label">危險</span>
+                                <span class="id-field-val">${finalResult.meta.danger}</span>
+                            </div>
+                            <div class="id-field" style="grid-column: 1 / -1;">
+                                <span class="id-field-label">主要出沒</span>
+                                <span class="id-field-val">${finalResult.meta.place}</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="profile-body">
-                        ${finalResult.desc}
-                    </div>
-                    <div class="profile-quote">
-                        「${finalResult.quote}」
-                    </div>
-                    <div class="tag-section-title">偵測解鎖貼紙標籤</div>
-                    <div class="tags-container">
-                        ${traitHtml}
-                    </div>
-                    <div class="export-only" id="export-watermark"></div>
                 </div>
+                <div class="id-body">
+                    <div class="id-divider"></div>
+                    <div class="id-desc">${finalResult.desc}</div>
+                    <div class="id-quote">「${finalResult.quote}」</div>
+                    <div class="id-tags-row">
+                        ${finalResult.traits.map(t => `<span class="id-tag" style="background:${finalResult.bg}">${t}</span>`).join('')}
+                    </div>
+                </div>
+                <div class="id-footer-strip">
+                    <span>新竹市立建功高級中學 × 2026 畢聯會</span>
+                    <span class="id-stamp">2026</span>
+                </div>
+                <div class="export-only" id="export-watermark"></div>
             `;
 
             // 把卡片底色變數設給卡片本體，供 IG 模式背景使用
@@ -1207,7 +1374,8 @@
             setTimeout(fireConfetti, 200);
         },
 
-        // 🌟 用 html2canvas 截 DOM → IG 限動 9:16 高畫質 PNG (1080×1920)
+        // 🌟 匯出為 IG 限動 9:16 高畫質 PNG (1080×1920)
+        // 流程：html2canvas → toBlob → 試 Web Share API (iOS 會跳「儲存影像」) → 失敗就下載 PNG
         exportToImage: async function() {
             const targetNode = document.getElementById('profile-card-box');
             const btn = document.getElementById('export-btn-ig');
@@ -1218,21 +1386,20 @@
 
             btn.disabled = true;
             const oldHtml = btn.innerHTML;
-            btn.innerHTML = '<span class="btn-icon">⏳</span><span class="btn-text">正在生成 IG 限動版...</span>';
-            showToast('📱 正在生成 IG 限動版 (9:16)...', 4000);
+            btn.innerHTML = '<span class="btn-icon">⏳</span><span class="btn-text">正在生成...</span>';
+            showToast('📱 正在生成高畫質報告...', 4000);
 
             // 加上匯出時專屬浮水印
             const watermark = document.getElementById('export-watermark');
             if(watermark) {
                 watermark.innerHTML = `
-                    <div style="font-weight: 600; color: rgba(60, 60, 67, 0.65); margin-bottom: 3px;">${this.userName} 的專屬畢業鑑定報告</div>
-                    <div>新竹市立建功高級中學 × 2026 建功畢聯會</div>
+                    <div style="font-weight: 600; color: rgba(60, 60, 67, 0.7); margin-bottom: 2px;">${this.userName} 的專屬畢業鑑定報告</div>
                 `;
             }
 
             targetNode.classList.add('exporting', 'ig-story');
 
-            // 等動畫穩定 + 所有圖片載入完（hero 大圖很關鍵）
+            // 等動畫穩定 + 所有圖片載入完
             await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
             const allImgs = targetNode.querySelectorAll('img');
             await Promise.all(Array.from(allImgs).map(img => {
@@ -1272,15 +1439,47 @@
                     }
                 });
 
-                const dataURL = canvas.toDataURL('image/png', 1.0);
-                const downloadLink = document.createElement('a');
-                downloadLink.href = dataURL;
-                downloadLink.download = `${this.userName}_建功畢業鑑定_IG限動.png`;
-                document.body.appendChild(downloadLink);
-                downloadLink.click();
-                document.body.removeChild(downloadLink);
+                // 先轉成 Blob 以便走 Web Share API
+                const blob = await new Promise((resolve, reject) => {
+                    canvas.toBlob(b => b ? resolve(b) : reject(new Error('toBlob failed')), 'image/png', 1.0);
+                });
+                const fileName = `${this.userName}_建功畢業鑑定報告.png`;
+                const file = new File([blob], fileName, { type: 'image/png' });
 
-                showToast('✅ IG 限動版已儲存！', 2000);
+                // 嘗試 Web Share API（行動裝置原生分享：iOS 可選「儲存影像」直入相簿）
+                let shared = false;
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                    try {
+                        await navigator.share({
+                            files: [file],
+                            title: '我的建功畢業鑑定報告',
+                            text: `${this.userName} 的 2026 建功畢業鑑定報告 ✨`
+                        });
+                        shared = true;
+                        showToast('✅ 分享完成！', 2000);
+                    } catch (shareErr) {
+                        // 使用者按取消也會丟錯，這時不 fallback（避免又下載一次）
+                        if (shareErr && shareErr.name === 'AbortError') {
+                            shared = true;     // 視為已處理
+                            showToast('已取消', 1500);
+                        } else {
+                            console.warn('Web Share 失敗，fallback 到下載:', shareErr);
+                        }
+                    }
+                }
+
+                // Fallback：下載 PNG（手機 Safari 長按可儲存至相簿，桌面則直接下載）
+                if (!shared) {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = fileName;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    setTimeout(() => URL.revokeObjectURL(url), 1000);
+                    showToast('✅ 已下載！手機可長按圖片儲存至相簿', 3000);
+                }
             } catch (err) {
                 console.error('匯出失敗:', err);
                 showToast('⚠️ 匯出失敗，請再試一次', 2500);
