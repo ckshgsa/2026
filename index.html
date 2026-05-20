@@ -726,14 +726,16 @@ body {
             flex-wrap: wrap;
             gap: 6px;
         }
-        .report-tag-item {
-            border: 1px solid #000000;
+               .report-tag-item {
+            border: 2px solid #000000; /* 設定邊框為 2px 的黑色 */
             padding: 4px 10px;
             font-size: 11.5px;
             font-weight: 700;
             color: #000000;
-            background: #ffffff;
+            background: #ffffff; /* 設定白色背景 */
+            border-radius: 4px;   /* 若想要更精緻的標籤感，可以加入圓角 */
         }
+
 
         .report-footer {
             margin-top: 24px;
@@ -1023,6 +1025,8 @@ body {
             height: 124px;
             font-size: 18px;
             border-width: 3px;
+            background: transparent; /* 這裡也要設為透明 */
+            box-shadow: none;        /* 確保匯出圖不會有白底陰影 */
         }
         .profile-card.ig-story .stamp-red-seal span {
             font-size: 13px !important;
@@ -1700,8 +1704,9 @@ const barcodeLines = generateBarcodeSet(300);
                     ${finalResult.traits.map(t => `
     <span class="report-tag-item" 
           style="background-color: ${lightThemeBg}; 
-                 border-color: ${finalResult.bg}; 
+                 border-color: ${finalResult.bg}; /* <--- 這裡會動態覆蓋掉 CSS 的黑色設定 */
                  color: #111; 
+                 border: 2px solid #000000; /* <--- 請在這裡手動加上這行 */
                  font-weight: 700; 
                  font-size: 16px; 
                  padding: 8px 16px;">
