@@ -610,22 +610,10 @@
         }
 
         .report-meta-row {
-    display: grid;
-    /* 這裡 grid-template-columns 的比例是你版面的骨架，一定要鎖定 */
-    grid-template-columns: 40% 60%; 
-    gap: 10px;
-    margin-bottom: 18px;
-    /* 確保 Android 不會因為內容撐開而變形 */
-    align-items: start; 
-}
-
-/* 確保表格內容嚴格遵守寬度 */
-.report-table {
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: fixed; /* 這行非常重要，它會無視 Android 自動計算出的奇怪寬度 */
-}
-
+            display: flex;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
         .report-photo-box {
             flex: 0 0 40%;
             display: flex;
@@ -670,7 +658,12 @@
             background: transparent;
         }
 
-        
+        .report-table {
+            flex: 1;
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 12.5px;
+        }
         .report-table td {
             border: 1px solid #000000;
             padding: 8px 10px;
