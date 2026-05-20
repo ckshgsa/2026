@@ -621,22 +621,13 @@
             gap: 8px;
         }
         .report-photo {
-    width: 100%;
-    height: 0;
-    padding-top: 100%;     ← 加這行（撐出正方形）
-    border: 1px solid #000000;
-    background: var(--hero-bg, #f2f2f7);
-    position: relative;
-    /* padding: 8px 拿掉，改到 img 用 absolute 內縮 */
-}
-
-.report-photo img {
-    position: absolute;
-    top: 8px; left: 8px;
-    width: calc(100% - 16px);
-    height: calc(100% - 16px);
-    object-fit: cover;
-}
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border: 1px solid #000000;
+            background: var(--hero-bg, #f2f2f7);
+            position: relative;
+            padding: 8px;
+        }
         .report-photo::before, .report-photo::after {
             content: "";
             position: absolute;
@@ -667,16 +658,22 @@
             background: transparent;
         }
 
-        .report-table {
+                .report-table {
             flex: 1;
             border-collapse: collapse;
             width: 100%;
             font-size: 12.5px;
+            /* 新增這行：確保表格內容垂直對齊基準一致 */
+            table-layout: fixed; 
         }
         .report-table td {
             border: 1px solid #000000;
             padding: 8px 10px;
-            vertical-align: middle;
+            /* 明確指定垂直對齊方式 */
+            vertical-align: middle; 
+            /* 確保字體行高不會撐開高度導致不對齊 */
+            line-height: 1.2;
+            box-sizing: border-box;
         }
         .report-table td:first-child {
             width: 90px;
@@ -686,6 +683,7 @@
             color: #333333;
             text-align: center;
         }
+
         .report-table .td-val {
             font-weight: 700;
             color: #000000;
