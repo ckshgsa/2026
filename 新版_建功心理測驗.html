@@ -52,14 +52,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100dvh;
+            min-height: 100vh;
             line-height: 1.47;
             letter-spacing: -0.01em;
         }
 
         #quiz-container {
             width: 100vw;
-            min-height: 100dvh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -409,7 +409,7 @@
             color: var(--label-primary);
             box-shadow: 0 6px 22px rgba(0, 122, 255, 0.18), 0 0 0 3px rgba(0, 122, 255, 0.10);
             animation: selectPulse 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            padding-right: 62px;        /* 預留貼紙空間 */
+            padding-right: 90px;        /* 預留貼紙空間 */
         }
         .option-btn.selected::before {
             background: var(--apple-blue);
@@ -423,7 +423,7 @@
         }
 
         .option-btn.selected::after {
-            content: '✓';
+            content: '✓ 已貼上';
             position: absolute;
             right: 14px;
             top: 50%;
@@ -465,12 +465,9 @@
            - 匯出 IG：套 .ig-story，540×960 (9:16)，scale 2 → 1080×1920
            ========================================================= */
         .profile-card {
-            background: #f4ead7;
-            border: 2px solid #1f1f1f;
-            border-radius: 18px;
-            width: 100%;
-            max-width: 420px;
-            margin: 0 auto;
+            background: #ffffff;
+            border: 0.5px solid rgba(60, 60, 67, 0.12);
+            border-radius: 22px;
             padding: 0;
             margin-top: 12px;
             text-align: left;
@@ -1026,40 +1023,6 @@
             letter-spacing: -0.01em;
         }
         .toast.show { transform: translateX(-50%) translateY(0); }
-
-        .id-card-strip {
-            background:#111 !important;
-            color:white;
-            border-bottom:none !important;
-            border-radius:16px 16px 0 0;
-        }
-
-        .id-badge{
-            background:#111 !important;
-            color:#fff !important;
-            border-radius:8px !important;
-            box-shadow:none !important;
-        }
-
-        .id-field{
-            background:#fff8ee;
-            border:1.5px solid #111;
-            border-radius:10px;
-            padding:8px;
-        }
-
-        .id-quote{
-            background:#fff !important;
-            border:2px solid #111 !important;
-            border-radius:12px !important;
-            font-style:normal !important;
-        }
-
-        .id-tag{
-            border:1.5px solid #111 !important;
-            background:#fff !important;
-        }
-
     </style>
 </head>
 <body>
@@ -1121,13 +1084,6 @@
                 
                 <div class="profile-card" id="profile-card-box"></div>
                 
-                <div id="share-preview-wrap" style="display:none; margin-top:14px;">
-                    <img id="share-preview-image" style="width:100%; border-radius:18px; border:2px solid #111; display:block;">
-                    <div style="font-size:12px; text-align:center; margin-top:6px; color:#666;">
-                        手機可直接長按上方整張報告下載
-                    </div>
-                </div>
-
                 <div class="action-box">
                     <button id="export-btn-ig" class="action-btn export-btn" onclick="window.jgQuiz.exportToImage()">
                         <span class="btn-icon">📲</span>
@@ -1522,15 +1478,7 @@
                     a.click();
                     document.body.removeChild(a);
                     setTimeout(() => URL.revokeObjectURL(url), 1000);
-                    // 建立可長按整張卡片的預覽圖
-                    const preview = document.getElementById('share-preview-image');
-                    const wrap = document.getElementById('share-preview-wrap');
-                    if(preview && wrap){
-                        preview.src = url;
-                        wrap.style.display = 'block';
-                    }
-
-                    showToast('✅ 已生成完整報告！可直接長按整張圖下載', 3500);
+                    showToast('✅ 已下載！手機可長按圖片儲存至相簿', 3000);
                 }
             } catch (err) {
                 console.error('匯出失敗:', err);
