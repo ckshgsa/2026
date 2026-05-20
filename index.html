@@ -364,7 +364,7 @@
             background: #ffffff;
             border: 0.5px solid rgba(60, 60, 67, 0.12);
             border-radius: 22px;
-            padding: 22px 20px;
+            padding: 0;
             margin-top: 12px;
             text-align: left;
             position: relative;
@@ -380,10 +380,58 @@
             100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
+        /* 🎨 角色英雄圖區（大圖融入卡片頂端） */
+        .profile-hero {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1;            /* 角色圖預設為方形 */
+            max-height: 420px;
+            overflow: hidden;
+            background: var(--hero-bg, rgba(118, 118, 128, 0.08));
+        }
+        .profile-hero::after {
+            /* 底部漸層淡出，銜接下方白色內容區 */
+            content: "";
+            position: absolute;
+            left: 0; right: 0; bottom: 0;
+            height: 35%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.7) 70%, #ffffff 100%);
+            pointer-events: none;
+        }
+        .profile-hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 30%;
+            animation: heroFloat 0.8s cubic-bezier(0.32, 0.72, 0, 1);
+        }
+        @keyframes heroFloat {
+            0% { opacity: 0; transform: scale(1.08); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .profile-hero-badge {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            font-size: 11px;
+            background: rgba(0, 0, 0, 0.72);
+            color: #fff;
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 2;
+        }
+        .profile-content-inner {
+            padding: 18px 20px 22px;
+        }
+
         .profile-header {
             border-bottom: 0.5px solid rgba(60, 60, 67, 0.16);
-            padding-bottom: 16px;
-            margin-bottom: 16px;
+            padding-bottom: 14px;
+            margin-bottom: 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -392,8 +440,8 @@
 
         .profile-title-area { flex: 1; }
         .profile-avatar-box {
-            width: 78px; height: 78px; 
-            border-radius: 18px; 
+            width: 64px; height: 64px;
+            border-radius: 16px; 
             overflow: hidden; 
             background: rgba(118, 118, 128, 0.08); 
             flex-shrink: 0; 
@@ -448,9 +496,12 @@
             .image-box { height: 140px; margin-bottom: 16px; }
             .question-title { font-size: 18px; margin-bottom: 14px; }
             .option-btn { padding: 13px 16px; font-size: 15px; }
-            .profile-card { padding: 20px 18px; }
+            .profile-card { padding: 0; }
+            .profile-content-inner { padding: 16px 18px 20px; }
+            .profile-hero { max-height: 360px; }
+            .profile-hero-badge { font-size: 10.5px; padding: 4px 10px; top: 12px; left: 12px; }
             .profile-name { font-size: 19px; }
-            .profile-avatar-box { width: 68px; height: 68px; border-radius: 16px; }
+            .profile-avatar-box { width: 56px; height: 56px; border-radius: 14px; }
             .subtitle { font-size: 13.5px; margin-bottom: 18px; }
             .identity-container { padding: 14px 12px; gap: 10px; }
             .sticker-btn { padding: 10px 18px; font-size: 14px; }
@@ -514,7 +565,7 @@
         .export-only { display: none; }
         .profile-card.exporting .export-only {
             display: block;
-            margin-top: 18px;
+            margin-top: 16px;
             padding-top: 14px;
             border-top: 0.5px dashed rgba(60, 60, 67, 0.18);
             text-align: center;
@@ -523,6 +574,98 @@
             font-weight: 500;
             letter-spacing: 0.02em;
             line-height: 1.5;
+        }
+
+        /* =========================================================
+           📱 IG 限動 9:16 匯出模式（1080 × 1920，等比 540 × 960）
+           匯出時動態為 #profile-card-box 加上 .ig-story
+           匯出完後再移除，所以平常瀏覽完全不受影響
+           ========================================================= */
+        .profile-card.ig-story {
+            width: 540px;
+            height: 960px;            /* 9:16 */
+            border-radius: 0;
+            border: none;
+            display: flex;
+            flex-direction: column;
+            background: var(--hero-bg, #fafafa);
+            position: relative;
+            box-shadow: none;
+            animation: none;
+        }
+        .profile-card.ig-story .profile-hero {
+            aspect-ratio: auto;
+            max-height: none;
+            height: 440px;            /* 大圖佔上半 */
+            flex-shrink: 0;
+            background: transparent;
+        }
+        .profile-card.ig-story .profile-hero::after {
+            height: 28%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, var(--hero-bg-translucent, rgba(255,255,255,0.6)) 60%, #ffffff 100%);
+        }
+        .profile-card.ig-story .profile-hero img {
+            object-position: center 25%;
+        }
+        .profile-card.ig-story .profile-hero-badge {
+            top: 24px;
+            left: 24px;
+            font-size: 13px;
+            padding: 7px 16px;
+        }
+        .profile-card.ig-story .profile-content-inner {
+            background: #ffffff;
+            flex: 1;
+            padding: 22px 28px 28px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .profile-card.ig-story .profile-header {
+            padding-bottom: 14px;
+            margin-bottom: 14px;
+        }
+        .profile-card.ig-story .profile-name {
+            font-size: 24px;
+        }
+        .profile-card.ig-story .profile-badge {
+            font-size: 12px;
+            padding: 5px 13px;
+        }
+        .profile-card.ig-story .profile-avatar-box {
+            width: 64px;
+            height: 64px;
+        }
+        .profile-card.ig-story .profile-meta {
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            padding: 12px 14px;
+            font-size: 12.5px;
+            margin-bottom: 14px;
+        }
+        .profile-card.ig-story .meta-val { font-size: 13px; }
+        .profile-card.ig-story .meta-label { font-size: 10px; }
+        .profile-card.ig-story .profile-body {
+            font-size: 13.5px;
+            line-height: 1.6;
+        }
+        .profile-card.ig-story .profile-quote {
+            font-size: 13.5px;
+            padding: 11px 14px;
+            margin-top: 12px;
+        }
+        .profile-card.ig-story .tag-section-title {
+            margin-top: 12px;
+            margin-bottom: 6px;
+        }
+        .profile-card.ig-story .trait-tag {
+            font-size: 11.5px;
+            padding: 4px 11px;
+        }
+        .profile-card.ig-story .export-only {
+            margin-top: auto;       /* 把浮水印推到最下方 */
+            padding-top: 14px;
+            border-top: 0.5px dashed rgba(60, 60, 67, 0.18);
         }
 
         .action-box {
@@ -544,21 +687,34 @@
             font-family: inherit;
         }
         .export-btn { 
-            background: linear-gradient(180deg, #34C759, #30B350); 
+            background: linear-gradient(180deg, #FF2D55, #AF52DE 50%, #5856D6); 
             color: white; 
             box-shadow: 
-                0 1px 2px rgba(52, 199, 89, 0.2),
-                0 4px 14px rgba(52, 199, 89, 0.25);
+                0 1px 2px rgba(175, 82, 222, 0.22),
+                0 4px 14px rgba(175, 82, 222, 0.28);
         }
         .export-btn:hover { 
             transform: translateY(-1px); 
             filter: brightness(1.04); 
             box-shadow: 
-                0 2px 4px rgba(52, 199, 89, 0.25),
-                0 8px 22px rgba(52, 199, 89, 0.32);
+                0 2px 4px rgba(175, 82, 222, 0.28),
+                0 8px 22px rgba(175, 82, 222, 0.35);
         }
         .export-btn:active { transform: scale(0.98); filter: brightness(0.96); }
         .export-btn:disabled { opacity: 0.6; cursor: wait; transform: none; }
+
+        /* 次要匯出按鈕（一般卡片，蘋果綠） */
+        .export-btn-secondary {
+            background: linear-gradient(180deg, #34C759, #30B350);
+            box-shadow: 
+                0 1px 2px rgba(52, 199, 89, 0.2),
+                0 4px 14px rgba(52, 199, 89, 0.25);
+        }
+        .export-btn-secondary:hover {
+            box-shadow: 
+                0 2px 4px rgba(52, 199, 89, 0.25),
+                0 8px 22px rgba(52, 199, 89, 0.32);
+        }
         
         .restart-btn { 
             background: rgba(118, 118, 128, 0.16); 
@@ -653,7 +809,8 @@
                 <div class="profile-card" id="profile-card-box"></div>
                 
                 <div class="action-box">
-                    <button id="export-btn-main" class="action-btn export-btn" onclick="window.jgQuiz.exportToImage()">📸 儲存鑑定報告 (高畫質 PNG)</button>
+                    <button id="export-btn-ig" class="action-btn export-btn" onclick="window.jgQuiz.exportToImage('ig')">📱 IG 限動版 (9:16)</button>
+                    <button id="export-btn-main" class="action-btn export-btn export-btn-secondary" onclick="window.jgQuiz.exportToImage('card')">📸 一般鑑定報告</button>
                     <button class="action-btn restart-btn" onclick="window.jgQuiz.resetQuiz()">重新建檔 / 再測一次</button>
                 </div>
             </div>
@@ -870,50 +1027,69 @@
             });
 
             cardBox.innerHTML = `
-                <div class="profile-header">
-                    <div class="profile-title-area">
-                        <span class="profile-badge">${finalResult.badge}</span>
-                        <h2 class="profile-name">${finalResult.name}</h2>
+                <div class="profile-hero" style="--hero-bg:${finalResult.bg}; background:${finalResult.bg};">
+                    <span class="profile-hero-badge">${finalResult.badge}</span>
+                    <img src="${finalResult.characterName}.jpeg" onerror="this.onerror=null; this.src='${finalResult.characterName}.jpg'; this.onerror=function(){ this.onerror=null; this.src='${finalResult.characterName}.png';};" alt="${finalResult.name}">
+                </div>
+                <div class="profile-content-inner">
+                    <div class="profile-header">
+                        <div class="profile-title-area">
+                            <span class="profile-badge">${finalResult.badge}</span>
+                            <h2 class="profile-name">${finalResult.name}</h2>
+                        </div>
+                        <div class="profile-avatar-box">
+                            <img src="${finalResult.characterName}.jpeg" onerror="this.onerror=null; this.src='${finalResult.characterName}.jpg'; this.onerror=function(){ this.onerror=null; this.src='${finalResult.characterName}.png';};" alt="${finalResult.name}">
+                        </div>
                     </div>
-                    <div class="profile-avatar-box">
-                        <img src="${finalResult.characterName}.jpeg" onerror="this.onerror=null; this.src='${finalResult.characterName}.jpg'; this.onerror=function(){this.src='${finalResult.characterName}.png';};" alt="${finalResult.name}">
+                    <div class="profile-meta">
+                        <div class="meta-item"><span class="meta-label">動物代碼</span><span class="meta-val">${finalResult.meta.code}</span></div>
+                        <div class="meta-item"><span class="meta-label">特質歸屬</span><span class="meta-val">${finalResult.meta.type}</span></div>
+                        <div class="meta-item"><span class="meta-label">危險系數</span><span class="meta-val">${finalResult.meta.danger}</span></div>
+                        <div class="meta-item"><span class="meta-label">主要出沒</span><span class="meta-val">${finalResult.meta.place}</span></div>
                     </div>
+                    <div class="profile-body">
+                        ${finalResult.desc}
+                    </div>
+                    <div class="profile-quote">
+                        「${finalResult.quote}」
+                    </div>
+                    <div class="tag-section-title">偵測解鎖貼紙標籤</div>
+                    <div class="tags-container">
+                        ${traitHtml}
+                    </div>
+                    <div class="export-only" id="export-watermark"></div>
                 </div>
-                <div class="profile-meta">
-                    <div class="meta-item"><span class="meta-label">動物代碼</span><span class="meta-val">${finalResult.meta.code}</span></div>
-                    <div class="meta-item"><span class="meta-label">特質歸屬</span><span class="meta-val">${finalResult.meta.type}</span></div>
-                    <div class="meta-item"><span class="meta-label">危險系數</span><span class="meta-val">${finalResult.meta.danger}</span></div>
-                    <div class="meta-item"><span class="meta-label">主要出沒</span><span class="meta-val">${finalResult.meta.place}</span></div>
-                </div>
-                <div class="profile-body">
-                    ${finalResult.desc}
-                </div>
-                <div class="profile-quote">
-                    「${finalResult.quote}」
-                </div>
-                <div class="tag-section-title">偵測解鎖貼紙標籤</div>
-                <div class="tags-container">
-                    ${traitHtml}
-                </div>
-                <div class="export-only" id="export-watermark"></div>
             `;
+
+            // 把卡片底色變數設給卡片本體，供 IG 模式背景使用
+            cardBox.style.setProperty('--hero-bg', finalResult.bg);
 
             setTimeout(fireConfetti, 200);
         },
 
-        // 🌟 用 html2canvas 截 DOM，scale=3 → 超高畫質 PNG，只擷取卡片本體
-        exportToImage: async function() {
+        // 🌟 用 html2canvas 截 DOM，scale=3 → 超高畫質 PNG
+        // mode: 'card' 一般卡片版；'ig' IG 限動 9:16 版（1080×1920）
+        exportToImage: async function(mode) {
+            mode = (mode === 'ig') ? 'ig' : 'card';
             const targetNode = document.getElementById('profile-card-box');
-            const btn = document.getElementById('export-btn-main');
+            const btn = (mode === 'ig')
+                ? document.getElementById('export-btn-ig')
+                : document.getElementById('export-btn-main');
             if(!targetNode || !window.html2canvas) {
                 showToast('匯出工具尚未載入，請稍候');
                 return;
             }
 
-            btn.disabled = true;
-            const oldText = btn.innerText;
-            btn.innerText = '⏳ 正在生成高畫質報告...';
-            showToast('📸 正在生成高畫質報告...', 4000);
+            // 兩顆按鈕都先鎖
+            const igBtn = document.getElementById('export-btn-ig');
+            const cardBtn = document.getElementById('export-btn-main');
+            const oldIgText = igBtn ? igBtn.innerText : '';
+            const oldCardText = cardBtn ? cardBtn.innerText : '';
+            if(igBtn) igBtn.disabled = true;
+            if(cardBtn) cardBtn.disabled = true;
+
+            btn.innerText = (mode === 'ig') ? '⏳ 正在生成 IG 限動版...' : '⏳ 正在生成高畫質報告...';
+            showToast(mode === 'ig' ? '📱 正在生成 IG 限動版 (9:16)...' : '📸 正在生成高畫質報告...', 4000);
 
             // 加上匯出時專屬浮水印
             const watermark = document.getElementById('export-watermark');
@@ -924,27 +1100,36 @@
                 `;
             }
 
+            // 加上對應 class
             targetNode.classList.add('exporting');
+            if(mode === 'ig') targetNode.classList.add('ig-story');
 
-            // 等動畫穩定 + 圖片載入
+            // 等動畫穩定 + 所有圖片載入完（hero 大圖很關鍵）
             await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
-            const avatarImg = targetNode.querySelector('.profile-avatar-box img');
-            if(avatarImg && !avatarImg.complete) {
-                await new Promise(r => {
-                    avatarImg.onload = r;
-                    avatarImg.onerror = r;
-                    setTimeout(r, 2000);
+            const allImgs = targetNode.querySelectorAll('img');
+            await Promise.all(Array.from(allImgs).map(img => {
+                if(img.complete && img.naturalWidth > 0) return Promise.resolve();
+                return new Promise(r => {
+                    const done = () => r();
+                    img.addEventListener('load', done, { once: true });
+                    img.addEventListener('error', done, { once: true });
+                    setTimeout(done, 2500);
                 });
-            }
+            }));
 
             try {
+                const isIg = (mode === 'ig');
                 const canvas = await html2canvas(targetNode, {
-                    scale: 3,                              // 3 倍解析度 → 超清晰
-                    backgroundColor: '#FFFFFF',            // 純白底，不含外面紫漸層
+                    scale: isIg ? 2 : 3,                   // IG 版 540×2=1080；卡片版 3 倍
+                    backgroundColor: '#FFFFFF',
                     useCORS: true,
                     allowTaint: true,
                     logging: false,
                     imageTimeout: 5000,
+                    width: isIg ? 540 : undefined,
+                    height: isIg ? 960 : undefined,
+                    windowWidth: isIg ? 540 : undefined,
+                    windowHeight: isIg ? 960 : undefined,
                     onclone: (clonedDoc) => {
                         const card = clonedDoc.getElementById('profile-card-box');
                         if(card) {
@@ -964,19 +1149,22 @@
                 const dataURL = canvas.toDataURL('image/png', 1.0);
                 const downloadLink = document.createElement('a');
                 downloadLink.href = dataURL;
-                downloadLink.download = `${this.userName}_建功畢業鑑定報告.png`;
+                downloadLink.download = isIg
+                    ? `${this.userName}_建功畢業鑑定_IG限動.png`
+                    : `${this.userName}_建功畢業鑑定報告.png`;
                 document.body.appendChild(downloadLink);
                 downloadLink.click();
                 document.body.removeChild(downloadLink);
 
-                showToast('✅ 報告已儲存！', 2000);
+                showToast(isIg ? '✅ IG 限動版已儲存！' : '✅ 報告已儲存！', 2000);
             } catch (err) {
                 console.error('匯出失敗:', err);
                 showToast('⚠️ 匯出失敗，請再試一次', 2500);
             } finally {
                 targetNode.classList.remove('exporting');
-                btn.disabled = false;
-                btn.innerText = oldText;
+                targetNode.classList.remove('ig-story');
+                if(igBtn) { igBtn.disabled = false; igBtn.innerText = oldIgText; }
+                if(cardBtn) { cardBtn.disabled = false; cardBtn.innerText = oldCardText; }
             }
         },
 
