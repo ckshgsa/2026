@@ -468,6 +468,15 @@
             box-shadow: 0 12px 32px rgba(0,0,0,0.15);
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang TC", "Microsoft JhengHei", sans-serif;
             animation: cardPop 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            /* 🌟 讓匯出瞬間的卡片絕對定位，擺脫手機容器限制，避免截圖被按鈕或邊界切到 */
+.profile-card.exporting.ig-story {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 1080px !important;
+    z-index: 9999 !important;
+}
+
             /* 🔧 FIX2: scale wrap 容器，方便手機一頁內顯示 */
             transform-origin: top center;
         }
@@ -1738,40 +1747,47 @@
 
         // 🔧 FIX2: 結算卡等比縮放到一個螢幕內
         fitCardToScreen: function() {
-            const card = document.getElementById('profile-card-box');
-            if(!card) return;
+    const card = document.getElementById('profile-card-box');
+    if(!card) return;
 
-            // 重置以取得原始尺寸
+    // 重置以取得原始尺寸
+    card.style.transform = 'none';
+    card.style.width = '';
+    card.style.marginBottom = '0'; // 先歸零確保計算正確
+    const naturalH = card.offsetHeight;
+
+    // 預留空間：偵測小標 ~30 + 兩顆按鈕 ~140 + footer ~70 + padding 60
+    const reservedH = 300;
+    const availableH = window.innerHeight - reservedH;
+
+    if (naturalH > availableH && availableH > 0) {
+        const ratio = availableH / naturalH;
+        const scale = Math.max(0.6, Math.min(1, ratio));
+
+        if (scale < 1) {
+            // 1. 先把寬度撐開
+            card.style.width = `${100 / scale}%`;
+            
+            // 2. 🌟 關鍵修復：因為寬度變寬了，文字換行減少，卡片會變「矮」
+            // 必須在這裡重新量測排版後的真實高度！
+            const realH = card.offsetHeight;
+            
+            // 3. 套用縮放
+            card.style.transformOrigin = 'top left';
+            card.style.transform = `scale(${scale})`;
+            
+            // 4. 根據「真實高度」計算按鈕該往上拉多少
+            const visualH = realH * scale;
+            card.style.marginBottom = `${-(realH - visualH) + 12}px`;
+        } else {
             card.style.transform = 'none';
-            card.style.width = '';
-            const naturalH = card.offsetHeight;
-            const naturalW = card.offsetWidth;
-
-            // 預留空間：偵測小標 ~30 + 兩顆按鈕 ~140 + footer ~70 + padding 60
-            const reservedH = 300;
-            const availableH = window.innerHeight - reservedH;
-
-            if (naturalH > availableH && availableH > 0) {
-                const ratio = availableH / naturalH;
-                const scale = Math.max(0.6, Math.min(1, ratio));
-
-                if (scale < 1) {
-                    // 寬度補償：放大成 (1/scale) 倍，scale 後視覺剛好填滿原本寬度
-                    card.style.width = `${100 / scale}%`;
-                    card.style.transformOrigin = 'top left';
-                    card.style.transform = `scale(${scale})`;
-                    // scale 後實際佔的高度會變小，用負 margin 補
-                    const visualH = naturalH * scale;
-                    card.style.marginBottom = `${-(naturalH - visualH) + 12}px`;
-                } else {
-                    card.style.transform = 'none';
-                    card.style.marginBottom = '12px';
-                }
-            } else {
-                card.style.transform = 'none';
-                card.style.marginBottom = '12px';
-            }
-        },
+            card.style.marginBottom = '12px';
+        }
+    } else {
+        card.style.transform = 'none';
+        card.style.marginBottom = '12px';
+    }
+}
 
         // 🌟 匯出為 IG 限動 9:16 高畫質 PNG (1080×1920)
         exportToImage: async function() {
