@@ -1086,7 +1086,20 @@
         .export-only { display: none; }
         .profile-card.exporting .export-only { display: block; }
 
-        .action-box {
+        /* card-scale-wrap：讓 scale 縮放後仍填滿寬度、高度準確回收 */
+        #card-scale-wrap {
+            width: 100%;
+            position: relative;
+            margin-top: 12px;
+            /* 高度由 JS 設定 */
+        }
+        #card-scale-wrap .profile-card {
+            margin-top: 0;          /* 已由 wrap 提供 margin */
+            transform-origin: top left;
+            width: 100%;            /* 預設 100% */
+        }
+
+
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -1371,7 +1384,10 @@
             <div id="result-page" class="hidden">
                 <div id="result-header-text" style="font-size: 13.5px; font-weight: 600; color: var(--label-tertiary); margin-bottom: 8px; text-align: left; letter-spacing: -0.005em;"></div>
                 
-                <div class="profile-card" id="profile-card-box"></div>
+                <!-- wrapper：固定寬度，overflow hidden，裡面的卡片用 transform scale -->
+                <div id="card-scale-wrap">
+                    <div class="profile-card" id="profile-card-box"></div>
+                </div>
                 
                 <div class="action-box">
                     <button id="export-btn-ig" class="action-btn export-btn" onclick="window.jgQuiz.exportToImage()">
@@ -1739,37 +1755,36 @@
         // 🔧 FIX2: 結算卡等比縮放到一個螢幕內
         fitCardToScreen: function() {
             const card = document.getElementById('profile-card-box');
-            if(!card) return;
+            const wrap = document.getElementById('card-scale-wrap');
+            if(!card || !wrap) return;
 
             // 重置以取得原始尺寸
             card.style.transform = 'none';
-            card.style.width = '';
+            card.style.width = '100%';
+            wrap.style.height = '';
             const naturalH = card.offsetHeight;
-            const naturalW = card.offsetWidth;
 
-            // 預留空間：偵測小標 ~30 + 兩顆按鈕 ~140 + footer ~70 + padding 60
-            const reservedH = 300;
+            // 預留空間：偵測小標 ~30 + 兩顆按鈕 ~140 + footer ~80 + container padding 60
+            const reservedH = 310;
             const availableH = window.innerHeight - reservedH;
 
             if (naturalH > availableH && availableH > 0) {
                 const ratio = availableH / naturalH;
-                const scale = Math.max(0.6, Math.min(1, ratio));
+                const scale = Math.max(0.55, Math.min(1, ratio));
 
                 if (scale < 1) {
-                    // 寬度補償：放大成 (1/scale) 倍，scale 後視覺剛好填滿原本寬度
-                    card.style.width = `${100 / scale}%`;
                     card.style.transformOrigin = 'top left';
                     card.style.transform = `scale(${scale})`;
-                    // scale 後實際佔的高度會變小，用負 margin 補
-                    const visualH = naturalH * scale;
-                    card.style.marginBottom = `${-(naturalH - visualH) + 12}px`;
-                } else {
-                    card.style.transform = 'none';
-                    card.style.marginBottom = '12px';
+                    card.style.width = `${100 / scale}%`;   // 補回寬度，讓卡片填滿 wrap
+
+                    // wrap 高度設為縮放後的視覺高度（這樣下方 action-box 緊貼卡片）
+                    const visualH = Math.ceil(naturalH * scale);
+                    wrap.style.height = `${visualH}px`;
                 }
             } else {
                 card.style.transform = 'none';
-                card.style.marginBottom = '12px';
+                card.style.width = '100%';
+                wrap.style.height = '';
             }
         },
 
@@ -1794,13 +1809,27 @@
                 `;
             }
 
-            // 🔧 暫時取消 scale/width 縮放，讓 html2canvas 截到完整卡片
+            // 🔧 暫時把卡片移到 body 頂層（脫離 container），ig-story 1080px 才能正確展開
+            const wrap = document.getElementById('card-scale-wrap');
             const oldTransform = targetNode.style.transform;
             const oldMarginBottom = targetNode.style.marginBottom;
             const oldWidth = targetNode.style.width;
+            const oldWrapH = wrap ? wrap.style.height : '';
             targetNode.style.transform = 'none';
             targetNode.style.marginBottom = '0';
             targetNode.style.width = '';
+            if(wrap) wrap.style.height = '';
+
+            // 把卡片暫時移到 body，讓 1080px ig-story 不受 container 限制
+            const placeholder = document.createElement('div');
+            placeholder.style.display = 'none';
+            if(wrap && wrap.firstElementChild === targetNode) {
+                wrap.insertBefore(placeholder, targetNode);
+            }
+            document.body.appendChild(targetNode);
+            targetNode.style.position = 'fixed';
+            targetNode.style.top = '-9999px';
+            targetNode.style.left = '0';
 
             targetNode.classList.add('exporting', 'ig-story');
 
@@ -1865,9 +1894,18 @@
             } finally {
                 targetNode.classList.remove('exporting', 'ig-story');
                 // 還原 scale
+                // 把卡片放回 wrap
+                targetNode.style.position = '';
+                targetNode.style.top = '';
+                targetNode.style.left = '';
+                if(wrap && placeholder.parentNode === wrap) {
+                    wrap.insertBefore(targetNode, placeholder);
+                    placeholder.remove();
+                }
                 targetNode.style.transform = oldTransform;
                 targetNode.style.marginBottom = oldMarginBottom;
                 targetNode.style.width = oldWidth;
+                if(wrap) wrap.style.height = oldWrapH;
                 btn.disabled = false;
                 btn.innerHTML = oldHtml;
             }
@@ -1931,7 +1969,9 @@
             document.getElementById('start-page').className = '';
             // 還原 card 的 transform/margin
             const card = document.getElementById('profile-card-box');
-            if(card) { card.style.transform = ''; card.style.marginBottom = ''; }
+            if(card) { card.style.transform = ''; card.style.marginBottom = ''; card.style.width = ''; }
+            const wrap = document.getElementById('card-scale-wrap');
+            if(wrap) wrap.style.height = '';
             ImageEngine.setWelcomeImage();
         }
     };
