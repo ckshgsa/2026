@@ -1,1472 +1,1994 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>2026 建功人請回答！！畢業限定心理測驗</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>2026 建功人請回答！！畢業限定心理測驗</title>
 
-<!-- 🌟 html2canvas：直接擷取 DOM，畫質高、字體準 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- 🌟 html2canvas：直接擷取 DOM，畫質高、字體準 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-<style>
-/* ==============================
-🍎 Apple HIG 設計系統
-============================== */
-:root {
---apple-blue: #007AFF;
---apple-indigo: #5856D6;
---apple-purple: #AF52DE;
---apple-pink: #FF2D55;
---apple-green: #34C759;
---apple-gray-1: #8E8E93;
---apple-gray-5: #E5E5EA;
---apple-gray-6: #F2F2F7;
+    <style>
+        /* ==============================
+           🍎 Apple HIG 設計系統
+           ============================== */
+        :root {
+            --apple-blue: #007AFF;
+            --apple-indigo: #5856D6;
+            --apple-purple: #AF52DE;
+            --apple-pink: #FF2D55;
+            --apple-green: #34C759;
+            --apple-gray-1: #8E8E93;
+            --apple-gray-5: #E5E5EA;
+            --apple-gray-6: #F2F2F7;
+            
+            --label-primary: #000000;
+            --label-secondary: rgba(60, 60, 67, 0.85);
+            --label-tertiary: rgba(60, 60, 67, 0.6);
+            --label-quaternary: rgba(60, 60, 67, 0.3);
+            
+            --card-bg: rgba(255, 255, 255, 0.82);
+            --sticker-color: #cbd5e0;
+        }
+        
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
 
---label-primary: #000000;
---label-secondary: rgba(60, 60, 67, 0.85);
---label-tertiary: rgba(60, 60, 67, 0.6);
---label-quaternary: rgba(60, 60, 67, 0.3);
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'PingFang TC', 'Helvetica Neue', 'Microsoft JhengHei', sans-serif;
+            background-color: #F2F2F7;
+            background-image: url('背景.jpeg'), url('背景.jpg'), url('背景.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: var(--label-primary);
+            margin: 0;
+            padding: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            line-height: 1.47;
+            letter-spacing: -0.01em;
+        }
 
---card-bg: rgba(255, 255, 255, 0.82);
---sticker-color: #cbd5e0;
-}
+        #quiz-container {
+            width: 100vw;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 12px 0;
+        }
 
-* {
-box-sizing: border-box;
--webkit-tap-highlight-color: transparent;
--webkit-font-smoothing: antialiased;
--moz-osx-font-smoothing: grayscale;
-}
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: 28px;
+            box-shadow: 
+                0 1px 2px rgba(0, 0, 0, 0.04),
+                0 8px 24px rgba(0, 0, 0, 0.08),
+                0 24px 56px rgba(0, 0, 0, 0.06);
+            padding: 26px 22px;
+            text-align: center;
+            border: 0.5px solid rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            position: relative;
+        }
 
-body {
-font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'PingFang TC', 'Helvetica Neue', 'Microsoft JhengHei', sans-serif;
-background-color: #F2F2F7;
-background-image: url('背景.jpeg'), url('背景.jpg'), url('背景.png');
-background-size: cover;
-background-position: center;
-background-repeat: no-repeat;
-background-attachment: fixed;
-color: var(--label-primary);
-margin: 0;
-padding: 12px;
-display: flex;
-justify-content: center;
-align-items: center;
-min-height: 100vh;
-line-height: 1.47;
-letter-spacing: -0.01em;
-}
+        h1 {
+            color: var(--label-primary);
+            font-size: 28px;
+            font-weight: 800;
+            margin-top: 4px;
+            margin-bottom: 12px;
+            letter-spacing: -0.028em;
+            line-height: 1.12;
+            background: linear-gradient(120deg, #1a1a1a 0%, #5856D6 50%, #AF52DE 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .top-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--apple-indigo);
+            padding: 5px 12px;
+            background: rgba(88, 86, 214, 0.1);
+            border: 0.5px solid rgba(88, 86, 214, 0.18);
+            border-radius: 50px;
+            margin-bottom: 12px;
+        }
+        .top-eyebrow::before {
+            content: "";
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--apple-pink);
+            box-shadow: 0 0 8px var(--apple-pink);
+            animation: dotPulse 1.8s ease-in-out infinite;
+        }
 
-#quiz-container {
-width: 100vw;
-min-height: 100vh;
-display: flex;
-justify-content: center;
-align-items: center;
-padding: 12px 0;
-}
+        .subtitle {
+            color: var(--label-secondary);
+            font-size: 14.5px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+            text-align: justify;
+            letter-spacing: -0.005em;
+        }
 
-.container {
-max-width: 500px;
-width: 100%;
-background: var(--card-bg);
-border-radius: 28px;
-box-shadow:
-0 1px 2px rgba(0, 0, 0, 0.04),
-0 8px 24px rgba(0, 0, 0, 0.08),
-0 24px 56px rgba(0, 0, 0, 0.06);
-padding: 26px 22px;
-text-align: center;
-border: 0.5px solid rgba(255, 255, 255, 0.6);
-backdrop-filter: blur(40px) saturate(180%);
--webkit-backdrop-filter: blur(40px) saturate(180%);
-position: relative;
-}
+        .hidden { display: none !important; }
 
-h1 {
-color: var(--label-primary);
-font-size: 28px;
-font-weight: 800;
-margin-top: 4px;
-margin-bottom: 12px;
-letter-spacing: -0.028em;
-line-height: 1.12;
-background: linear-gradient(120deg, #1a1a1a 0%, #5856D6 50%, #AF52DE 100%);
--webkit-background-clip: text;
-background-clip: text;
--webkit-text-fill-color: transparent;
-}
-.top-eyebrow {
-display: inline-flex;
-align-items: center;
-gap: 6px;
-font-size: 11px;
-font-weight: 700;
-letter-spacing: 0.12em;
-text-transform: uppercase;
-color: var(--apple-indigo);
-padding: 5px 12px;
-background: rgba(88, 86, 214, 0.1);
-border: 0.5px solid rgba(88, 86, 214, 0.18);
-border-radius: 50px;
-margin-bottom: 12px;
-}
-.top-eyebrow::before {
-content: "";
-width: 6px; height: 6px;
-border-radius: 50%;
-background: var(--apple-pink);
-box-shadow: 0 0 8px var(--apple-pink);
-animation: dotPulse 1.8s ease-in-out infinite;
-}
+        #start-page, #quiz-page, #result-page {
+            animation: pageSlide 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+        }
+        @keyframes pageSlide {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
 
-.subtitle {
-color: var(--label-secondary);
-font-size: 14.5px;
-line-height: 1.6;
-margin-bottom: 24px;
-text-align: justify;
-letter-spacing: -0.005em;
-}
+        .name-input-box {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 16px;
+            font-weight: 500;
+            border: none;
+            background: rgba(118, 118, 128, 0.12);
+            border-radius: 12px;
+            margin-bottom: 18px;
+            text-align: center;
+            outline: none;
+            transition: all 0.25s cubic-bezier(0.32, 0.72, 0, 1);
+            color: var(--label-primary);
+            letter-spacing: -0.01em;
+        }
+        .name-input-box::placeholder { color: var(--label-tertiary); font-weight: 400; }
+        .name-input-box:focus {
+            background: rgba(118, 118, 128, 0.18);
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.22);
+        }
+        .name-input-box.shake-error {
+            animation: shakeX 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+            box-shadow: 0 0 0 3px rgba(255, 45, 85, 0.32), 0 0 22px rgba(255, 45, 85, 0.25);
+            background: rgba(255, 45, 85, 0.08);
+        }
+        @keyframes shakeX {
+            10%, 90% { transform: translateX(-2px); }
+            20%, 80% { transform: translateX(3px); }
+            30%, 50%, 70% { transform: translateX(-6px); }
+            40%, 60% { transform: translateX(6px); }
+        }
+        .name-required-hint {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            color: var(--apple-pink);
+            font-weight: 600;
+            margin-left: 6px;
+            transition: opacity 0.3s;
+        }
+        .name-required-hint::before {
+            content: "";
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--apple-pink);
+            animation: dotPulse 1.6s ease-in-out infinite;
+        }
+        @keyframes dotPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.4); opacity: 0.55; }
+        }
+        .sticker-btn.is-locked {
+            opacity: 0.4;
+            filter: grayscale(0.6);
+            cursor: not-allowed;
+        }
+        .sticker-btn.is-locked:hover {
+            transform: none !important;
+            box-shadow: none !important;
+        }
 
-.hidden { display: none !important; }
+        .image-box {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border-radius: 18px;
+            margin-bottom: 18px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #fce7f3, #ede9fe);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            box-shadow:
+                0 1px 2px rgba(0, 0, 0, 0.04),
+                0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            animation: imgFade 0.6s cubic-bezier(0.32, 0.72, 0, 1);
+        }
+        @keyframes imgFade {
+            from { opacity: 0; transform: scale(0.96); }
+            to { opacity: 1; transform: scale(1); }
+        }
 
-#start-page, #quiz-page, #result-page {
-animation: pageSlide 0.5s cubic-bezier(0.32, 0.72, 0, 1);
-}
-@keyframes pageSlide {
-0% { opacity: 0; transform: translateY(10px); }
-100% { opacity: 1; transform: translateY(0); }
-}
+        .quiz-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .back-btn {
+            background: none;
+            border: none;
+            color: var(--apple-blue);
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 4px 0;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: opacity 0.2s;
+            visibility: hidden;
+            letter-spacing: -0.01em;
+        }
+        .back-btn:hover { opacity: 0.6; }
+        .back-btn:active { opacity: 0.4; }
 
-.name-input-box {
-width: 100%;
-padding: 14px 16px;
-font-size: 16px;
-font-weight: 500;
-border: none;
-background: rgba(118, 118, 128, 0.12);
-border-radius: 12px;
-margin-bottom: 18px;
-text-align: center;
-outline: none;
-transition: all 0.25s cubic-bezier(0.32, 0.72, 0, 1);
-color: var(--label-primary);
-letter-spacing: -0.01em;
-}
-.name-input-box::placeholder { color: var(--label-tertiary); font-weight: 400; }
-.name-input-box:focus {
-background: rgba(118, 118, 128, 0.18);
-box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.22);
-}
-.name-input-box.shake-error {
-animation: shakeX 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97);
-box-shadow: 0 0 0 3px rgba(255, 45, 85, 0.32), 0 0 22px rgba(255, 45, 85, 0.25);
-background: rgba(255, 45, 85, 0.08);
-}
-@keyframes shakeX {
-10%, 90% { transform: translateX(-2px); }
-20%, 80% { transform: translateX(3px); }
-30%, 50%, 70% { transform: translateX(-6px); }
-40%, 60% { transform: translateX(6px); }
-}
-.name-required-hint {
-display: inline-flex;
-align-items: center;
-gap: 4px;
-font-size: 12px;
-color: var(--apple-pink);
-font-weight: 600;
-margin-left: 6px;
-transition: opacity 0.3s;
-}
-.name-required-hint::before {
-content: "";
-width: 6px; height: 6px;
-border-radius: 50%;
-background: var(--apple-pink);
-animation: dotPulse 1.6s ease-in-out infinite;
-}
-@keyframes dotPulse {
-0%, 100% { transform: scale(1); opacity: 1; }
-50% { transform: scale(1.4); opacity: 0.55; }
-}
-.sticker-btn.is-locked {
-opacity: 0.4;
-filter: grayscale(0.6);
-cursor: not-allowed;
-}
-.sticker-btn.is-locked:hover {
-transform: none !important;
-box-shadow: none !important;
-}
+        .progress-wrap { margin-bottom: 18px; }
+        .progress-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+        .progress-meta .progress-label { color: var(--label-tertiary); }
+        .progress-meta .progress-percent {
+            color: var(--apple-blue);
+            font-variant-numeric: tabular-nums;
+            font-size: 12px;
+        }
+        .progress-bar-bg {
+            width: 100%;
+            height: 6px;
+            background: rgba(118, 118, 128, 0.16);
+            border-radius: 50px;
+            overflow: hidden;
+            position: relative;
+        }
+        .progress-bar-fg {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--apple-blue), var(--apple-indigo), var(--apple-purple));
+            background-size: 200% 100%;
+            border-radius: 50px;
+            transition: width 0.6s cubic-bezier(0.32, 0.72, 0, 1);
+            animation: shimmer 3s linear infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: 0% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .progress-dots {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            padding: 0 1px;
+        }
+        .progress-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(118, 118, 128, 0.24);
+            transition: all 0.45s cubic-bezier(0.32, 0.72, 0, 1.4);
+        }
+        .progress-dot.done {
+            background: var(--apple-blue);
+            transform: scale(1.3);
+        }
+        .progress-dot.current {
+            background: var(--apple-indigo);
+            transform: scale(1.7);
+            box-shadow: 0 0 0 4px rgba(88, 86, 214, 0.18);
+            animation: pulse 1.6s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 4px rgba(88, 86, 214, 0.18); }
+            50% { box-shadow: 0 0 0 8px rgba(88, 86, 214, 0.06); }
+        }
 
-.image-box {
-width: 100%;
-aspect-ratio: 16 / 9;
-border-radius: 18px;
-margin-bottom: 18px;
-overflow: hidden;
-background: linear-gradient(135deg, #fce7f3, #ede9fe);
-display: flex;
-justify-content: center;
-align-items: center;
-position: relative;
-box-shadow:
-0 1px 2px rgba(0, 0, 0, 0.04),
-0 8px 24px rgba(0, 0, 0, 0.06);
-}
-.image-box img {
-width: 100%;
-height: 100%;
-object-fit: cover;
-animation: imgFade 0.6s cubic-bezier(0.32, 0.72, 0, 1);
-}
-@keyframes imgFade {
-from { opacity: 0; transform: scale(0.96); }
-to { opacity: 1; transform: scale(1); }
-}
+        .identity-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 14px;
+            margin: 10px 0;
+            padding: 18px 14px;
+            background: rgba(118, 118, 128, 0.08);
+            border-radius: 18px;
+        }
 
-.quiz-top-bar {
-display: flex;
-justify-content: space-between;
-align-items: center;
-margin-bottom: 10px;
-}
-.back-btn {
-background: none;
-border: none;
-color: var(--apple-blue);
-font-size: 15px;
-font-weight: 500;
-cursor: pointer;
-padding: 4px 0;
-display: flex;
-align-items: center;
-gap: 4px;
-transition: opacity 0.2s;
-visibility: hidden;
-letter-spacing: -0.01em;
-}
-.back-btn:hover { opacity: 0.6; }
-.back-btn:active { opacity: 0.4; }
+        .sticker-btn {
+            padding: 12px 22px;
+            border: 2.5px solid #ffffff;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-block;
+            letter-spacing: -0.005em;
+        }
 
-.progress-wrap { margin-bottom: 18px; }
-.progress-meta {
-display: flex;
-justify-content: space-between;
-align-items: center;
-font-size: 11px;
-font-weight: 600;
-letter-spacing: 0.05em;
-margin-bottom: 8px;
-text-transform: uppercase;
-}
-.progress-meta .progress-label { color: var(--label-tertiary); }
-.progress-meta .progress-percent {
-color: var(--apple-blue);
-font-variant-numeric: tabular-nums;
-font-size: 12px;
-}
-.progress-bar-bg {
-width: 100%;
-height: 6px;
-background: rgba(118, 118, 128, 0.16);
-border-radius: 50px;
-overflow: hidden;
-position: relative;
-}
-.progress-bar-fg {
-height: 100%;
-width: 0%;
-background: linear-gradient(90deg, var(--apple-blue), var(--apple-indigo), var(--apple-purple));
-background-size: 200% 100%;
-border-radius: 50px;
-transition: width 0.6s cubic-bezier(0.32, 0.72, 0, 1);
-animation: shimmer 3s linear infinite;
-}
-@keyframes shimmer {
-0% { background-position: 0% 0; }
-100% { background-position: 200% 0; }
-}
-.progress-dots {
-display: flex;
-justify-content: space-between;
-margin-top: 10px;
-padding: 0 1px;
-}
-.progress-dot {
-width: 6px;
-height: 6px;
-border-radius: 50%;
-background: rgba(118, 118, 128, 0.24);
-transition: all 0.45s cubic-bezier(0.32, 0.72, 0, 1.4);
-}
-.progress-dot.done {
-background: var(--apple-blue);
-transform: scale(1.3);
-}
-.progress-dot.current {
-background: var(--apple-indigo);
-transform: scale(1.7);
-box-shadow: 0 0 0 4px rgba(88, 86, 214, 0.18);
-animation: pulse 1.6s ease-in-out infinite;
-}
-@keyframes pulse {
-0%, 100% { box-shadow: 0 0 0 4px rgba(88, 86, 214, 0.18); }
-50% { box-shadow: 0 0 0 8px rgba(88, 86, 214, 0.06); }
-}
+        .silver { background: linear-gradient(135deg, #f1f5f9, #cbd5e1); color: #334155; transform: rotate(-2.5deg); box-shadow: 2px 3px 0px #94a3b8, 2px 6px 14px rgba(0,0,0,0.08); }
+        .gold { background: linear-gradient(135deg, #fffbeb, #fef08a); color: #713f12; transform: rotate(2deg); box-shadow: -2px 3px 0px #d97706, -2px 6px 14px rgba(0,0,0,0.08); }
+        .purple { background: linear-gradient(135deg, #f3e8ff, #e9d5ff); color: #5b21b6; transform: rotate(-1.5deg); box-shadow: 2px 2px 0px #7c3aed, 3px 6px 14px rgba(0,0,0,0.08); }
 
-.identity-container {
-display: flex;
-flex-wrap: wrap;
-justify-content: center;
-gap: 14px;
-margin: 10px 0;
-padding: 18px 14px;
-background: rgba(118, 118, 128, 0.08);
-border-radius: 18px;
-}
+        .sticker-btn:hover { transform: scale(1.06) rotate(0deg) translateY(-2px); box-shadow: 0 12px 24px rgba(0,0,0,0.12); z-index: 10; }
+        .sticker-btn:active { transform: scale(0.95); }
 
-.sticker-btn {
-padding: 12px 22px;
-border: 2.5px solid #ffffff;
-border-radius: 12px;
-font-weight: 700;
-font-size: 15px;
-cursor: pointer;
-transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-display: inline-block;
-letter-spacing: -0.005em;
-}
+        .question-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-top: 4px;
+            margin-bottom: 18px;
+            color: var(--label-primary);
+            line-height: 1.3;
+            text-align: left;
+            letter-spacing: -0.02em;
+        }
 
-.silver { background: linear-gradient(135deg, #f1f5f9, #cbd5e1); color: #334155; transform: rotate(-2.5deg); box-shadow: 2px 3px 0px #94a3b8, 2px 6px 14px rgba(0,0,0,0.08); }
-.gold { background: linear-gradient(135deg, #fffbeb, #fef08a); color: #713f12; transform: rotate(2deg); box-shadow: -2px 3px 0px #d97706, -2px 6px 14px rgba(0,0,0,0.08); }
-.purple { background: linear-gradient(135deg, #f3e8ff, #e9d5ff); color: #5b21b6; transform: rotate(-1.5deg); box-shadow: 2px 2px 0px #7c3aed, 3px 6px 14px rgba(0,0,0,0.08); }
+        .options-container { display: flex; flex-direction: column; gap: 11px; }
 
-.sticker-btn:hover { transform: scale(1.06) rotate(0deg) translateY(-2px); box-shadow: 0 12px 24px rgba(0,0,0,0.12); z-index: 10; }
-.sticker-btn:active { transform: scale(0.95); }
+        /* 🔧 FIX1: 選項按鈕改用 flex 排版，圓圈不再絕對定位疊在文字上 */
+        .option-btn {
+            background: rgba(255, 255, 255, 0.78);
+            border: 1px solid rgba(60, 60, 67, 0.10);
+            padding: 14px 16px;
+            border-radius: 16px;
+            text-align: left;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--label-primary);
+            cursor: pointer;
+            transition: all 0.28s cubic-bezier(0.32, 0.72, 0, 1);
+            position: relative;
+            line-height: 1.35;
+            letter-spacing: -0.01em;
+            backdrop-filter: blur(10px);
+            font-family: inherit;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .option-btn::before {
+            content: "";
+            flex-shrink: 0;          /* 圓圈不縮 */
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(60, 60, 67, 0.28);
+            background: #fff;
+            transition: all 0.28s cubic-bezier(0.32, 0.72, 0, 1);
+        }
+        .option-btn .btn-label {
+            flex: 1;
+            min-width: 0;
+        }
+        .option-btn:hover { 
+            background: rgba(255, 255, 255, 0.96);
+            border-color: rgba(0, 122, 255, 0.35);
+            transform: translateY(-1.5px);
+            box-shadow: 0 10px 22px rgba(0, 122, 255, 0.10), 0 1px 2px rgba(0,0,0,0.04);
+        }
+        .option-btn:hover::before { border-color: var(--apple-blue); }
+        .option-btn:active { transform: scale(0.985); }
+        .option-btn.selected {
+            background: linear-gradient(135deg, rgba(0, 122, 255, 0.10), rgba(88, 86, 214, 0.12));
+            border-color: var(--apple-blue);
+            color: var(--label-primary);
+            box-shadow: 0 6px 22px rgba(0, 122, 255, 0.18), 0 0 0 3px rgba(0, 122, 255, 0.10);
+            animation: selectPulse 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .option-btn.selected::before {
+            background: var(--apple-blue);
+            border-color: var(--apple-blue);
+            box-shadow: inset 0 0 0 3px #fff;
+        }
+        @keyframes selectPulse {
+            0% { transform: scale(1); }
+            40% { transform: scale(1.025); }
+            100% { transform: scale(1); }
+        }
+        .option-btn.selected::after {
+            content: '✓ 已貼上';
+            flex-shrink: 0;
+            background: var(--sticker-color);
+            color: var(--sticker-text, #fff);
+            padding: 5px 11px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0;
+            animation: stamp 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        @keyframes stamp {
+            0% { transform: scale(3) rotate(-15deg); opacity: 0; filter: blur(2px); }
+            60% { transform: scale(1.15) rotate(3deg); opacity: 1; filter: blur(0); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; filter: blur(0); }
+        }
 
-.question-title {
-font-size: 20px;
-font-weight: 700;
-margin-top: 4px;
-margin-bottom: 18px;
-color: var(--label-primary);
-line-height: 1.3;
-text-align: left;
-letter-spacing: -0.02em;
-}
+        .confetti {
+            position: fixed;
+            top: -10px;
+            width: 10px;
+            height: 14px;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 9999;
+            animation: confettiFall linear forwards;
+        }
+        @keyframes confettiFall {
+            0% { opacity: 1; transform: translateY(0) rotate(0deg); }
+            100% { opacity: 0; transform: translateY(110vh) rotate(720deg); }
+        }
 
-.options-container { display: flex; flex-direction: column; gap: 11px; }
+        /* =========================================================
+           📁 機密檔案風格結算卡（情報局特務風）
+           ========================================================= */
+        .profile-card {
+            background: #ffffff;
+            border: 2px solid #000000;
+            border-radius: 0px;
+            padding: 20px 16px;
+            margin-top: 12px;
+            text-align: left;
+            position: relative;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang TC", "Microsoft JhengHei", sans-serif;
+            animation: cardPop 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            /* 🔧 FIX2: scale wrap 容器，方便手機一頁內顯示 */
+            transform-origin: top center;
+        }
+        @keyframes cardPop {
+            0%   { opacity: 0; transform: translateY(18px) scale(0.93); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
 
-/* 🔧 FIX1: 選項按鈕改用 flex 排版，圓圈不再絕對定位疊在文字上 /
-.option-btn {
-background: rgba(255, 255, 255, 0.78);
-border: 1px solid rgba(60, 60, 67, 0.10);
-padding: 14px 16px;
-border-radius: 16px;
-text-align: left;
-font-size: 16px;
-font-weight: 500;
-color: var(--label-primary);
-cursor: pointer;
-transition: all 0.28s cubic-bezier(0.32, 0.72, 0, 1);
-position: relative;
-line-height: 1.35;
-letter-spacing: -0.01em;
-backdrop-filter: blur(10px);
-font-family: inherit;
-box-shadow: 0 1px 2px rgba(0,0,0,0.03);
-display: flex;
-align-items: center;
-gap: 12px;
-}
-.option-btn::before {
-content: "";
-flex-shrink: 0; / 圓圈不縮 */
-width: 18px;
-height: 18px;
-border-radius: 50%;
-border: 1.5px solid rgba(60, 60, 67, 0.28);
-background: #fff;
-transition: all 0.28s cubic-bezier(0.32, 0.72, 0, 1);
-}
-.option-btn .btn-label {
-flex: 1;
-min-width: 0;
-}
-.option-btn:hover {
-background: rgba(255, 255, 255, 0.96);
-border-color: rgba(0, 122, 255, 0.35);
-transform: translateY(-1.5px);
-box-shadow: 0 10px 22px rgba(0, 122, 255, 0.10), 0 1px 2px rgba(0,0,0,0.04);
-}
-.option-btn:hover::before { border-color: var(--apple-blue); }
-.option-btn:active { transform: scale(0.985); }
-.option-btn.selected {
-background: linear-gradient(135deg, rgba(0, 122, 255, 0.10), rgba(88, 86, 214, 0.12));
-border-color: var(--apple-blue);
-color: var(--label-primary);
-box-shadow: 0 6px 22px rgba(0, 122, 255, 0.18), 0 0 0 3px rgba(0, 122, 255, 0.10);
-animation: selectPulse 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-.option-btn.selected::before {
-background: var(--apple-blue);
-border-color: var(--apple-blue);
-box-shadow: inset 0 0 0 3px #fff;
-}
-@keyframes selectPulse {
-0% { transform: scale(1); }
-40% { transform: scale(1.025); }
-100% { transform: scale(1); }
-}
-.option-btn.selected::after {
-content: '✓ 已貼上';
-flex-shrink: 0;
-background: var(--sticker-color);
-color: var(--sticker-text, #fff);
-padding: 5px 11px;
-border-radius: 50px;
-font-size: 11px;
-font-weight: 600;
-letter-spacing: 0;
-animation: stamp 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
-@keyframes stamp {
-0% { transform: scale(3) rotate(-15deg); opacity: 0; filter: blur(2px); }
-60% { transform: scale(1.15) rotate(3deg); opacity: 1; filter: blur(0); }
-100% { transform: scale(1) rotate(0deg); opacity: 1; filter: blur(0); }
-}
+        /* 頂部黑底機密條 */
+        .report-top-bar {
+            background: #000000;
+            color: #ffffff;
+            padding: 6px 12px;
+            font-size: 10px;
+            font-weight: 700;
+            font-family: 'SF Mono', Menlo, monospace;
+            display: flex;
+            justify-content: space-between;
+            letter-spacing: 0.06em;
+            margin-bottom: 16px;
+            position: relative;
+        }
+        /* 頂部黑條左邊三個打孔（活頁夾風） */
+        .report-top-bar .punch-holes {
+            display: inline-flex;
+            gap: 4px;
+            align-items: center;
+            margin-right: 8px;
+        }
+        .report-top-bar .punch-holes span {
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.25);
+            box-shadow: inset 0 0 0 0.5px rgba(255,255,255,0.5);
+        }
+        .report-top-bar .dot-secret::before {
+            content: "●";
+            color: #ff2d55;
+            margin-right: 6px;
+        }
 
-.confetti {
-position: fixed;
-top: -10px;
-width: 10px;
-height: 14px;
-opacity: 0;
-pointer-events: none;
-z-index: 9999;
-animation: confettiFall linear forwards;
-}
-@keyframes confettiFall {
-0% { opacity: 1; transform: translateY(0) rotate(0deg); }
-100% { opacity: 0; transform: translateY(110vh) rotate(720deg); }
-}
+        /* QR 點陣裝飾（放在 footer 區） */
+        .qr-deco {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1px;
+            flex-shrink: 0;
+        }
+        .qr-deco span {
+            background: #000;
+            border-radius: 1px;
+        }
+        .qr-deco span.empty { background: transparent; }
 
-/* =========================================================
-📁 機密檔案風格結算卡（情報局特務風）
-========================================================= /
-.profile-card {
-background: #ffffff;
-border: 2px solid #000000;
-border-radius: 0px;
-padding: 20px 16px;
-margin-top: 12px;
-text-align: left;
-position: relative;
-box-shadow: 0 12px 32px rgba(0,0,0,0.15);
-font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang TC", "Microsoft JhengHei", sans-serif;
-animation: cardPop 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-/ 🔧 FIX2: scale wrap 容器，方便手機一頁內顯示 */
-transform-origin: top center;
-}
-@keyframes cardPop {
-0% { opacity: 0; transform: translateY(18px) scale(0.93); }
-100% { opacity: 1; transform: translateY(0) scale(1); }
-}
+        /* 紅色圖釘（左上） */
+        .pin-deco {
+            position: absolute;
+            top: 8px;
+            left: 22px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 30%, #ff6b8a 0%, #dc2641 60%, #8b0d1e 100%);
+            box-shadow:
+                0 2px 4px rgba(0,0,0,0.35),
+                0 4px 10px rgba(220, 38, 65, 0.4),
+                inset 0 -1px 2px rgba(0,0,0,0.3);
+            z-index: 5;
+        }
+        .pin-deco::after {
+            content: "";
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 4px; height: 4px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.7);
+            box-shadow: 0 0 4px rgba(255,255,255,0.6);
+        }
 
-/* 頂部黑底機密條 /
-.report-top-bar {
-background: #000000;
-color: #ffffff;
-padding: 6px 12px;
-font-size: 10px;
-font-weight: 700;
-font-family: 'SF Mono', Menlo, monospace;
-display: flex;
-justify-content: space-between;
-letter-spacing: 0.06em;
-margin-bottom: 16px;
-position: relative;
-}
-/ 頂部黑條左邊三個打孔（活頁夾風） */
-.report-top-bar .punch-holes {
-display: inline-flex;
-gap: 4px;
-align-items: center;
-margin-right: 8px;
-}
-.report-top-bar .punch-holes span {
-width: 5px; height: 5px;
-border-radius: 50%;
-background: rgba(255,255,255,0.25);
-box-shadow: inset 0 0 0 0.5px rgba(255,255,255,0.5);
-}
-.report-top-bar .dot-secret::before {
-content: "●";
-color: #ff2d55;
-margin-right: 6px;
-}
+        /* 大背景浮水印「OFFICIAL」斜傾 */
+        .bg-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-25deg);
+            font-family: 'SF Mono', Menlo, monospace;
+            font-size: 50px;
+            font-weight: 900;
+            color: rgba(0, 0, 0, 0.025);
+            letter-spacing: 0.3em;
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 0;
+            user-select: none;
+        }
+        /* 確保內容浮在浮水印之上 */
+        .profile-card > *:not(.bg-watermark):not(.pin-deco) {
+            position: relative;
+            z-index: 1;
+        }
 
-/* QR 點陣裝飾（放在 footer 區） */
-.qr-deco {
-width: 42px;
-height: 42px;
-display: grid;
-grid-template-columns: repeat(6, 1fr);
-gap: 1px;
-flex-shrink: 0;
-}
-.qr-deco span {
-background: #000;
-border-radius: 1px;
-}
-.qr-deco span.empty { background: transparent; }
+        .report-header {
+            border-bottom: 2px solid #000000;
+            padding-bottom: 10px;
+            margin-bottom: 14px;
+            position: relative;
+        }
+        .report-subtitle {
+            font-size: 11px;
+            font-weight: 800;
+            color: #555555;
+            letter-spacing: 0.08em;
+            font-family: 'SF Mono', Menlo, monospace;
+            margin: 0 0 2px 0;
+        }
+        .report-title {
+            font-size: 24px;
+            font-weight: 900;
+            color: #000000;
+            margin: 0;
+            letter-spacing: -0.01em;
+        }
+        .stamp-top-secret {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            border: 3px solid #dc3545;
+            color: #dc3545;
+            padding: 6px 16px;
+            font-size: 22px;
+            font-weight: 900;
+            text-transform: uppercase;
+            transform: rotate(8deg);
+            opacity: 0.85;
+            letter-spacing: 3px;
+            border-radius: 4px;
+        }
 
-/* 紅色圖釘（左上） */
-.pin-deco {
-position: absolute;
-top: 8px;
-left: 22px;
-width: 14px;
-height: 14px;
-border-radius: 50%;
-background: radial-gradient(circle at 35% 30%, #ff6b8a 0%, #dc2641 60%, #8b0d1e 100%);
-box-shadow:
-0 2px 4px rgba(0,0,0,0.35),
-0 4px 10px rgba(220, 38, 65, 0.4),
-inset 0 -1px 2px rgba(0,0,0,0.3);
-z-index: 5;
-}
-.pin-deco::after {
-content: "";
-position: absolute;
-top: 50%; left: 50%;
-transform: translate(-50%, -50%);
-width: 4px; height: 4px;
-border-radius: 50%;
-background: rgba(255,255,255,0.7);
-box-shadow: 0 0 4px rgba(255,255,255,0.6);
-}
+        .report-meta-row {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+        .report-photo-box {
+            flex: 0 0 40%;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .report-photo {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border: 1px solid #000000;
+            background: var(--hero-bg, #f2f2f7);
+            position: relative;
+            padding: 8px;
+        }
+        .report-photo::before, .report-photo::after {
+            content: "";
+            position: absolute;
+            width: 10px; height: 10px;
+            border-color: #000000;
+            border-style: solid;
+            pointer-events: none;
+        }
+        .report-photo::before { top: 6px; left: 6px; border-width: 1px 0 0 1px; }
+        .report-photo::after { bottom: 6px; right: 6px; border-width: 0 1px 1px 0; }
+        
+        .report-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .report-biometric {
+            margin-top: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft JhengHei", sans-serif;
+            font-size: 14px;
+            font-weight: 900;
+            color: #000000;
+            border: 1px solid #000000;
+            padding: 4px 0;
+            background: transparent;
+        }
 
-/* 大背景浮水印「OFFICIAL」斜傾 /
-.bg-watermark {
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%) rotate(-25deg);
-font-family: 'SF Mono', Menlo, monospace;
-font-size: 50px;
-font-weight: 900;
-color: rgba(0, 0, 0, 0.025);
-letter-spacing: 0.3em;
-white-space: nowrap;
-pointer-events: none;
-z-index: 0;
-user-select: none;
-}
-/ 確保內容浮在浮水印之上 */
-.profile-card > *:not(.bg-watermark):not(.pin-deco) {
-position: relative;
-z-index: 1;
-}
+        .report-table {
+            flex: 1;
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 12.5px;
+        }
+        .report-table td {
+            border: 1px solid #000000;
+            padding: 8px 10px;
+            vertical-align: middle;
+        }
+        .report-table td:first-child {
+            width: 90px;
+            white-space: nowrap;
+            background: #f5f5f7;
+            font-weight: 700;
+            color: #333333;
+            text-align: center;
+        }
+        .report-table .td-val {
+            font-weight: 700;
+            color: #000000;
+        }
+        .report-table .td-mono {
+            font-family: 'SF Mono', Menlo, monospace;
+            font-size: 11px;
+        }
+        .report-table .td-place {
+            font-size: 11px;
+            line-height: 1.2;
+        }
+        .report-table .td-place-label {
+            font-size: 11px;
+        }
+        .danger-num {
+            font-family: 'SF Mono', Menlo, monospace;
+            width: 32px;
+            text-align: right;
+            font-weight: 700;
+        }
+        .danger-bar-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .danger-bar-bg {
+            flex: 1;
+            height: 6px;
+            background: #e5e5ea;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .danger-bar-fg {
+            height: 100%;
+            background: #ff2d55;
+        }
 
-.report-header {
-border-bottom: 2px solid #000000;
-padding-bottom: 10px;
-margin-bottom: 14px;
-position: relative;
-}
-.report-subtitle {
-font-size: 11px;
-font-weight: 800;
-color: #555555;
-letter-spacing: 0.08em;
-font-family: 'SF Mono', Menlo, monospace;
-margin: 0 0 2px 0;
-}
-.report-title {
-font-size: 24px;
-font-weight: 900;
-color: #000000;
-margin: 0;
-letter-spacing: -0.01em;
-}
-.stamp-top-secret {
-position: absolute;
-top: 16px;
-right: 16px;
-border: 3px solid #dc3545;
-color: #dc3545;
-padding: 6px 16px;
-font-size: 22px;
-font-weight: 900;
-text-transform: uppercase;
-transform: rotate(8deg);
-opacity: 0.85;
-letter-spacing: 3px;
-border-radius: 4px;
-}
+        .section-divider {
+            font-size: 9px;
+            font-weight: 800;
+            color: #666666;
+            font-family: 'SF Mono', Menlo, monospace;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid #000000;
+            padding-bottom: 4px;
+            margin: 18px 0 10px 0;
+            text-transform: uppercase;
+        }
 
-.report-meta-row {
-display: flex;
-gap: 16px;
-margin-bottom: 18px;
-}
-.report-photo-box {
-flex: 0 0 40%;
-display: flex;
-flex-direction: column;
-gap: 8px;
-}
-.report-photo {
-width: 100%;
-aspect-ratio: 1 / 1;
-border: 1px solid #000000;
-background: var(--hero-bg, #f2f2f7);
-position: relative;
-padding: 8px;
-}
-.report-photo::before, .report-photo::after {
-content: "";
-position: absolute;
-width: 10px; height: 10px;
-border-color: #000000;
-border-style: solid;
-pointer-events: none;
-}
-.report-photo::before { top: 6px; left: 6px; border-width: 1px 0 0 1px; }
-.report-photo::after { bottom: 6px; right: 6px; border-width: 0 1px 1px 0; }
+        .report-text-block {
+            font-size: 13.5px;
+            line-height: 1.6;
+            color: #111111;
+            text-align: justify;
+            position: relative;
+        }
+        .highlight-name {
+            background: #fef08a;
+            font-weight: 800;
+            padding: 1px 4px;
+        }
+       
+        .quote-log-box {
+            background: #f8f9fa;
+            border: 1px solid #e5e5ea;
+            padding: 10px 12px;
+            margin-top: 12px;
+            font-size: 12px;
+        }
+        .quote-log-label {
+            font-size: 9px;
+            font-weight: 700;
+            color: #8e8e93;
+            font-family: 'SF Mono', Menlo, monospace;
+            margin-bottom: 2px;
+        }
+        .quote-log-content {
+            font-size: 16px;
+            font-weight: 900;
+            line-height: 1.5;
+            font-style: italic;
+            color: #111;
+        }
 
-.report-photo img {
-width: 100%;
-height: 100%;
-object-fit: cover;
-}
-.report-biometric {
-margin-top: 1px;
-display: flex;
-align-items: center;
-justify-content: center;
-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft JhengHei", sans-serif;
-font-size: 14px;
-font-weight: 900;
-color: #000000;
-border: 1px solid #000000;
-padding: 4px 0;
-background: transparent;
-}
+        .report-tags-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .report-tag-item {
+            border: 1px solid #000000;
+            padding: 4px 10px;
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #000000;
+            background: #ffffff;
+        }
 
-.report-table {
-flex: 1;
-border-collapse: collapse;
-width: 100%;
-font-size: 12.5px;
-}
-.report-table td {
-border: 1px solid #000000;
-padding: 8px 10px;
-vertical-align: middle;
-}
-.report-table td:first-child {
-width: 90px;
-white-space: nowrap;
-background: #f5f5f7;
-font-weight: 700;
-color: #333333;
-text-align: center;
-}
-.report-table .td-val {
-font-weight: 700;
-color: #000000;
-}
-.report-table .td-mono {
-font-family: 'SF Mono', Menlo, monospace;
-font-size: 11px;
-}
-.report-table .td-place {
-font-size: 11px;
-line-height: 1.2;
-}
-.report-table .td-place-label {
-font-size: 11px;
-}
-.danger-num {
-font-family: 'SF Mono', Menlo, monospace;
-width: 32px;
-text-align: right;
-font-weight: 700;
-}
-.danger-bar-container {
-display: flex;
-align-items: center;
-gap: 8px;
-}
-.danger-bar-bg {
-flex: 1;
-height: 6px;
-background: #e5e5ea;
-border-radius: 2px;
-overflow: hidden;
-}
-.danger-bar-fg {
-height: 100%;
-background: #ff2d55;
-}
+        .report-footer {
+            margin-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 12px;
+            position: relative;
+        }
+        .report-footer .report-footer-meta {
+            flex: 1;
+            min-width: 0;
+        }
+        .report-footer-meta {
+            font-size: 8.5px;
+            font-family: 'SF Mono', Menlo, monospace;
+            color: #777777;
+            line-height: 1.4;
+        }
+        .stamp-red-seal {
+            width: 52px;
+            height: 52px;
+            border: 2px solid rgba(255, 45, 85, 0.85);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: rgba(255, 45, 85, 0.85);
+            font-size: 8px;
+            font-weight: 900;
+            line-height: 1.2;
+            text-align: center;
+            transform: rotate(-5deg) translateY(4px);
+            letter-spacing: -0.05em;
+            background: rgba(255,255,255,0.8);
+            box-shadow: inset 0 0 0 1px rgba(255, 45, 85, 0.3);
+        }
 
-.section-divider {
-font-size: 9px;
-font-weight: 800;
-color: #666666;
-font-family: 'SF Mono', Menlo, monospace;
-letter-spacing: 0.05em;
-border-bottom: 1px solid #000000;
-padding-bottom: 4px;
-margin: 18px 0 10px 0;
-text-transform: uppercase;
-}
+        /* 升級：底部條碼區 */
+        .report-barcode {
+            margin-top: 16px;
+            padding: 10px 12px;
+            border: 1px solid #000;
+            background: #fafafa;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .barcode-lines {
+            height: 28px;
+            background-image: repeating-linear-gradient(
+                90deg,
+                #000 0px,
+                #000 2px,
+                transparent 2px,
+                transparent 4px,
+                #000 4px,
+                #000 5px,
+                transparent 5px,
+                transparent 9px,
+                #000 9px,
+                #000 12px,
+                transparent 12px,
+                transparent 14px,
+                #000 14px,
+                #000 15px,
+                transparent 15px,
+                transparent 19px
+            );
+        }
+        .barcode-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'SF Mono', Menlo, monospace;
+            font-size: 9px;
+            font-weight: 700;
+            color: #333;
+            letter-spacing: 0.1em;
+        }
+        .barcode-stamp {
+            color: var(--apple-green);
+            font-weight: 900;
+        }
 
-.report-text-block {
-font-size: 13.5px;
-line-height: 1.6;
-color: #111111;
-text-align: justify;
-position: relative;
-}
-.highlight-name {
-background: #fef08a;
-font-weight: 800;
-padding: 1px 4px;
-}
+        /* =========================================================
+           📱 IG 限動 9:16 匯出樣式
+           ========================================================= */
+        .profile-card.ig-story {
+            width: 1080px;
+            min-height: 1920px;
+            border: 6px solid #000000;
+            padding: 48px 52px 38px;
+            /* 匯出時取消縮放 */
+            transform: none !important;
+            box-sizing: border-box;
+            position: relative;
+            /* 升級設計：牛皮紙底紋 + 微噪點感 */
+            background:
+                /* 紙張纖維紋理 */
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0,0,0,0.012),
+                    rgba(0,0,0,0.012) 1px,
+                    transparent 1px,
+                    transparent 3px
+                ),
+                /* 主底 */
+                radial-gradient(circle at 20% 10%, #ffffff 0%, #faf8f3 70%, #f5f1e8 100%);
+            box-shadow: none;
+            overflow: visible;
+        }
+        /* IG 模式：四角的「機密」裝飾 */
+        .profile-card.ig-story::before {
+            content: "CONFIDENTIAL · CONFIDENTIAL · CONFIDENTIAL · CONFIDENTIAL · CONFIDENTIAL · ";
+            position: absolute;
+            top: 14px;
+            left: 0;
+            right: 0;
+            font-family: 'SF Mono', Menlo, monospace;
+            font-size: 11px;
+            color: rgba(0,0,0,0.35);
+            letter-spacing: 0.4em;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            font-weight: 700;
+        }
+        .profile-card.ig-story::after {
+            content: "CONFIDENTIAL · CONFIDENTIAL · CONFIDENTIAL · CONFIDENTIAL · CONFIDENTIAL · ";
+            position: absolute;
+            bottom: 14px;
+            left: 0;
+            right: 0;
+            font-family: 'SF Mono', Menlo, monospace;
+            font-size: 11px;
+            color: rgba(0,0,0,0.35);
+            letter-spacing: 0.4em;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            font-weight: 700;
+        }
 
-.quote-log-box {
-background: #f8f9fa;
-border: 1px solid #e5e5ea;
-padding: 10px 12px;
-margin-top: 12px;
-font-size: 12px;
-}
-.quote-log-label {
-font-size: 9px;
-font-weight: 700;
-color: #8e8e93;
-font-family: 'SF Mono', Menlo, monospace;
-margin-bottom: 2px;
-}
-.quote-log-content {
-font-size: 16px;
-font-weight: 900;
-line-height: 1.5;
-font-style: italic;
-color: #111;
-}
+        .profile-card.ig-story .report-top-bar {
+            font-size: 20px;
+            padding: 14px 24px;
+            margin-bottom: 36px;
+            letter-spacing: 0.08em;
+        }
+        .profile-card.ig-story .report-top-bar .punch-holes {
+            gap: 8px;
+            margin-right: 16px;
+        }
+        .profile-card.ig-story .report-top-bar .punch-holes span {
+            width: 10px; height: 10px;
+        }
+        .profile-card.ig-story .qr-deco {
+            width: 96px;
+            height: 96px;
+            gap: 2px;
+        }
+        .profile-card.ig-story .pin-deco {
+            top: 16px;
+            left: 50px;
+            width: 28px;
+            height: 28px;
+        }
+        .profile-card.ig-story .pin-deco::after {
+            width: 7px; height: 7px;
+        }
+        .profile-card.ig-story .bg-watermark {
+            font-size: 130px;
+            letter-spacing: 0.35em;
+            color: rgba(0,0,0,0.025);
+        }
+        .profile-card.ig-story .report-header {
+            border-bottom-width: 3px;
+            padding-bottom: 18px;
+            margin-bottom: 28px;
+        }
+        .profile-card.ig-story .report-subtitle { font-size: 22px; margin-bottom: 6px; letter-spacing: 0.1em; }
+        .profile-card.ig-story .report-title {
+            font-size: 56px;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+        .profile-card.ig-story .stamp-top-secret {
+            font-size: 44px;
+            padding: 14px 32px;
+            top: 28px;
+            right: 28px;
+            border-width: 5px;
+            letter-spacing: 8px;
+            opacity: 0.9;
+        }
+        .profile-card.ig-story .report-meta-row {
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+        .profile-card.ig-story .report-photo-box {
+            flex: 0 0 42%;
+            gap: 14px;
+        }
+        .profile-card.ig-story .report-photo {
+            border-width: 2px;
+            padding: 14px;
+        }
+        .profile-card.ig-story .report-photo::before,
+        .profile-card.ig-story .report-photo::after {
+            width: 22px; height: 22px;
+            border-width: 2px;
+        }
+        .profile-card.ig-story .report-photo::before { top: 10px; left: 10px; border-width: 2px 0 0 2px; }
+        .profile-card.ig-story .report-photo::after { bottom: 10px; right: 10px; border-width: 0 2px 2px 0; }
+        .profile-card.ig-story .report-biometric {
+            font-size: 30px;
+            padding: 10px 0;
+            border-width: 2px;
+        }
+        .profile-card.ig-story .report-table { font-size: 23px; }
+        .profile-card.ig-story .report-table td {
+            padding: 18px 20px;
+            border-width: 2px;
+        }
+        .profile-card.ig-story .report-table td:first-child {
+            width: 200px !important;
+            font-size: 23px;
+        }
+        .profile-card.ig-story .td-mono {
+            font-size: 21px;
+        }
+        .profile-card.ig-story .td-place,
+        .profile-card.ig-story .td-place-label {
+            font-size: 22px;
+            line-height: 1.4;
+        }
+        .profile-card.ig-story .danger-num {
+            width: 80px;
+            font-size: 24px;
+        }
+        .profile-card.ig-story .danger-bar-bg {
+            height: 12px;
+            border-radius: 4px;
+        }
+        .profile-card.ig-story .section-divider {
+            font-size: 20px;
+            margin: 38px 0 22px;
+            padding-bottom: 8px;
+            border-bottom-width: 2px;
+            letter-spacing: 0.08em;
+        }
+        .profile-card.ig-story .report-text-block {
+            font-size: 26px;
+            line-height: 1.7;
+        }
+        .profile-card.ig-story .highlight-name {
+            padding: 2px 8px;
+        }
+        .profile-card.ig-story .quote-log-box {
+            padding: 24px 28px;
+            margin-top: 28px;
+            border-width: 2px;
+            border-left: 6px solid #000;
+        }
+        .profile-card.ig-story .quote-log-content {
+            font-size: 30px;
+            line-height: 1.45;
+        }
+        .profile-card.ig-story .report-tag-item {
+            font-size: 23px;
+            padding: 10px 22px;
+            border-width: 2px;
+        }
+        .profile-card.ig-story .report-tags-grid { gap: 14px; }
+        .profile-card.ig-story .report-footer {
+            margin-top: 44px;
+            padding-top: 24px;
+            border-top: 2px solid #000;
+        }
+        .profile-card.ig-story .report-footer-meta {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .profile-card.ig-story .stamp-red-seal {
+            width: 124px;
+            height: 124px;
+            font-size: 18px;
+            border-width: 3px;
+        }
+        .profile-card.ig-story .stamp-red-seal span {
+            font-size: 13px !important;
+        }
+        .profile-card.ig-story .report-barcode {
+            margin-top: 32px;
+            padding: 22px 26px;
+            border-width: 2px;
+            gap: 12px;
+        }
+        .profile-card.ig-story .barcode-lines {
+            height: 60px;
+        }
+        .profile-card.ig-story .barcode-meta {
+            font-size: 17px;
+        }
 
-.report-tags-grid {
-display: flex;
-flex-wrap: wrap;
-gap: 6px;
-}
-.report-tag-item {
-border: 1px solid #000000;
-padding: 4px 10px;
-font-size: 11.5px;
-font-weight: 700;
-color: #000000;
-background: #ffffff;
-}
+        /* 匯出浮水印（平常隱藏） */
+        .export-only { display: none; }
+        .profile-card.exporting .export-only { display: block; }
 
-.report-footer {
-margin-top: 24px;
-display: flex;
-justify-content: space-between;
-align-items: flex-end;
-gap: 12px;
-position: relative;
-}
-.report-footer .report-footer-meta {
-flex: 1;
-min-width: 0;
-}
-.report-footer-meta {
-font-size: 8.5px;
-font-family: 'SF Mono', Menlo, monospace;
-color: #777777;
-line-height: 1.4;
-}
-.stamp-red-seal {
-width: 52px;
-height: 52px;
-border: 2px solid rgba(255, 45, 85, 0.85);
-border-radius: 50%;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-color: rgba(255, 45, 85, 0.85);
-font-size: 8px;
-font-weight: 900;
-line-height: 1.2;
-text-align: center;
-transform: rotate(-5deg) translateY(4px);
-letter-spacing: -0.05em;
-background: rgba(255,255,255,0.8);
-box-shadow: inset 0 0 0 1px rgba(255, 45, 85, 0.3);
-}
-
-/* 升級：底部條碼區 */
-.report-barcode {
-margin-top: 16px;
-padding: 10px 12px;
-border: 1px solid #000;
-background: #fafafa;
-display: flex;
-flex-direction: column;
-gap: 6px;
-}
-.barcode-lines {
-height: 28px;
-background-image: repeating-linear-gradient(
-90deg,
-#000 0px,
-#000 2px,
-transparent 2px,
-transparent 4px,
-#000 4px,
-#000 5px,
-transparent 5px,
-transparent 9px,
-#000 9px,
-#000 12px,
-transparent 12px,
-transparent 14px,
-#000 14px,
-#000 15px,
-transparent 15px,
-transparent 19px
-);
-}
-.barcode-meta {
-display: flex;
-justify-content: space-between;
-align-items: center;
-font-family: 'SF Mono', Menlo, monospace;
-font-size: 9px;
-font-weight: 700;
-color: #333;
-letter-spacing: 0.1em;
-}
-.barcode-stamp {
-color: var(--apple-green);
-font-weight: 900;
-}
-
-/* =========================================================
-📱 IG 限動 9:16 匯出樣式
-========================================================= /
-.profile-card.ig-story {
-width: 1080px;
-min-height: 1920px;
-border: 6px solid #000000;
-padding: 48px 52px 38px;
-/ 匯出時取消縮放 /
-transform: none !important;
-box-sizing: border-box;
-position: relative;
-/ 升級設計：牛皮紙底紋 + 微噪點感 /
-background:
-/ 紙張纖維紋理 /
-repeating-linear-gradient(
-0deg,
-rgba(0,0,0,0.012),
-rgba(0,0,0,0.012) 1px,
-transparent 1px,
-transparent 3px
-),
-/ 主底 /
-radial-gradient(circle at 20% 10%, #ffffff 0%, #faf8f3 70%, #f5f1e8 100%);
-box-shadow: none;
-overflow: visible;
-}
-/ IG 模式：四角的「機密」裝飾 */
-.profile-card.ig-story::before {
-content: "CONFIDENTIAL · CONFIDENTIAL · CONFIDENTIAL · CONFIDENTIAL · CONFIDENTIAL · ";
-position: absolute;
-top: 14px;
-left: 0;
-right: 0;
-font-family: 'SF Mono', Menlo, monospace;
-font-size: 11px;
-color: rgba(0,0,0,0.35);
-letter-spacing: 0.4em;
-text-align: center;
-white-space: nowrap;
-overflow: hidden;
-font-weight: 700;
-}
-.profile-card.ig-story::after {
-content: "CONFIDENTIAL · CONFIDENTIAL · CONFIDENTIAL · CONFIDENTIAL · CONFIDENTIAL · ";
-position: absolute;
-bottom: 14px;
-left: 0;
-right: 0;
-font-family: 'SF Mono', Menlo, monospace;
-font-size: 11px;
-color: rgba(0,0,0,0.35);
-letter-spacing: 0.4em;
-text-align: center;
-white-space: nowrap;
-overflow: hidden;
-font-weight: 700;
-}
-
-.profile-card.ig-story .report-top-bar {
-font-size: 20px;
-padding: 14px 24px;
-margin-bottom: 36px;
-letter-spacing: 0.08em;
-}
-.profile-card.ig-story .report-top-bar .punch-holes {
-gap: 8px;
-margin-right: 16px;
-}
-.profile-card.ig-story .report-top-bar .punch-holes span {
-width: 10px; height: 10px;
-}
-.profile-card.ig-story .qr-deco {
-width: 96px;
-height: 96px;
-gap: 2px;
-}
-.profile-card.ig-story .pin-deco {
-top: 16px;
-left: 50px;
-width: 28px;
-height: 28px;
-}
-.profile-card.ig-story .pin-deco::after {
-width: 7px; height: 7px;
-}
-.profile-card.ig-story .bg-watermark {
-font-size: 130px;
-letter-spacing: 0.35em;
-color: rgba(0,0,0,0.025);
-}
-.profile-card.ig-story .report-header {
-border-bottom-width: 3px;
-padding-bottom: 18px;
-margin-bottom: 28px;
-}
-.profile-card.ig-story .report-subtitle { font-size: 22px; margin-bottom: 6px; letter-spacing: 0.1em; }
-.profile-card.ig-story .report-title {
-font-size: 56px;
-letter-spacing: -0.02em;
-line-height: 1.1;
-}
-.profile-card.ig-story .stamp-top-secret {
-font-size: 44px;
-padding: 14px 32px;
-top: 28px;
-right: 28px;
-border-width: 5px;
-letter-spacing: 8px;
-opacity: 0.9;
-}
-.profile-card.ig-story .report-meta-row {
-gap: 32px;
-margin-bottom: 32px;
-}
-.profile-card.ig-story .report-photo-box {
-flex: 0 0 42%;
-gap: 14px;
-}
-.profile-card.ig-story .report-photo {
-border-width: 2px;
-padding: 14px;
-}
-.profile-card.ig-story .report-photo::before,
-.profile-card.ig-story .report-photo::after {
-width: 22px; height: 22px;
-border-width: 2px;
-}
-.profile-card.ig-story .report-photo::before { top: 10px; left: 10px; border-width: 2px 0 0 2px; }
-.profile-card.ig-story .report-photo::after { bottom: 10px; right: 10px; border-width: 0 2px 2px 0; }
-.profile-card.ig-story .report-biometric {
-font-size: 30px;
-padding: 10px 0;
-border-width: 2px;
-}
-.profile-card.ig-story .report-table { font-size: 23px; }
-.profile-card.ig-story .report-table td {
-padding: 18px 20px;
-border-width: 2px;
-}
-.profile-card.ig-story .report-table td:first-child {
-width: 200px !important;
-font-size: 23px;
-}
-.profile-card.ig-story .td-mono {
-font-size: 21px;
-}
-.profile-card.ig-story .td-place,
-.profile-card.ig-story .td-place-label {
-font-size: 22px;
-line-height: 1.4;
-}
-.profile-card.ig-story .danger-num {
-width: 80px;
-font-size: 24px;
-}
-.profile-card.ig-story .danger-bar-bg {
-height: 12px;
-border-radius: 4px;
-}
-.profile-card.ig-story .section-divider {
-font-size: 20px;
-margin: 38px 0 22px;
-padding-bottom: 8px;
-border-bottom-width: 2px;
-letter-spacing: 0.08em;
-}
-.profile-card.ig-story .report-text-block {
-font-size: 26px;
-line-height: 1.7;
-}
-.profile-card.ig-story .highlight-name {
-padding: 2px 8px;
-}
-.profile-card.ig-story .quote-log-box {
-padding: 24px 28px;
-margin-top: 28px;
-border-width: 2px;
-border-left: 6px solid #000;
-}
-.profile-card.ig-story .quote-log-content {
-font-size: 30px;
-line-height: 1.45;
-}
-.profile-card.ig-story .report-tag-item {
-font-size: 23px;
-padding: 10px 22px;
-border-width: 2px;
-}
-.profile-card.ig-story .report-tags-grid { gap: 14px; }
-.profile-card.ig-story .report-footer {
-margin-top: 44px;
-padding-top: 24px;
-border-top: 2px solid #000;
-}
-.profile-card.ig-story .report-footer-meta {
-font-size: 16px;
-line-height: 1.5;
-}
-.profile-card.ig-story .stamp-red-seal {
-width: 124px;
-height: 124px;
-font-size: 18px;
-border-width: 3px;
-}
-.profile-card.ig-story .stamp-red-seal span {
-font-size: 13px !important;
-}
-.profile-card.ig-story .report-barcode {
-margin-top: 32px;
-padding: 22px 26px;
-border-width: 2px;
-gap: 12px;
-}
-.profile-card.ig-story .barcode-lines {
-height: 60px;
-}
-.profile-card.ig-story .barcode-meta {
-font-size: 17px;
-}
-
-/* 匯出浮水印（平常隱藏） */
-.export-only { display: none; }
-.profile-card.exporting .export-only { display: block; }
-
-/* card-scale-wrap：讓 scale 縮放後仍填滿寬度、高度準確回收 /
-#card-scale-wrap {
-width: 100%;
-position: relative;
-margin-top: 12px;
-/ 高度由 JS 設定 /
-}
-#card-scale-wrap .profile-card {
-margin-top: 0; / 已由 wrap 提供 margin /
-transform-origin: top left;
-width: 100%; / 預設 100% */
-}
+        /* card-scale-wrap：讓 scale 縮放後仍填滿寬度、高度準確回收 */
+        #card-scale-wrap {
+            width: 100%;
+            position: relative;
+            margin-top: 12px;
+            /* 高度由 JS 設定 */
+        }
+        #card-scale-wrap .profile-card {
+            margin-top: 0;          /* 已由 wrap 提供 margin */
+            transform-origin: top left;
+            width: 100%;            /* 預設 100% */
+        }
 
 .action-box {
-display: flex;
-flex-direction: column;
-gap: 10px;
-margin-top: 20px;
-}
-.action-btn {
-border: none;
-padding: 15px 28px;
-border-radius: 16px;
-cursor: pointer;
-font-size: 16px;
-font-weight: 600;
-width: 100%;
-transition: all 0.28s cubic-bezier(0.32, 0.72, 0, 1);
-letter-spacing: -0.01em;
-font-family: inherit;
-position: relative;
-overflow: hidden;
-}
-.export-btn {
-background: linear-gradient(135deg, #FEDA77 0%, #F58529 18%, #DD2A7B 45%, #8134AF 70%, #515BD4 100%);
-background-size: 220% 220%;
-color: white;
-display: flex;
-align-items: center;
-justify-content: center;
-gap: 10px;
-padding: 17px 22px;
-font-size: 16.5px;
-box-shadow:
-0 1px 2px rgba(221, 42, 123, 0.28),
-0 8px 22px rgba(221, 42, 123, 0.32),
-inset 0 1px 0 rgba(255,255,255,0.25);
-animation: gradientShift 6s ease infinite;
-}
-@keyframes gradientShift {
-0%, 100% { background-position: 0% 50%; }
-50% { background-position: 100% 50%; }
-}
-.export-btn::before {
-content: "";
-position: absolute;
-top: 0; left: -100%;
-width: 60%; height: 100%;
-background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
-transform: skewX(-25deg);
-animation: btnShimmer 3.2s ease-in-out infinite;
-}
-@keyframes btnShimmer {
-0% { left: -100%; }
-55%, 100% { left: 130%; }
-}
-.export-btn .btn-icon { font-size: 18px; }
-.export-btn .btn-text { font-weight: 700; }
-.export-btn .btn-tag {
-font-size: 11px;
-padding: 3px 9px;
-background: rgba(255,255,255,0.28);
-border-radius: 50px;
-font-weight: 700;
-letter-spacing: 0.05em;
-backdrop-filter: blur(8px);
-}
-.export-btn:hover {
-transform: translateY(-2px);
-filter: brightness(1.06);
-box-shadow:
-0 2px 4px rgba(221, 42, 123, 0.32),
-0 14px 30px rgba(221, 42, 123, 0.42),
-inset 0 1px 0 rgba(255,255,255,0.3);
-}
-.export-btn:active { transform: scale(0.98); filter: brightness(0.96); }
-.export-btn:disabled { opacity: 0.7; cursor: wait; transform: none; animation: none; }
-.export-btn:disabled::before { animation: none; }
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .action-btn {
+            border: none; 
+            padding: 15px 28px; 
+            border-radius: 16px; 
+            cursor: pointer;
+            font-size: 16px; 
+            font-weight: 600; 
+            width: 100%; 
+            transition: all 0.28s cubic-bezier(0.32, 0.72, 0, 1);
+            letter-spacing: -0.01em;
+            font-family: inherit;
+            position: relative;
+            overflow: hidden;
+        }
+        .export-btn { 
+            background: linear-gradient(135deg, #FEDA77 0%, #F58529 18%, #DD2A7B 45%, #8134AF 70%, #515BD4 100%);
+            background-size: 220% 220%;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 17px 22px;
+            font-size: 16.5px;
+            box-shadow: 
+                0 1px 2px rgba(221, 42, 123, 0.28),
+                0 8px 22px rgba(221, 42, 123, 0.32),
+                inset 0 1px 0 rgba(255,255,255,0.25);
+            animation: gradientShift 6s ease infinite;
+        }
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        .export-btn::before {
+            content: "";
+            position: absolute;
+            top: 0; left: -100%;
+            width: 60%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+            transform: skewX(-25deg);
+            animation: btnShimmer 3.2s ease-in-out infinite;
+        }
+        @keyframes btnShimmer {
+            0% { left: -100%; }
+            55%, 100% { left: 130%; }
+        }
+        .export-btn .btn-icon { font-size: 18px; }
+        .export-btn .btn-text { font-weight: 700; }
+        .export-btn .btn-tag {
+            font-size: 11px;
+            padding: 3px 9px;
+            background: rgba(255,255,255,0.28);
+            border-radius: 50px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            backdrop-filter: blur(8px);
+        }
+        .export-btn:hover { 
+            transform: translateY(-2px); 
+            filter: brightness(1.06); 
+            box-shadow: 
+                0 2px 4px rgba(221, 42, 123, 0.32),
+                0 14px 30px rgba(221, 42, 123, 0.42),
+                inset 0 1px 0 rgba(255,255,255,0.3);
+        }
+        .export-btn:active { transform: scale(0.98); filter: brightness(0.96); }
+        .export-btn:disabled { opacity: 0.7; cursor: wait; transform: none; animation: none; }
+        .export-btn:disabled::before { animation: none; }
+        
+        .restart-btn { 
+            background: rgba(118, 118, 128, 0.16); 
+            color: var(--label-primary); 
+            backdrop-filter: blur(8px);
+        }
+        .restart-btn:hover { background: rgba(118, 118, 128, 0.22); transform: translateY(-1px); }
+        .restart-btn:active { transform: scale(0.98); }
 
-.restart-btn {
-background: rgba(118, 118, 128, 0.16);
-color: var(--label-primary);
-backdrop-filter: blur(8px);
-}
-.restart-btn:hover { background: rgba(118, 118, 128, 0.22); transform: translateY(-1px); }
-.restart-btn:active { transform: scale(0.98); }
+        footer { 
+            margin-top: 28px; 
+            padding-top: 18px;
+            border-top: 0.5px solid rgba(60, 60, 67, 0.12);
+            font-size: 11px; 
+            color: var(--label-tertiary); 
+            font-weight: 500; 
+            letter-spacing: -0.005em;
+            line-height: 1.7;
+        }
+        footer .school-line {
+            font-weight: 700;
+            color: var(--label-secondary);
+            letter-spacing: 0.02em;
+        }
+        footer .en-line {
+            font-size: 10px;
+            letter-spacing: 0.04em;
+            opacity: 0.75;
+        }
 
-footer {
-margin-top: 28px;
-padding-top: 18px;
-border-top: 0.5px solid rgba(60, 60, 67, 0.12);
-font-size: 11px;
-color: var(--label-tertiary);
-font-weight: 500;
-letter-spacing: -0.005em;
-line-height: 1.7;
-}
-footer .school-line {
-font-weight: 700;
-color: var(--label-secondary);
-letter-spacing: 0.02em;
-}
-footer .en-line {
-font-size: 10px;
-letter-spacing: 0.04em;
-opacity: 0.75;
-}
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: rgba(20, 20, 20, 0.92);
+            color: #fff;
+            padding: 12px 22px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 500;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            z-index: 10000;
+            transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+            letter-spacing: -0.01em;
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); }
 
-.toast {
-position: fixed;
-top: 20px;
-left: 50%;
-transform: translateX(-50%) translateY(-100px);
-background: rgba(20, 20, 20, 0.92);
-color: #fff;
-padding: 12px 22px;
-border-radius: 50px;
-font-size: 14px;
-font-weight: 500;
-backdrop-filter: blur(20px);
--webkit-backdrop-filter: blur(20px);
-box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-z-index: 10000;
-transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
-letter-spacing: -0.01em;
-}
-.toast.show { transform: translateX(-50%) translateY(0); }
-
-/* 🔧 FIX3: 預覽 modal — 匯出後直接顯示成像在這裡，使用者可長按整張 /
-.preview-overlay {
-position: fixed;
-inset: 0;
-background: rgba(0,0,0,0.92);
-z-index: 10001;
-display: none;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-padding: 16px;
-backdrop-filter: blur(12px);
--webkit-backdrop-filter: blur(12px);
-}
-.preview-overlay.show {
-display: flex;
-animation: previewFade 0.4s cubic-bezier(0.32, 0.72, 0, 1);
-}
-@keyframes previewFade {
-from { opacity: 0; backdrop-filter: blur(0); }
-to { opacity: 1; backdrop-filter: blur(12px); }
-}
-.preview-overlay .preview-hint {
-color: #fff;
-font-size: 13.5px;
-font-weight: 600;
-margin-bottom: 14px;
-text-align: center;
-line-height: 1.5;
-padding: 10px 18px;
-background: rgba(255,255,255,0.14);
-border-radius: 50px;
-backdrop-filter: blur(20px);
-border: 0.5px solid rgba(255,255,255,0.18);
-animation: hintSlideDown 0.6s 0.1s cubic-bezier(0.32, 0.72, 0, 1) backwards;
-}
-@keyframes hintSlideDown {
-from { opacity: 0; transform: translateY(-12px); }
-to { opacity: 1; transform: translateY(0); }
-}
-.preview-overlay .preview-img {
-max-width: 100%;
-max-height: 60vh;
-border-radius: 12px;
-box-shadow:
-0 0 0 1px rgba(255,255,255,0.15),
-0 24px 64px rgba(0,0,0,0.6),
-0 4px 12px rgba(0,0,0,0.4);
--webkit-touch-callout: default; / iOS 開啟長按選單 */
--webkit-user-select: auto;
-user-select: auto;
-animation: previewImgPop 0.55s 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275) backwards;
-}
-@keyframes previewImgPop {
-from { opacity: 0; transform: scale(0.85) translateY(20px); }
-to { opacity: 1; transform: scale(1) translateY(0); }
-}
-.preview-overlay .preview-actions {
-display: flex;
-gap: 10px;
-margin-top: 18px;
-flex-wrap: wrap;
-justify-content: center;
-width: 100%;
-max-width: 380px;
-animation: hintSlideDown 0.5s 0.3s cubic-bezier(0.32, 0.72, 0, 1) backwards;
-}
-.preview-overlay button {
-flex: 1;
-min-width: 130px;
-padding: 14px 18px;
-border-radius: 14px;
-border: none;
-font-size: 15px;
-font-weight: 700;
-cursor: pointer;
-font-family: inherit;
-letter-spacing: -0.005em;
-transition: all 0.25s cubic-bezier(0.32, 0.72, 0, 1);
-}
-.preview-overlay .btn-download {
-background: linear-gradient(135deg, #FEDA77 0%, #F58529 18%, #DD2A7B 45%, #8134AF 70%, #515BD4 100%);
-background-size: 220% 220%;
-color: #fff;
-box-shadow:
-0 4px 16px rgba(221, 42, 123, 0.45),
-inset 0 1px 0 rgba(255,255,255,0.25);
-animation: gradientShift 6s ease infinite, hintSlideDown 0.5s 0.3s cubic-bezier(0.32, 0.72, 0, 1) backwards;
-}
-.preview-overlay .btn-download:hover { filter: brightness(1.08); transform: translateY(-1px); }
-.preview-overlay .btn-download:active { transform: scale(0.97); filter: brightness(0.95); }
-.preview-overlay .btn-close {
-background: rgba(255,255,255,0.18);
-color: #fff;
-backdrop-filter: blur(20px);
-flex: 0 0 auto;
-min-width: 80px;
-border: 0.5px solid rgba(255,255,255,0.15);
-}
-.preview-overlay .btn-close:hover { background: rgba(255,255,255,0.26); }
-.preview-overlay .btn-close:active { transform: scale(0.97); }
-</style>
+        /* 🔧 FIX3: 預覽 modal — 匯出後直接顯示成像在這裡，使用者可長按整張 */
+        .preview-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.92);
+            z-index: 10001;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .preview-overlay.show {
+            display: flex;
+            animation: previewFade 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+        }
+        @keyframes previewFade {
+            from { opacity: 0; backdrop-filter: blur(0); }
+            to { opacity: 1; backdrop-filter: blur(12px); }
+        }
+        .preview-overlay .preview-hint {
+            color: #fff;
+            font-size: 13.5px;
+            font-weight: 600;
+            margin-bottom: 14px;
+            text-align: center;
+            line-height: 1.5;
+            padding: 10px 18px;
+            background: rgba(255,255,255,0.14);
+            border-radius: 50px;
+            backdrop-filter: blur(20px);
+            border: 0.5px solid rgba(255,255,255,0.18);
+            animation: hintSlideDown 0.6s 0.1s cubic-bezier(0.32, 0.72, 0, 1) backwards;
+        }
+        @keyframes hintSlideDown {
+            from { opacity: 0; transform: translateY(-12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .preview-overlay .preview-img {
+            max-width: 100%;
+            max-height: 60vh;
+            border-radius: 12px;
+            box-shadow:
+                0 0 0 1px rgba(255,255,255,0.15),
+                0 24px 64px rgba(0,0,0,0.6),
+                0 4px 12px rgba(0,0,0,0.4);
+            -webkit-touch-callout: default;  /* iOS 開啟長按選單 */
+            -webkit-user-select: auto;
+            user-select: auto;
+            animation: previewImgPop 0.55s 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275) backwards;
+        }
+        @keyframes previewImgPop {
+            from { opacity: 0; transform: scale(0.85) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .preview-overlay .preview-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+            max-width: 380px;
+            animation: hintSlideDown 0.5s 0.3s cubic-bezier(0.32, 0.72, 0, 1) backwards;
+        }
+        .preview-overlay button {
+            flex: 1;
+            min-width: 130px;
+            padding: 14px 18px;
+            border-radius: 14px;
+            border: none;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            letter-spacing: -0.005em;
+            transition: all 0.25s cubic-bezier(0.32, 0.72, 0, 1);
+        }
+        .preview-overlay .btn-download {
+            background: linear-gradient(135deg, #FEDA77 0%, #F58529 18%, #DD2A7B 45%, #8134AF 70%, #515BD4 100%);
+            background-size: 220% 220%;
+            color: #fff;
+            box-shadow:
+                0 4px 16px rgba(221, 42, 123, 0.45),
+                inset 0 1px 0 rgba(255,255,255,0.25);
+            animation: gradientShift 6s ease infinite, hintSlideDown 0.5s 0.3s cubic-bezier(0.32, 0.72, 0, 1) backwards;
+        }
+        .preview-overlay .btn-download:hover { filter: brightness(1.08); transform: translateY(-1px); }
+        .preview-overlay .btn-download:active { transform: scale(0.97); filter: brightness(0.95); }
+        .preview-overlay .btn-close {
+            background: rgba(255,255,255,0.18);
+            color: #fff;
+            backdrop-filter: blur(20px);
+            flex: 0 0 auto;
+            min-width: 80px;
+            border: 0.5px solid rgba(255,255,255,0.15);
+        }
+        .preview-overlay .btn-close:hover { background: rgba(255,255,255,0.26); }
+        .preview-overlay .btn-close:active { transform: scale(0.97); }
+    </style>
 </head>
 <body>
 
-<div id="quiz-container">
+    <div id="quiz-container">
+        
+        <div class="container">
+            
+            <div id="start-page">
+                <span class="top-eyebrow">2026 畢業限定 · 動物城鑑定</span>
+                <h1>2026 建功人請回答！！</h1>
+                <div class="image-box">
+                    <img id="welcome-img" src="主視覺.jpeg" alt="建功心測主視覺">
+                </div>
+                <p class="subtitle">
+                    這個測驗是畢聯會為建功人設計的，準備好迎接即將到來的畢業典禮嗎！快來看看你在建功動物城是什麼角色吧！希望大家可以透過一些小問題面對更真實的自己~~
+                </p>
+                
+                <p style="font-size: 14.5px; font-weight: 600; color: var(--label-secondary); margin-bottom: 8px; letter-spacing: -0.005em;">
+                    填入你的畢業大名 / 暱稱<span style="color: var(--apple-pink);">*</span>
+                    <span id="name-required-hint" class="name-required-hint">必填</span>
+                </p>
+                <input type="text" id="user-name-input" class="name-input-box" placeholder="例如：萬年班長小明 (限8字)" maxlength="8" oninput="window.jgQuiz.refreshNameGate()">
 
-<div class="container">
+                <p style="font-size: 14.5px; font-weight: 600; color: var(--label-secondary); margin-bottom: 5px; letter-spacing: -0.005em;">撕下一張你的專屬貼紙身分：</p>
+                <div class="identity-container">
+                    <button class="sticker-btn silver is-locked" onclick="window.jgQuiz.selectIdentity('silver')">國中生</button>
+                    <button class="sticker-btn gold is-locked" onclick="window.jgQuiz.selectIdentity('gold')">高中生</button>
+                    <button class="sticker-btn purple is-locked" onclick="window.jgQuiz.selectIdentity('purple')">家長及外賓</button>
+                </div>
+            </div>
 
-<div id="start-page">
-<span class="top-eyebrow">2026 畢業限定 · 動物城鑑定</span>
-<h1>2026 建功人請回答！！</h1>
-<div class="image-box">
-<img id="welcome-img" src="主視覺.jpeg" alt="建功心測主視覺">
-</div>
-<p class="subtitle">
-這個測驗是畢聯會為建功人設計的，準備好迎接即將到來的畢業典禮嗎！快來看看你在建功動物城是什麼角色吧！希望大家可以透過一些小問題面對更真實的自己~~
-</p>
+            <div id="quiz-page" class="hidden">
+                <div class="quiz-top-bar">
+                    <button id="back-btn" class="back-btn" onclick="window.jgQuiz.prevQuestion()">← 上一頁</button>
+                    <div id="progress-text" style="font-size: 11px; color: var(--label-tertiary); font-weight: 600; letter-spacing: 0.05em;"></div>
+                </div>
 
-<p style="font-size: 14.5px; font-weight: 600; color: var(--label-secondary); margin-bottom: 8px; letter-spacing: -0.005em;">
-填入你的畢業大名 / 暱稱<span style="color: var(--apple-pink);">*</span>
-<span id="name-required-hint" class="name-required-hint">必填</span>
-</p>
-<input type="text" id="user-name-input" class="name-input-box" placeholder="例如：萬年班長小明 (限8字)" maxlength="8" oninput="window.jgQuiz.refreshNameGate()">
+                <div class="progress-wrap">
+                    <div class="progress-meta">
+                        <span class="progress-label" id="progress-label">作答中</span>
+                        <span class="progress-percent" id="progress-percent">0%</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fg" id="progress-bar"></div>
+                    </div>
+                    <div class="progress-dots" id="progress-dots"></div>
+                </div>
 
-<p style="font-size: 14.5px; font-weight: 600; color: var(--label-secondary); margin-bottom: 5px; letter-spacing: -0.005em;">撕下一張你的專屬貼紙身分：</p>
-<div class="identity-container">
-<button class="sticker-btn silver is-locked" onclick="window.jgQuiz.selectIdentity('silver')">國中生</button>
-<button class="sticker-btn gold is-locked" onclick="window.jgQuiz.selectIdentity('gold')">高中生</button>
-<button class="sticker-btn purple is-locked" onclick="window.jgQuiz.selectIdentity('purple')">家長及外賓</button>
-</div>
-</div>
+                <div class="image-box">
+                    <img id="quiz-img" src="" alt="問題插圖">
+                </div>
+                <div class="question-title" id="question-text"></div>
+                <div class="options-container" id="options-box"></div>
+            </div>
 
-<div id="quiz-page" class="hidden">
-<div class="quiz-top-bar">
-<button id="back-btn" class="back-btn" onclick="window.jgQuiz.prevQuestion()">← 上一頁</button>
-<div id="progress-text" style="font-size: 11px; color: var(--label-tertiary); font-weight: 600; letter-spacing: 0.05em;"></div>
-</div>
+            <div id="result-page" class="hidden">
+                <div id="result-header-text" style="font-size: 13.5px; font-weight: 600; color: var(--label-tertiary); margin-bottom: 8px; text-align: left; letter-spacing: -0.005em;"></div>
+                
+                <!-- wrapper：固定寬度，overflow hidden，裡面的卡片用 transform scale -->
+                <div id="card-scale-wrap">
+                    <div class="profile-card" id="profile-card-box"></div>
+                </div>
+                
+                <div class="action-box">
+                    <button id="export-btn-ig" class="action-btn export-btn" onclick="window.jgQuiz.exportToImage()">
+                        <span class="btn-icon">📲</span>
+                        <span class="btn-text">儲存到相簿 / 分享</span>
+                        <span class="btn-tag">9:16</span>
+                    </button>
+                    <button class="action-btn restart-btn" onclick="window.jgQuiz.resetQuiz()">↻ 再測一次</button>
+                </div>
+            </div>
 
-<div class="progress-wrap">
-<div class="progress-meta">
-<span class="progress-label" id="progress-label">作答中</span>
-<span class="progress-percent" id="progress-percent">0%</span>
-</div>
-<div class="progress-bar-bg">
-<div class="progress-bar-fg" id="progress-bar"></div>
-</div>
-<div class="progress-dots" id="progress-dots"></div>
-</div>
+            <footer>
+                <div class="school-line">新竹市立建功高級中學 × 2026 建功畢聯會</div>
+                <div class="en-line">Hsinchu Municipal Chien Kang Senior High School</div>
+            </footer>
+        </div>
+        
+    </div>
 
-<div class="image-box">
-<img id="quiz-img" src="" alt="問題插圖">
-</div>
-<div class="question-title" id="question-text"></div>
-<div class="options-container" id="options-box"></div>
-</div>
+    <div id="toast" class="toast"></div>
 
-<div id="result-page" class="hidden">
-<div id="result-header-text" style="font-size: 13.5px; font-weight: 600; color: var(--label-tertiary); margin-bottom: 8px; text-align: left; letter-spacing: -0.005em;"></div>
-
-<!-- wrapper：固定寬度，overflow hidden，裡面的卡片用 transform scale -->
-<div id="card-scale-wrap">
-<div class="profile-card" id="profile-card-box"></div>
-</div>
-
-<div class="action-box">
-<button id="export-btn-ig" class="action-btn export-btn" onclick="window.jgQuiz.exportToImage()">
-<span class="btn-icon">📲</span>
-<span class="btn-text">儲存到相簿 / 分享</span>
-<span class="btn-tag">9:16</span>
-</button>
-<button class="action-btn restart-btn" onclick="window.jgQuiz.resetQuiz()">↻ 再測一次</button>
-</div>
-</div>
-
-<footer>
-<div class="school-line">新竹市立建功高級中學 × 2026 建功畢聯會</div>
-<div class="en-line">Hsinchu Municipal Chien Kang Senior High School</div>
-</footer>
-</div>
-
-</div>
-
-<div id="toast" class="toast"></div>
-
-<!-- 🔧 FIX3: 匯出後顯示完整大圖，使用者可長按整張圖 -->
-<div id="preview-overlay" class="preview-overlay">
-<div class="preview-hint">👇 長按圖片可選「儲存影像」存到相簿，或按下方按鈕下載</div>
-<img id="preview-img" class="preview-img" alt="鑑定報告預覽">
-<div class="preview-actions">
-<button class="btn-download" id="preview-download-btn" onclick="window.jgQuiz.previewDownload()">⬇️ 下載到相簿</button>
-<button class="btn-close" onclick="window.jgQuiz.previewClose()">關閉</button>
-</div>
-</div>
+    <!-- 🔧 FIX3: 匯出後顯示完整大圖，使用者可長按整張圖 -->
+    <div id="preview-overlay" class="preview-overlay">
+        <div class="preview-hint">👇 長按圖片可選「儲存影像」存到相簿，或按下方按鈕下載</div>
+        <img id="preview-img" class="preview-img" alt="鑑定報告預覽">
+        <div class="preview-actions">
+            <button class="btn-download" id="preview-download-btn" onclick="window.jgQuiz.previewDownload()">⬇️ 下載到相簿</button>
+            <button class="btn-close" onclick="window.jgQuiz.previewClose()">關閉</button>
+        </div>
+    </div>
 
 <script>
 (function() {
-const questions = [
-{ title: "明天要考試，今天晚上我會選擇...", options: [{ text: "#想辦法捲死同學", score: "A" }, { text: "#與周公約會", score: "B" }] },
-{ title: "考前我更願意相信...", options: [{ text: "#自己的智商", score: "C" }, { text: "#神明一定會幫助我的", score: "D" }] },
-{ title: "關於上學...", options: [{ text: "#上課有認真聽", score: "C" }, { text: "#有來學校就很棒了", score: "B" }] },
-{ title: "和朋友的相處...", options: [{ text: "#高山流水遇知音", score: "A" }, { text: "#低山臭水遇噪音", score: "D" }] },
-{ title: "面對未來的困難...", options: [{ text: "#放馬過來", score: "A" }, { text: "#放我一馬", score: "D" }] }
-];
+    const questions = [
+        { title: "明天要考試，今天晚上我會選擇...", options: [{ text: "#想辦法捲死同學", score: "A" }, { text: "#與周公約會", score: "B" }] },
+        { title: "考前我更願意相信...", options: [{ text: "#自己的智商", score: "C" }, { text: "#神明一定會幫助我的", score: "D" }] },
+        { title: "關於上學...", options: [{ text: "#上課有認真聽", score: "C" }, { text: "#有來學校就很棒了", score: "B" }] },
+        { title: "和朋友的相處...", options: [{ text: "#高山流水遇知音", score: "A" }, { text: "#低山臭水遇噪音", score: "D" }] },
+        { title: "面對未來的困難...", options: [{ text: "#放馬過來", score: "A" }, { text: "#放我一馬", score: "D" }] }
+    ];
 
-window.quizResultsDatabase = {
-"A": { badge: "2026 頂峰執行者檔案", name: "蠻牛局長 × 風紀股長", characterName: "蠻牛局長", bg: "#fee2e2", meta: { code: "BOGO-BOSS-01", danger: "98%", place: "K書中心 / 糾察哨口", type: "鐵血行動派" }, traits: ["#放馬過來", "#想辦法捲死同學", "#氣場兩米八", "#高山流水遇知音"], desc: "你就是那個面對未知挑戰敢正面大喊「放馬過來」的絕對強者！在學校裡遇到競爭會瞬間激發滿滿的戰鬥力，實力上演捲死同學的戲碼。你目標明確、效率極高，擁有不可動搖的霸氣。畢業後絕對是社會上打破常規、開疆闢土的開路先鋒！", quote: "別擋路，我的目標只有頂峰。" },
-"B": { badge: "2026 活力夢想家檔案", name: "兔子茱蒂 × 體育股長", characterName: "哈茱蒂", bg: "#fef9c3", meta: { code: "JUDY-SPORTS-26", danger: "15%", place: "操場跑道 / 體育器材室", type: "佛系熱血派" }, traits: ["#有來學校就很棒了", "#與周公約會", "#熱血滿點", "#元氣輸出"], desc: "你抱持著「有來學校就很棒了」的樂活達人態度，雖然昨晚可能還在跟周公進行深度約會，但點燃熱情的速度比誰都快！看似無害其實內心生命力爆棚。只要運動會或活動號角響起，你就是全班的動能核心！", quote: "生活要懂得放鬆，但好玩的事情我絕不缺席！" },
-"C": { badge: "2026 智商天花板檔案", name: "狐狸尼克 × 副班長", characterName: "狐狸尼克", bg: "#fae8ff", meta: { code: "NICK-VICE-99", danger: "65%", place: "後排靠窗座位 / 考前被包圍的課桌", type: "從容智謀派" }, traits: ["#自己的智商", "#上課有認真聽", "#智商擔當", "#優雅省力"], desc: "考前你絕對敢大膽貼上「相信自己智商」的標籤，因為你上課其實都有默默抓到核心重點，骨子裡自帶一種看透局勢的淡定。聰明、帶點讓人又愛又恨的小傲嬌，平時低調看戲、優雅省力，但大局需要時總能用高智商精準掌控，是班上的隱藏版大佬。", quote: "實力擺在那裡，穩紮穩打才是最高級的優雅。" },
-"D": { badge: "2026 校園守護神檔案", name: "樹懶快俠 × 普通學生", characterName: "快俠", bg: "#dcfce7", meta: { code: "FLASH-STUDENT-00", danger: "0%", place: "教室最後一排 / 合作社榕樹下", type: "療癒避風港" }, traits: ["#放我一馬", "#神明一定會幫助我的", "#低山臭水遇噪音", "#慢條斯理"], desc: "面對壓力重重的日常，你只想高喊「放我一馬」，考前默默祈禱神明加持。你不追求職位的虛名，只想當個與世無爭、置身事外的普通學生。即使身邊的人際關係像噪音一樣煩人，你也總能用強大的冷幽默和獨特的慢節奏將其化解，活得悠閒又療癒。", quote: "沒事沒事，平安畢業，順其自然。" }
-};
+    window.quizResultsDatabase = {
+        "A": { badge: "2026 頂峰執行者檔案", name: "蠻牛局長 × 風紀股長", characterName: "蠻牛局長", bg: "#fee2e2", meta: { code: "BOGO-BOSS-01", danger: "98%", place: "K書中心 / 糾察哨口", type: "鐵血行動派" }, traits: ["#放馬過來", "#想辦法捲死同學", "#氣場兩米八", "#高山流水遇知音"], desc: "你就是那個面對未知挑戰敢正面大喊「放馬過來」的絕對強者！在學校裡遇到競爭會瞬間激發滿滿的戰鬥力，實力上演捲死同學的戲碼。你目標明確、效率極高，擁有不可動搖的霸氣。畢業後絕對是社會上打破常規、開疆闢土的開路先鋒！", quote: "別擋路，我的目標只有頂峰。" },
+        "B": { badge: "2026 活力夢想家檔案", name: "兔子茱蒂 × 體育股長", characterName: "哈茱蒂", bg: "#fef9c3", meta: { code: "JUDY-SPORTS-26", danger: "15%", place: "操場跑道 / 體育器材室", type: "佛系熱血派" }, traits: ["#有來學校就很棒了", "#與周公約會", "#熱血滿點", "#元氣輸出"], desc: "你抱持著「有來學校就很棒了」的樂活達人態度，雖然昨晚可能還在跟周公進行深度約會，但點燃熱情的速度比誰都快！看似無害其實內心生命力爆棚。只要運動會或活動號角響起，你就是全班的動能核心！", quote: "生活要懂得放鬆，但好玩的事情我絕不缺席！" },
+        "C": { badge: "2026 智商天花板檔案", name: "狐狸尼克 × 副班長", characterName: "狐狸尼克", bg: "#fae8ff", meta: { code: "NICK-VICE-99", danger: "65%", place: "後排靠窗座位 / 考前被包圍的課桌", type: "從容智謀派" }, traits: ["#自己的智商", "#上課有認真聽", "#智商擔當", "#優雅省力"], desc: "考前你絕對敢大膽貼上「相信自己智商」的標籤，因為你上課其實都有默默抓到核心重點，骨子裡自帶一種看透局勢的淡定。聰明、帶點讓人又愛又恨的小傲嬌，平時低調看戲、優雅省力，但大局需要時總能用高智商精準掌控，是班上的隱藏版大佬。", quote: "實力擺在那裡，穩紮穩打才是最高級的優雅。" },
+        "D": { badge: "2026 校園守護神檔案", name: "樹懶快俠 × 普通學生", characterName: "快俠", bg: "#dcfce7", meta: { code: "FLASH-STUDENT-00", danger: "0%", place: "教室最後一排 / 合作社榕樹下", type: "療癒避風港" }, traits: ["#放我一馬", "#神明一定會幫助我的", "#低山臭水遇噪音", "#慢條斯理"], desc: "面對壓力重重的日常，你只想高喊「放我一馬」，考前默默祈禱神明加持。你不追求職位的虛名，只想當個與世無爭、置身事外的普通學生。即使身邊的人際關係像噪音一樣煩人，你也總能用強大的冷幽默和獨特的慢節奏將其化解，活得悠閒又療癒。", quote: "沒事沒事，平安畢業，順其自然。" }
+    };
 
-const ImageEngine = {
-setQuestionImage: function(index) {
-const imgTag = document.getElementById('quiz-img');
-if(!imgTag) return;
-const qNum = index + 1;
-imgTag.src = 問題${qNum}.png; imgTag.onerror = function() { this.onerror = function() { this.onerror = function() { this.src = ''; }; this.src =問題${qNum}.jpg;
-};
-this.src = 問題${qNum}.jpeg`;
-};
-},
-setWelcomeImage: function() {
-const imgTag = document.getElementById('welcome-img');
-if(!imgTag) return;
-imgTag.src = '主視覺.jpeg';
-imgTag.onerror = function() {
-this.onerror = function() { this.src = '主視覺.png'; };
-this.src = '主視覺.jpg';
-};
-}
-};
+    const ImageEngine = {
+        setQuestionImage: function(index) {
+            const imgTag = document.getElementById('quiz-img');
+            if(!imgTag) return;
+            const qNum = index + 1;
+            imgTag.src = `問題${qNum}.png`;
+            imgTag.onerror = function() {
+                this.onerror = function() {
+                    this.onerror = function() { this.src = ''; };
+                    this.src = `問題${qNum}.jpg`;
+                };
+                this.src = `問題${qNum}.jpeg`;
+            };
+        },
+        setWelcomeImage: function() {
+            const imgTag = document.getElementById('welcome-img');
+            if(!imgTag) return;
+            imgTag.src = '主視覺.jpeg';
+            imgTag.onerror = function() {
+                this.onerror = function() { this.src = '主視覺.png'; };
+                this.src = '主視覺.jpg';
+            };
+        }
+    };
 
-function fireConfetti() {
-const colors = ['#FF2D55', '#FF9500', '#FFCC00', '#34C759', '#007AFF', '#5856D6', '#AF52DE'];
-const total = 42;
-for(let i = 0; i < total; i++) {
-const c = document.createElement('div');
-c.className = 'confetti';
-c.style.left = (Math.random() * 100) + 'vw';
-c.style.background = colors[Math.floor(Math.random() * colors.length)];
-c.style.animationDuration = (1.8 + Math.random() * 1.4) + 's';
-c.style.animationDelay = (Math.random() * 0.3) + 's';
-c.style.transform = rotate(${Math.random() * 360}deg)`;
-if(Math.random() > 0.5) { c.style.borderRadius = '50%'; }
-document.body.appendChild(
+    function fireConfetti() {
+        const colors = ['#FF2D55', '#FF9500', '#FFCC00', '#34C759', '#007AFF', '#5856D6', '#AF52DE'];
+        const total = 42;
+        for(let i = 0; i < total; i++) {
+            const c = document.createElement('div');
+            c.className = 'confetti';
+            c.style.left = (Math.random() * 100) + 'vw';
+            c.style.background = colors[Math.floor(Math.random() * colors.length)];
+            c.style.animationDuration = (1.8 + Math.random() * 1.4) + 's';
+            c.style.animationDelay = (Math.random() * 0.3) + 's';
+            c.style.transform = `rotate(${Math.random() * 360}deg)`;
+            if(Math.random() > 0.5) { c.style.borderRadius = '50%'; }
+            document.body.appendChild(c);
+            setTimeout(() => c.remove(), 3500);
+        }
+    }
+
+    function showToast(msg, duration) {
+        duration = duration || 2000;
+        const t = document.getElementById('toast');
+        t.innerText = msg;
+        t.classList.add('show');
+        if(window._toastTimer) clearTimeout(window._toastTimer);
+        window._toastTimer = setTimeout(() => {
+            t.classList.remove('show');
+        }, duration);
+    }
+
+    window.jgQuiz = {
+        currentQuestionIndex: 0,
+        selectedScores: [],
+        userName: "建功人",
+        _lastBlob: null,
+        _lastDataUrl: null,
+        _lastFileName: null,
+
+        selectIdentity: function(type) {
+            const input = document.getElementById('user-name-input');
+            const inputName = input.value.trim();
+            if(!inputName) {
+                showToast('🙋 請先填入你的畢業大名 / 暱稱', 2200);
+                input.classList.add('shake-error');
+                input.focus();
+                setTimeout(() => input.classList.remove('shake-error'), 600);
+                return;
+            }
+            this.userName = inputName;
+
+            const root = document.documentElement;
+            let textColor = '#fff';
+            if (type === 'silver') { root.style.setProperty('--sticker-color', '#cbd5e0'); textColor = '#4a5568'; }
+            else if (type === 'gold') { root.style.setProperty('--sticker-color', '#ecc94b'); textColor = '#744210'; }
+            else if (type === 'purple') { root.style.setProperty('--sticker-color', '#9f7aea'); textColor = '#ffffff'; }
+            root.style.setProperty('--sticker-text', textColor);
+
+            document.getElementById('start-page').className = 'hidden';
+            document.getElementById('quiz-page').className = '';
+            this.buildProgressDots();
+            this.showQuestion();
+        },
+
+        refreshNameGate: function() {
+            const input = document.getElementById('user-name-input');
+            const hasName = !!input.value.trim();
+            document.querySelectorAll('.sticker-btn').forEach(b => {
+                b.classList.toggle('is-locked', !hasName);
+            });
+            const hint = document.getElementById('name-required-hint');
+            if(hint) hint.style.opacity = hasName ? '0' : '1';
+        },
+
+        buildProgressDots: function() {
+            const dotsBox = document.getElementById('progress-dots');
+            dotsBox.innerHTML = '';
+            for(let i = 0; i < questions.length; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'progress-dot';
+                dotsBox.appendChild(dot);
+            }
+        },
+
+        updateProgress: function() {
+            const total = questions.length;
+            const current = this.currentQuestionIndex;
+            const percent = Math.round((current / total) * 100);
+            document.getElementById('progress-bar').style.width = percent + '%';
+            document.getElementById('progress-percent').innerText = percent + '%';
+            document.getElementById('progress-text').innerText = `QUESTION ${current + 1} / ${total}`;
+            
+            const labels = ['開始作答', '繼續加油', '已過半囉', '快完成了', '最後一題'];
+            document.getElementById('progress-label').innerText = labels[Math.min(current, labels.length - 1)];
+
+            const dots = document.querySelectorAll('.progress-dot');
+            dots.forEach((d, i) => {
+                d.classList.remove('done', 'current');
+                if(i < current) d.classList.add('done');
+                else if(i === current) d.classList.add('current');
+            });
+        },
+
+        showQuestion: function() {
+            if (this.currentQuestionIndex >= questions.length) {
+                this.showResult();
+                return;
+            }
+
+            const backBtn = document.getElementById('back-btn');
+            if(this.currentQuestionIndex > 0) {
+                backBtn.style.visibility = 'visible';
+            } else {
+                backBtn.style.visibility = 'hidden';
+            }
+
+            const q = questions[this.currentQuestionIndex];
+            this.updateProgress();
+            document.getElementById('question-text').innerText = q.title;
+            
+            ImageEngine.setQuestionImage(this.currentQuestionIndex);
+
+            const optionsBox = document.getElementById('options-box');
+            optionsBox.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                // 🔧 FIX1: 把文字包在 .btn-label 裡，flex 排版確保不被圓圈擋
+                btn.innerHTML = `<span class="btn-label"></span>`;
+                btn.querySelector('.btn-label').textContent = opt.text;
+                btn.style.animation = `pageSlide 0.4s cubic-bezier(0.32, 0.72, 0, 1) ${0.1 + idx * 0.08}s backwards`;
+                btn.onclick = () => this.selectOption(btn, opt.score);
+                optionsBox.appendChild(btn);
+            });
+        },
+
+        selectOption: function(element, score) {
+            element.classList.add('selected');
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach(b => b.style.pointerEvents = 'none');
+
+            this.selectedScores.push(score);
+            this.currentQuestionIndex++;
+
+            const percent = Math.round((this.currentQuestionIndex / questions.length) * 100);
+            document.getElementById('progress-bar').style.width = percent + '%';
+            document.getElementById('progress-percent').innerText = percent + '%';
+
+            setTimeout(() => {
+                this.showQuestion();
+            }, 480); 
+        },
+
+        prevQuestion: function() {
+            if(this.currentQuestionIndex > 0) {
+                this.currentQuestionIndex--;
+                this.selectedScores.pop(); 
+                this.showQuestion();
+            }
+        },
+
+        showResult: function() {
+            document.getElementById('quiz-page').className = 'hidden';
+            document.getElementById('result-page').className = '';
+
+            const counts = {};
+            let maxScore = "B";
+            let maxCount = 0;
+
+            this.selectedScores.forEach(score => {
+                counts[score] = (counts[score] || 0) + 1;
+                if (counts[score] > maxCount) { maxCount = counts[score]; maxScore = score; }
+            });
+
+            const finalResult = window.quizResultsDatabase[maxScore];
+            
+            document.getElementById('result-header-text').innerText = `▸ 偵測 ${this.userName}的大數據精密分析：`;
+
+            const cardBox = document.getElementById('profile-card-box');
+
+            const lightThemeBg = `${finalResult.bg}50`;
+            const tableLeftBg = `${finalResult.bg}40`;
+
+            // QR 點陣（用 hash 化的角色代碼產生固定 pattern）
+            const qrSeed = finalResult.meta.code;
+            let qrPattern = '';
+            for(let i = 0; i < 36; i++) {
+                const ch = qrSeed.charCodeAt(i % qrSeed.length);
+                const filled = ((ch + i * 7) % 3) !== 0;
+                qrPattern += filled ? '<span></span>' : '<span class="empty"></span>';
+            }
+
+            cardBox.innerHTML = `
+                <div class="bg-watermark">OFFICIAL · 2026 · OFFICIAL · 2026</div>
+
+                <div class="report-top-bar">
+                    <div class="dot-secret"><span class="punch-holes"><span></span><span></span><span></span></span>TOP SECRET // CLASS-2026</div>
+                    <div>DOC-ID: ${finalResult.meta.code}</div>
+                </div>
+                
+                <div class="report-header">
+                    <div class="report-subtitle">HSINCHU CHIEN-KUNG INTELLIGENCE</div>
+                    <h2 class="report-title"><span>${finalResult.name}</span></h2>
+                    <div class="stamp-top-secret">極機密</div>
+                </div>
+
+                <div class="report-meta-row">
+                    <div class="report-photo-box">
+                        <div class="report-photo" style="--hero-bg:${finalResult.bg};">
+                            <img src="${finalResult.characterName}.jpeg" onerror="this.onerror=null; this.src='${finalResult.characterName}.jpg'; this.onerror=function(){ this.onerror=null; this.src='${finalResult.characterName}.png'; this.onerror=function(){ this.style.display='none'; }; };" alt="${finalResult.name}">
+                        </div>
+                        <div class="report-biometric">
+                            ${this.userName}
+                        </div>
+                    </div>
+                    
+                    <table class="report-table">
+                        <tr>
+                            <td style="background-color: ${tableLeftBg} !important; font-weight: bold; color: #222;">觀測代號</td>
+                            <td class="td-val td-mono">${finalResult.meta.code}</td>
+                        </tr>
+                        <tr>
+                            <td style="background-color: ${tableLeftBg} !important; font-weight: bold; color: #222;">危險等級</td>
+                            <td class="td-val">
+                                <div class="danger-bar-container">
+                                    <div class="danger-bar-bg">
+                                        <div class="danger-bar-fg" style="width: ${finalResult.meta.danger}; background-color: ${finalResult.bg};"></div>
+                                    </div>
+                                    <span class="danger-num">${finalResult.meta.danger}</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="background-color: ${tableLeftBg} !important; font-weight: bold; color: #222;">核心屬性</td>
+                            <td class="td-val">${finalResult.badge}</td>
+                        </tr>
+                        <tr>
+                            <td style="background-color: ${tableLeftBg} !important; font-weight: bold; color: #222;">主型態</td>
+                            <td class="td-val">${finalResult.meta.type}</td>
+                        </tr>
+                        <tr>
+                            <td class="td-place-label" style="background-color: ${tableLeftBg} !important; font-weight: bold; color: #222;">主要出沒地</td>
+                            <td class="td-val td-place">${finalResult.meta.place}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="section-divider">SECTION 01 // BEHAVIORAL DIAGNOSIS </div>
+                <div class="report-text-block">
+                    經過 2026 建功大數據與行為軌跡追蹤，對象個體 <span class="highlight-name">${this.userName}</span> 在校園生態系中展現出極為顯著的 <span class="highlight-name">${finalResult.name}</span> 特徵。${finalResult.desc}
+                    
+                    <div class="quote-log-box">
+                        <div class="quote-log-content">「${finalResult.quote}」</div>
+                    </div>
+                </div>
+
+                <div class="section-divider">SECTION 02 // SUB-TRAITS</div>
+                <div class="report-tags-grid">
+                    ${finalResult.traits.map(t => `<span class="report-tag-item" style="background-color: ${lightThemeBg}; border-color: ${finalResult.bg}; color: #111; font-weight: 600;">${t}</span>`).join('')}
+                </div>
+
+                <div class="report-footer">
+                    <div class="report-footer-meta">
+                        CLASSIFIED BY: 2026 CKHS GRADUATION COMMITTEE<br>
+                        DATE OF ISSUED: 2026.06 // AUTHORIZED UNDER STATUTE 63
+                    </div>
+                    <div class="qr-deco">${qrPattern}</div>
+                    <div class="stamp-red-seal">
+                        建功高中<br>畢聯會<br><span style="font-family:'SF Mono',monospace; font-size:7px; margin-top:2px;">2026</span>
+                    </div>
+                </div>
+
+                <!-- 升級：底部條碼 + 文件編號區（讓 IG 限動底部不空，更像真檔案） -->
+                <div class="report-barcode">
+                    <div class="barcode-lines"></div>
+                    <div class="barcode-meta">
+                        <span class="barcode-num">CK·2026·${finalResult.meta.code}</span>
+                        <span class="barcode-stamp">⬢ VERIFIED</span>
+                    </div>
+                </div>
+                <div class="export-only" id="export-watermark"></div>
+            `;
+
+            cardBox.style.setProperty('--hero-bg', finalResult.bg);
+
+            // 🔧 FIX2: 結算卡渲染完後，量測高度，若超過手機螢幕就等比縮放
+            requestAnimationFrame(() => {
+                this.fitCardToScreen();
+            });
+
+            setTimeout(fireConfetti, 200);
+        },
+
+        // 🔧 FIX2: 結算卡等比縮放到一個螢幕內
+        fitCardToScreen: function() {
+            const card = document.getElementById('profile-card-box');
+            const wrap = document.getElementById('card-scale-wrap');
+            if(!card || !wrap) return;
+
+            // 重置以取得原始尺寸
+            card.style.transform = 'none';
+            card.style.width = '100%';
+            wrap.style.height = '';
+            const naturalH = card.offsetHeight;
+
+            // 預留空間：偵測小標 ~30 + 兩顆按鈕 ~140 + footer ~80 + container padding 60
+            const reservedH = 310;
+            const availableH = window.innerHeight - reservedH;
+
+            if (naturalH > availableH && availableH > 0) {
+                const ratio = availableH / naturalH;
+                const scale = Math.max(0.55, Math.min(1, ratio));
+
+                if (scale < 1) {
+                    card.style.transformOrigin = 'top left';
+                    card.style.transform = `scale(${scale})`;
+                    card.style.width = `${100 / scale}%`;   // 補回寬度，讓卡片填滿 wrap
+
+                    // wrap 高度設為縮放後的視覺高度（這樣下方 action-box 緊貼卡片）
+                    const visualH = Math.ceil(naturalH * scale);
+                    wrap.style.height = `${visualH}px`;
+                }
+            } else {
+                card.style.transform = 'none';
+                card.style.width = '100%';
+                wrap.style.height = '';
+            }
+        },
+
+        // 🌟 匯出為 IG 限動 9:16 高畫質 PNG (1080×1920)
+        exportToImage: async function() {
+            const targetNode = document.getElementById('profile-card-box');
+            const btn = document.getElementById('export-btn-ig');
+            if(!targetNode || !window.html2canvas) {
+                showToast('匯出工具尚未載入，請稍候');
+                return;
+            }
+
+            btn.disabled = true;
+            const oldHtml = btn.innerHTML;
+            btn.innerHTML = '<span class="btn-icon">⏳</span><span class="btn-text">正在生成...</span>';
+            showToast('📱 正在生成高畫質報告...', 4000);
+
+            const watermark = document.getElementById('export-watermark');
+            if(watermark) {
+                watermark.innerHTML = `
+                    <div style="font-weight: 600; color: rgba(60, 60, 67, 0.7); margin-bottom: 2px; text-align:center; padding-top:8px; font-size:10px;">${this.userName} 的專屬畢業鑑定報告</div>
+                `;
+            }
+
+            // 🔧 暫時把卡片移到 body 頂層（脫離 container），ig-story 1080px 才能正確展開
+            const wrap = document.getElementById('card-scale-wrap');
+            const oldTransform = targetNode.style.transform;
+            const oldMarginBottom = targetNode.style.marginBottom;
+            const oldWidth = targetNode.style.width;
+            const oldWrapH = wrap ? wrap.style.height : '';
+            targetNode.style.transform = 'none';
+            targetNode.style.marginBottom = '0';
+            targetNode.style.width = '';
+            if(wrap) wrap.style.height = '';
+
+            // 把卡片暫時移到 body，讓 1080px ig-story 不受 container 限制
+            const placeholder = document.createElement('div');
+            placeholder.style.display = 'none';
+            if(wrap && wrap.firstElementChild === targetNode) {
+                wrap.insertBefore(placeholder, targetNode);
+            }
+            document.body.appendChild(targetNode);
+            targetNode.style.position = 'fixed';
+            targetNode.style.top = '-9999px';
+            targetNode.style.left = '0';
+
+            targetNode.classList.add('exporting', 'ig-story');
+
+            await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+            const allImgs = targetNode.querySelectorAll('img');
+            await Promise.all(Array.from(allImgs).map(img => {
+                if(img.complete && img.naturalWidth > 0) return Promise.resolve();
+                return new Promise(r => {
+                    const done = () => r();
+                    img.addEventListener('load', done, { once: true });
+                    img.addEventListener('error', done, { once: true });
+                    setTimeout(done, 2500);
+                });
+            }));
+
+            try {
+                // 先量測實際內容高度，動態決定 height（至少 1920，不會被裁）
+                const naturalH = Math.max(1920, targetNode.scrollHeight, targetNode.offsetHeight);
+
+                const canvas = await html2canvas(targetNode, {
+                    scale: 1,
+                    backgroundColor: '#FFFFFF',
+                    useCORS: true,
+                    allowTaint: true,
+                    logging: false,
+                    imageTimeout: 5000,
+                    width: 1080,
+                    height: naturalH,
+                    windowWidth: 1080,
+                    windowHeight: naturalH,
+                    onclone: (clonedDoc) => {
+                        const card = clonedDoc.getElementById('profile-card-box');
+                        if(card) {
+                            card.style.animation = 'none';
+                            card.style.transform = 'none';
+                            card.style.boxShadow = 'none';
+                            card.style.margin = '0';
+                            card.querySelectorAll('*').forEach(el => {
+                                el.style.animation = 'none';
+                                el.style.transition = 'none';
+                            });
+                        }
+                    }
+                });
+
+                const blob = await new Promise((resolve, reject) => {
+                    canvas.toBlob(b => b ? resolve(b) : reject(new Error('toBlob failed')), 'image/png', 1.0);
+                });
+                const fileName = `${this.userName}_建功畢業鑑定報告.png`;
+                const dataUrl = canvas.toDataURL('image/png', 1.0);
+
+                this._lastBlob = blob;
+                this._lastDataUrl = dataUrl;
+                this._lastFileName = fileName;
+
+                // 🔧 FIX3: 開預覽 overlay，讓使用者可長按整張圖
+                this.previewOpen(dataUrl);
+                showToast('✅ 生成完成！', 1500);
+            } catch (err) {
+                console.error('匯出失敗:', err);
+                showToast('⚠️ 匯出失敗，請再試一次', 2500);
+            } finally {
+                targetNode.classList.remove('exporting', 'ig-story');
+                // 還原 scale
+                // 把卡片放回 wrap
+                targetNode.style.position = '';
+                targetNode.style.top = '';
+                targetNode.style.left = '';
+                if(wrap && placeholder.parentNode === wrap) {
+                    wrap.insertBefore(targetNode, placeholder);
+                    placeholder.remove();
+                }
+                targetNode.style.transform = oldTransform;
+                targetNode.style.marginBottom = oldMarginBottom;
+                targetNode.style.width = oldWidth;
+                if(wrap) wrap.style.height = oldWrapH;
+                btn.disabled = false;
+                btn.innerHTML = oldHtml;
+            }
+        },
+
+        // 🔧 FIX3: 預覽相關函式
+        previewOpen: function(dataUrl) {
+            const overlay = document.getElementById('preview-overlay');
+            const img = document.getElementById('preview-img');
+            img.src = dataUrl;
+            overlay.classList.add('show');
+
+            // 不再切換按鈕顯隱（合併成一顆「下載到相簿」）
+        },
+        previewClose: function() {
+            document.getElementById('preview-overlay').classList.remove('show');
+        },
+        // 智慧型下載：iOS Safari 有 Web Share API + canShare files → 跳系統分享（可選「儲存到照片」直入相簿）
+        // 其他環境 → 走傳統 <a download>
+        previewDownload: async function() {
+            if(!this._lastBlob) return;
+            const file = new File([this._lastBlob], this._lastFileName, { type: 'image/png' });
+            const canShare = navigator.canShare && navigator.canShare({ files: [file] });
+
+            if (canShare) {
+                try {
+                    await navigator.share({
+                        files: [file],
+                        title: '我的建功畢業鑑定報告',
+                        text: `${this.userName} 的 2026 建功畢業鑑定報告 ✨`
+                    });
+                    showToast('✅ 已開啟系統選單', 1500);
+                    return;
+                } catch (e) {
+                    if (e && e.name === 'AbortError') {
+                        // 使用者取消，靜默處理
+                        return;
+                    }
+                    console.warn('share fallback to download:', e);
+                    // 落到下方 fallback
+                }
+            }
+
+            // Fallback：傳統下載
+            const url = URL.createObjectURL(this._lastBlob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = this._lastFileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+            showToast('✅ 已下載！手機可長按上方圖片儲存', 2200);
+        },
+
+        resetQuiz: function() {
+            this.currentQuestionIndex = 0;
+            this.selectedScores = [];
+            document.getElementById('result-page').className = 'hidden';
+            document.getElementById('quiz-page').className = 'hidden';
+            document.getElementById('start-page').className = '';
+            // 還原 card 的 transform/margin
+            const card = document.getElementById('profile-card-box');
+            if(card) { card.style.transform = ''; card.style.marginBottom = ''; card.style.width = ''; }
+            const wrap = document.getElementById('card-scale-wrap');
+            if(wrap) wrap.style.height = '';
+            ImageEngine.setWelcomeImage();
+        }
+    };
+
+    // 視窗大小變化時重新計算結算卡縮放
+    window.addEventListener('resize', () => {
+        if(document.getElementById('result-page') && 
+           document.getElementById('result-page').className !== 'hidden') {
+            window.jgQuiz.fitCardToScreen();
+        }
+    });
+
+    window.onload = function() {
+        ImageEngine.setWelcomeImage();
+    };
+})();
+</script>
+
+</body>
+</html>
