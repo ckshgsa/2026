@@ -545,7 +545,7 @@
         }
         .report-photo {
             width: 100%;
-            aspect-ratio: 3 / 4;
+            aspect-ratio: 1 / 1;
             border: 1px solid #000000;
             background: var(--hero-bg, #f2f2f7);
             position: relative;
@@ -603,6 +603,23 @@
         .report-table .td-val {
             font-weight: 700;
             color: #000000;
+        }
+        .report-table .td-mono {
+            font-family: 'SF Mono', Menlo, monospace;
+            font-size: 11px;
+        }
+        .report-table .td-place {
+            font-size: 11px;
+            line-height: 1.2;
+        }
+        .report-table .td-place-label {
+            font-size: 11px;
+        }
+        .danger-num {
+            font-family: 'SF Mono', Menlo, monospace;
+            width: 32px;
+            text-align: right;
+            font-weight: 700;
         }
         .danger-bar-container {
             display: flex;
@@ -715,35 +732,247 @@
             box-shadow: inset 0 0 0 1px rgba(255, 45, 85, 0.3);
         }
 
+        /* 升級：底部條碼區 */
+        .report-barcode {
+            margin-top: 16px;
+            padding: 10px 12px;
+            border: 1px solid #000;
+            background: #fafafa;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .barcode-lines {
+            height: 28px;
+            background-image: repeating-linear-gradient(
+                90deg,
+                #000 0px,
+                #000 2px,
+                transparent 2px,
+                transparent 4px,
+                #000 4px,
+                #000 5px,
+                transparent 5px,
+                transparent 9px,
+                #000 9px,
+                #000 12px,
+                transparent 12px,
+                transparent 14px,
+                #000 14px,
+                #000 15px,
+                transparent 15px,
+                transparent 19px
+            );
+        }
+        .barcode-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'SF Mono', Menlo, monospace;
+            font-size: 9px;
+            font-weight: 700;
+            color: #333;
+            letter-spacing: 0.1em;
+        }
+        .barcode-stamp {
+            color: var(--apple-green);
+            font-weight: 900;
+        }
+
         /* =========================================================
            📱 IG 限動 9:16 匯出樣式
            ========================================================= */
         .profile-card.ig-story {
-            width: 540px;
-            height: 960px;
-            border: none;
-            padding: 32px 28px;
+            width: 1080px;
+            height: 1920px;
+            border: 6px solid #000000;
+            padding: 48px 52px;
             /* 匯出時取消縮放 */
             transform: none !important;
+            box-sizing: border-box;
+            position: relative;
+            /* 升級設計：牛皮紙底紋 + 微噪點感 */
+            background:
+                /* 紙張纖維紋理 */
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0,0,0,0.012),
+                    rgba(0,0,0,0.012) 1px,
+                    transparent 1px,
+                    transparent 3px
+                ),
+                /* 主底 */
+                radial-gradient(circle at 20% 10%, #ffffff 0%, #faf8f3 70%, #f5f1e8 100%);
+            box-shadow: none;
+            overflow: hidden;
         }
-        .profile-card.ig-story .report-top-bar { font-size: 12px; padding: 8px 14px; margin-bottom: 24px; }
-        .profile-card.ig-story .report-title { font-size: 32px; }
-        .profile-card.ig-story .report-subtitle { font-size: 14px; }
-        .profile-card.ig-story .stamp-top-secret { font-size: 26px; padding: 8px 20px; top: 20px; right: 20px; }
-        .profile-card.ig-story .report-meta-row { gap: 24px; margin-bottom: 24px; }
-        .profile-card.ig-story .report-biometric { font-size: 18px; }
-        .profile-card.ig-story .report-table { font-size: 14.5px; }
-        .profile-card.ig-story .report-table td { padding: 11px 14px; }
-        .profile-card.ig-story .section-divider { font-size: 12px; margin: 26px 0 14px; }
-        .profile-card.ig-story .report-text-block { font-size: 16px; line-height: 1.7; }
-        .profile-card.ig-story .quote-log-box { padding: 14px 16px; margin-top: 18px; font-size: 14.5px; }
-        .profile-card.ig-story .quote-log-label { font-size: 11px; }
-        .profile-card.ig-story .quote-log-content { font-size: 18px; }
-        .profile-card.ig-story .report-tag-item { font-size: 14px; padding: 6px 14px; }
-        .profile-card.ig-story .report-tags-grid { gap: 10px; }
-        .profile-card.ig-story .report-footer { margin-top: 40px; }
-        .profile-card.ig-story .report-footer-meta { font-size: 11px; }
-        .profile-card.ig-story .stamp-red-seal { width: 72px; height: 72px; font-size: 11px; }
+        /* IG 模式：四角的「機密」裝飾 */
+        .profile-card.ig-story::before {
+            content: "CONFIDENTIAL · CONFIDENTIAL · CONFIDENTIAL · CONFIDENTIAL · CONFIDENTIAL · ";
+            position: absolute;
+            top: 14px;
+            left: 0;
+            right: 0;
+            font-family: 'SF Mono', Menlo, monospace;
+            font-size: 11px;
+            color: rgba(0,0,0,0.35);
+            letter-spacing: 0.4em;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            font-weight: 700;
+        }
+        .profile-card.ig-story::after {
+            content: "CONFIDENTIAL · CONFIDENTIAL · CONFIDENTIAL · CONFIDENTIAL · CONFIDENTIAL · ";
+            position: absolute;
+            bottom: 14px;
+            left: 0;
+            right: 0;
+            font-family: 'SF Mono', Menlo, monospace;
+            font-size: 11px;
+            color: rgba(0,0,0,0.35);
+            letter-spacing: 0.4em;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            font-weight: 700;
+        }
+
+        .profile-card.ig-story .report-top-bar {
+            font-size: 20px;
+            padding: 14px 24px;
+            margin-bottom: 36px;
+            letter-spacing: 0.08em;
+        }
+        .profile-card.ig-story .report-header {
+            border-bottom-width: 3px;
+            padding-bottom: 18px;
+            margin-bottom: 28px;
+        }
+        .profile-card.ig-story .report-subtitle { font-size: 22px; margin-bottom: 6px; letter-spacing: 0.1em; }
+        .profile-card.ig-story .report-title {
+            font-size: 56px;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+        .profile-card.ig-story .stamp-top-secret {
+            font-size: 44px;
+            padding: 14px 32px;
+            top: 28px;
+            right: 28px;
+            border-width: 5px;
+            letter-spacing: 8px;
+            opacity: 0.9;
+        }
+        .profile-card.ig-story .report-meta-row {
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+        .profile-card.ig-story .report-photo-box {
+            flex: 0 0 42%;
+            gap: 14px;
+        }
+        .profile-card.ig-story .report-photo {
+            border-width: 2px;
+            padding: 14px;
+        }
+        .profile-card.ig-story .report-photo::before,
+        .profile-card.ig-story .report-photo::after {
+            width: 22px; height: 22px;
+            border-width: 2px;
+        }
+        .profile-card.ig-story .report-photo::before { top: 10px; left: 10px; border-width: 2px 0 0 2px; }
+        .profile-card.ig-story .report-photo::after { bottom: 10px; right: 10px; border-width: 0 2px 2px 0; }
+        .profile-card.ig-story .report-biometric {
+            font-size: 30px;
+            padding: 10px 0;
+            border-width: 2px;
+        }
+        .profile-card.ig-story .report-table { font-size: 23px; }
+        .profile-card.ig-story .report-table td {
+            padding: 18px 20px;
+            border-width: 2px;
+        }
+        .profile-card.ig-story .report-table td:first-child {
+            width: 200px !important;
+            font-size: 23px;
+        }
+        .profile-card.ig-story .td-mono {
+            font-size: 21px;
+        }
+        .profile-card.ig-story .td-place,
+        .profile-card.ig-story .td-place-label {
+            font-size: 22px;
+            line-height: 1.4;
+        }
+        .profile-card.ig-story .danger-num {
+            width: 80px;
+            font-size: 24px;
+        }
+        .profile-card.ig-story .danger-bar-bg {
+            height: 12px;
+            border-radius: 4px;
+        }
+        .profile-card.ig-story .section-divider {
+            font-size: 20px;
+            margin: 38px 0 22px;
+            padding-bottom: 8px;
+            border-bottom-width: 2px;
+            letter-spacing: 0.08em;
+        }
+        .profile-card.ig-story .report-text-block {
+            font-size: 26px;
+            line-height: 1.7;
+        }
+        .profile-card.ig-story .highlight-name {
+            padding: 2px 8px;
+        }
+        .profile-card.ig-story .quote-log-box {
+            padding: 24px 28px;
+            margin-top: 28px;
+            border-width: 2px;
+            border-left: 6px solid #000;
+        }
+        .profile-card.ig-story .quote-log-content {
+            font-size: 30px;
+            line-height: 1.45;
+        }
+        .profile-card.ig-story .report-tag-item {
+            font-size: 23px;
+            padding: 10px 22px;
+            border-width: 2px;
+        }
+        .profile-card.ig-story .report-tags-grid { gap: 14px; }
+        .profile-card.ig-story .report-footer {
+            margin-top: 44px;
+            padding-top: 24px;
+            border-top: 2px solid #000;
+        }
+        .profile-card.ig-story .report-footer-meta {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .profile-card.ig-story .stamp-red-seal {
+            width: 124px;
+            height: 124px;
+            font-size: 18px;
+            border-width: 3px;
+        }
+        .profile-card.ig-story .stamp-red-seal span {
+            font-size: 13px !important;
+        }
+        .profile-card.ig-story .report-barcode {
+            margin-top: 32px;
+            padding: 22px 26px;
+            border-width: 2px;
+            gap: 12px;
+        }
+        .profile-card.ig-story .barcode-lines {
+            height: 60px;
+        }
+        .profile-card.ig-story .barcode-meta {
+            font-size: 17px;
+        }
 
         /* 匯出浮水印（平常隱藏） */
         .export-only { display: none; }
@@ -878,79 +1107,103 @@
         .preview-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.88);
+            background: rgba(0,0,0,0.92);
             z-index: 10001;
             display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 16px;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            animation: previewFade 0.3s ease;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
-        .preview-overlay.show { display: flex; }
+        .preview-overlay.show {
+            display: flex;
+            animation: previewFade 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+        }
         @keyframes previewFade {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; backdrop-filter: blur(0); }
+            to { opacity: 1; backdrop-filter: blur(12px); }
         }
         .preview-overlay .preview-hint {
             color: #fff;
-            font-size: 14px;
+            font-size: 13.5px;
             font-weight: 600;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
             text-align: center;
             line-height: 1.5;
             padding: 10px 18px;
-            background: rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.14);
             border-radius: 50px;
             backdrop-filter: blur(20px);
+            border: 0.5px solid rgba(255,255,255,0.18);
+            animation: hintSlideDown 0.6s 0.1s cubic-bezier(0.32, 0.72, 0, 1) backwards;
+        }
+        @keyframes hintSlideDown {
+            from { opacity: 0; transform: translateY(-12px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .preview-overlay .preview-img {
             max-width: 100%;
-            max-height: 65vh;
+            max-height: 60vh;
             border-radius: 12px;
-            box-shadow: 0 12px 48px rgba(0,0,0,0.5);
+            box-shadow:
+                0 0 0 1px rgba(255,255,255,0.15),
+                0 24px 64px rgba(0,0,0,0.6),
+                0 4px 12px rgba(0,0,0,0.4);
             -webkit-touch-callout: default;  /* iOS 開啟長按選單 */
             -webkit-user-select: auto;
             user-select: auto;
+            animation: previewImgPop 0.55s 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275) backwards;
+        }
+        @keyframes previewImgPop {
+            from { opacity: 0; transform: scale(0.85) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
         .preview-overlay .preview-actions {
             display: flex;
             gap: 10px;
-            margin-top: 16px;
+            margin-top: 18px;
             flex-wrap: wrap;
             justify-content: center;
             width: 100%;
             max-width: 380px;
+            animation: hintSlideDown 0.5s 0.3s cubic-bezier(0.32, 0.72, 0, 1) backwards;
         }
         .preview-overlay button {
             flex: 1;
             min-width: 130px;
-            padding: 13px 16px;
+            padding: 14px 18px;
             border-radius: 14px;
             border: none;
-            font-size: 14.5px;
+            font-size: 15px;
             font-weight: 700;
             cursor: pointer;
             font-family: inherit;
             letter-spacing: -0.005em;
-        }
-        .preview-overlay .btn-share {
-            background: linear-gradient(135deg, #F58529, #DD2A7B 50%, #8134AF);
-            color: #fff;
+            transition: all 0.25s cubic-bezier(0.32, 0.72, 0, 1);
         }
         .preview-overlay .btn-download {
-            background: rgba(255,255,255,0.95);
-            color: #000;
+            background: linear-gradient(135deg, #FEDA77 0%, #F58529 18%, #DD2A7B 45%, #8134AF 70%, #515BD4 100%);
+            background-size: 220% 220%;
+            color: #fff;
+            box-shadow:
+                0 4px 16px rgba(221, 42, 123, 0.45),
+                inset 0 1px 0 rgba(255,255,255,0.25);
+            animation: gradientShift 6s ease infinite, hintSlideDown 0.5s 0.3s cubic-bezier(0.32, 0.72, 0, 1) backwards;
         }
+        .preview-overlay .btn-download:hover { filter: brightness(1.08); transform: translateY(-1px); }
+        .preview-overlay .btn-download:active { transform: scale(0.97); filter: brightness(0.95); }
         .preview-overlay .btn-close {
             background: rgba(255,255,255,0.18);
             color: #fff;
             backdrop-filter: blur(20px);
             flex: 0 0 auto;
             min-width: 80px;
+            border: 0.5px solid rgba(255,255,255,0.15);
         }
+        .preview-overlay .btn-close:hover { background: rgba(255,255,255,0.26); }
+        .preview-overlay .btn-close:active { transform: scale(0.97); }
     </style>
 </head>
 <body>
@@ -1034,11 +1287,10 @@
 
     <!-- 🔧 FIX3: 匯出後顯示完整大圖，使用者可長按整張圖 -->
     <div id="preview-overlay" class="preview-overlay">
-        <div class="preview-hint">👇 長按下方圖片，選「儲存影像」即可存到相簿</div>
+        <div class="preview-hint">👇 長按圖片可選「儲存影像」存到相簿，或按下方按鈕下載</div>
         <img id="preview-img" class="preview-img" alt="鑑定報告預覽">
         <div class="preview-actions">
-            <button class="btn-share" id="preview-share-btn" onclick="window.jgQuiz.previewShare()">📤 系統分享</button>
-            <button class="btn-download" onclick="window.jgQuiz.previewDownload()">⬇️ 下載</button>
+            <button class="btn-download" id="preview-download-btn" onclick="window.jgQuiz.previewDownload()">⬇️ 下載到相簿</button>
             <button class="btn-close" onclick="window.jgQuiz.previewClose()">關閉</button>
         </div>
     </div>
@@ -1291,7 +1543,7 @@
                     <table class="report-table">
                         <tr>
                             <td style="background-color: ${tableLeftBg} !important; font-weight: bold; color: #222;">觀測代號</td>
-                            <td class="td-val" style="font-family:'SF Mono',monospace; font-size:11px;">${finalResult.meta.code}</td>
+                            <td class="td-val td-mono">${finalResult.meta.code}</td>
                         </tr>
                         <tr>
                             <td style="background-color: ${tableLeftBg} !important; font-weight: bold; color: #222;">危險等級</td>
@@ -1300,7 +1552,7 @@
                                     <div class="danger-bar-bg">
                                         <div class="danger-bar-fg" style="width: ${finalResult.meta.danger}; background-color: ${finalResult.bg};"></div>
                                     </div>
-                                    <span style="font-family:'SF Mono',monospace; width:32px; text-align:right;">${finalResult.meta.danger}</span>
+                                    <span class="danger-num">${finalResult.meta.danger}</span>
                                 </div>
                             </td>
                         </tr>
@@ -1313,8 +1565,8 @@
                             <td class="td-val">${finalResult.meta.type}</td>
                         </tr>
                         <tr>
-                            <td style="background-color: ${tableLeftBg} !important; font-weight: bold; color: #222; font-size: 11px;">主要出沒地</td>
-                            <td class="td-val" style="font-size:11px; line-height:1.2;">${finalResult.meta.place}</td>
+                            <td class="td-place-label" style="background-color: ${tableLeftBg} !important; font-weight: bold; color: #222;">主要出沒地</td>
+                            <td class="td-val td-place">${finalResult.meta.place}</td>
                         </tr>
                     </table>
                 </div>
@@ -1340,6 +1592,15 @@
                     </div>
                     <div class="stamp-red-seal">
                         建功高中<br>畢聯會<br><span style="font-family:'SF Mono',monospace; font-size:7px; margin-top:2px;">2026</span>
+                    </div>
+                </div>
+
+                <!-- 升級：底部條碼 + 文件編號區（讓 IG 限動底部不空，更像真檔案） -->
+                <div class="report-barcode">
+                    <div class="barcode-lines"></div>
+                    <div class="barcode-meta">
+                        <span class="barcode-num">CK·2026·${finalResult.meta.code}</span>
+                        <span class="barcode-stamp">⬢ VERIFIED</span>
                     </div>
                 </div>
                 <div class="export-only" id="export-watermark"></div>
@@ -1425,16 +1686,16 @@
 
             try {
                 const canvas = await html2canvas(targetNode, {
-                    scale: 2,
+                    scale: 1,
                     backgroundColor: '#FFFFFF',
                     useCORS: true,
                     allowTaint: true,
                     logging: false,
                     imageTimeout: 5000,
-                    width: 540,
-                    height: 960,
-                    windowWidth: 540,
-                    windowHeight: 960,
+                    width: 1080,
+                    height: 1920,
+                    windowWidth: 1080,
+                    windowHeight: 1920,
                     onclone: (clonedDoc) => {
                         const card = clonedDoc.getElementById('profile-card-box');
                         if(card) {
@@ -1483,35 +1744,38 @@
             img.src = dataUrl;
             overlay.classList.add('show');
 
-            // 沒支援 Web Share API 就隱藏分享按鈕
-            const file = this._lastBlob && this._lastFileName
-                ? new File([this._lastBlob], this._lastFileName, { type: 'image/png' })
-                : null;
-            const canShare = file && navigator.canShare && navigator.canShare({ files: [file] });
-            document.getElementById('preview-share-btn').style.display = canShare ? '' : 'none';
+            // 不再切換按鈕顯隱（合併成一顆「下載到相簿」）
         },
         previewClose: function() {
             document.getElementById('preview-overlay').classList.remove('show');
         },
-        previewShare: async function() {
+        // 智慧型下載：iOS Safari 有 Web Share API + canShare files → 跳系統分享（可選「儲存到照片」直入相簿）
+        // 其他環境 → 走傳統 <a download>
+        previewDownload: async function() {
             if(!this._lastBlob) return;
             const file = new File([this._lastBlob], this._lastFileName, { type: 'image/png' });
-            try {
-                await navigator.share({
-                    files: [file],
-                    title: '我的建功畢業鑑定報告',
-                    text: `${this.userName} 的 2026 建功畢業鑑定報告 ✨`
-                });
-                showToast('✅ 分享完成！', 1500);
-            } catch (e) {
-                if(e && e.name !== 'AbortError') {
-                    console.warn('share err:', e);
-                    showToast('分享失敗，請改用下載', 2000);
+            const canShare = navigator.canShare && navigator.canShare({ files: [file] });
+
+            if (canShare) {
+                try {
+                    await navigator.share({
+                        files: [file],
+                        title: '我的建功畢業鑑定報告',
+                        text: `${this.userName} 的 2026 建功畢業鑑定報告 ✨`
+                    });
+                    showToast('✅ 已開啟系統選單', 1500);
+                    return;
+                } catch (e) {
+                    if (e && e.name === 'AbortError') {
+                        // 使用者取消，靜默處理
+                        return;
+                    }
+                    console.warn('share fallback to download:', e);
+                    // 落到下方 fallback
                 }
             }
-        },
-        previewDownload: function() {
-            if(!this._lastBlob) return;
+
+            // Fallback：傳統下載
             const url = URL.createObjectURL(this._lastBlob);
             const a = document.createElement('a');
             a.href = url;
@@ -1520,7 +1784,7 @@
             a.click();
             document.body.removeChild(a);
             setTimeout(() => URL.revokeObjectURL(url), 1000);
-            showToast('✅ 已下載！', 1500);
+            showToast('✅ 已下載！手機可長按上方圖片儲存', 2200);
         },
 
         resetQuiz: function() {
