@@ -96,7 +96,6 @@
             background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        /* 首頁頂端小標籤 */
         .top-eyebrow {
             display: inline-flex;
             align-items: center;
@@ -171,7 +170,6 @@
             30%, 50%, 70% { transform: translateX(-6px); }
             40%, 60% { transform: translateX(6px); }
         }
-        /* 姓名必填小提示（紅色脈衝點） */
         .name-required-hint {
             display: inline-flex;
             align-items: center;
@@ -193,7 +191,6 @@
             0%, 100% { transform: scale(1); opacity: 1; }
             50% { transform: scale(1.4); opacity: 0.55; }
         }
-        /* 貼紙按鈕：未填名字時鎖定 */
         .sticker-btn.is-locked {
             opacity: 0.4;
             filter: grayscale(0.6);
@@ -206,7 +203,7 @@
 
         .image-box {
             width: 100%;
-            aspect-ratio: 16 / 9;            /* 配合主視覺實際比例 */
+            aspect-ratio: 16 / 9;
             border-radius: 18px;
             margin-bottom: 18px;
             overflow: hidden;
@@ -222,7 +219,7 @@
         .image-box img {
             width: 100%;
             height: 100%;
-            object-fit: cover;               /* 填滿邊框，不留白邊 */
+            object-fit: cover;
             animation: imgFade 0.6s cubic-bezier(0.32, 0.72, 0, 1);
         }
         @keyframes imgFade {
@@ -363,10 +360,11 @@
 
         .options-container { display: flex; flex-direction: column; gap: 11px; }
 
+        /* 🔧 FIX1: 選項按鈕改用 flex 排版，圓圈不再絕對定位疊在文字上 */
         .option-btn {
             background: rgba(255, 255, 255, 0.78);
             border: 1px solid rgba(60, 60, 67, 0.10);
-            padding: 16px 20px 16px 44px;
+            padding: 14px 16px;
             border-radius: 16px;
             text-align: left;
             font-size: 16px;
@@ -380,20 +378,23 @@
             backdrop-filter: blur(10px);
             font-family: inherit;
             box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
-        /* 左側小圓 indicator */
         .option-btn::before {
             content: "";
-            position: absolute;
-            left: 18px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 16px;
-            height: 16px;
+            flex-shrink: 0;          /* 圓圈不縮 */
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
             border: 1.5px solid rgba(60, 60, 67, 0.28);
             background: #fff;
             transition: all 0.28s cubic-bezier(0.32, 0.72, 0, 1);
+        }
+        .option-btn .btn-label {
+            flex: 1;
+            min-width: 0;
         }
         .option-btn:hover { 
             background: rgba(255, 255, 255, 0.96);
@@ -409,7 +410,6 @@
             color: var(--label-primary);
             box-shadow: 0 6px 22px rgba(0, 122, 255, 0.18), 0 0 0 3px rgba(0, 122, 255, 0.10);
             animation: selectPulse 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            padding-right: 90px;        /* 預留貼紙空間 */
         }
         .option-btn.selected::before {
             background: var(--apple-blue);
@@ -421,26 +421,22 @@
             40% { transform: scale(1.025); }
             100% { transform: scale(1); }
         }
-
         .option-btn.selected::after {
             content: '✓ 已貼上';
-            position: absolute;
-            right: 14px;
-            top: 50%;
-            transform: translateY(-50%);
+            flex-shrink: 0;
             background: var(--sticker-color);
             color: var(--sticker-text, #fff);
-            padding: 5px 12px;
+            padding: 5px 11px;
             border-radius: 50px;
-            font-size: 11.5px;
+            font-size: 11px;
             font-weight: 600;
             letter-spacing: 0;
             animation: stamp 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
         @keyframes stamp {
-            0% { transform: translateY(-50%) scale(3) rotate(-15deg); opacity: 0; filter: blur(2px); }
-            60% { transform: translateY(-50%) scale(1.15) rotate(3deg); opacity: 1; filter: blur(0); }
-            100% { transform: translateY(-50%) scale(1) rotate(0deg); opacity: 1; filter: blur(0); }
+            0% { transform: scale(3) rotate(-15deg); opacity: 0; filter: blur(2px); }
+            60% { transform: scale(1.15) rotate(3deg); opacity: 1; filter: blur(0); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; filter: blur(0); }
         }
 
         .confetti {
@@ -459,13 +455,12 @@
         }
 
         /* =========================================================
-                  /* =========================================================
            📁 機密檔案風格結算卡（情報局特務風）
            ========================================================= */
         .profile-card {
             background: #ffffff;
             border: 2px solid #000000;
-            border-radius: 0px; /* 檔案風走硬朗直角 */
+            border-radius: 0px;
             padding: 20px 16px;
             margin-top: 12px;
             text-align: left;
@@ -473,6 +468,12 @@
             box-shadow: 0 12px 32px rgba(0,0,0,0.15);
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang TC", "Microsoft JhengHei", sans-serif;
             animation: cardPop 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            /* 🔧 FIX2: scale wrap 容器，方便手機一頁內顯示 */
+            transform-origin: top center;
+        }
+        @keyframes cardPop {
+            0%   { opacity: 0; transform: translateY(18px) scale(0.93); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         /* 頂部黑底機密條 */
@@ -494,7 +495,6 @@
             margin-right: 6px;
         }
 
-        /* 主標題區 */
         .report-header {
             border-bottom: 2px solid #000000;
             padding-bottom: 10px;
@@ -516,31 +516,27 @@
             margin: 0;
             letter-spacing: -0.01em;
         }
-        /* 紅色「極機密」印章 */
-                .stamp-top-secret {
+        .stamp-top-secret {
             position: absolute;
             top: 16px;
             right: 16px;
-            border: 3px solid #dc3545; /* 稍微加粗邊框 */
+            border: 3px solid #dc3545;
             color: #dc3545;
-            padding: 6px 16px; /* 增加內邊距 */
-            font-size: 22px; /* 字體從原本的 16px-18px 放大到 22px */
+            padding: 6px 16px;
+            font-size: 22px;
             font-weight: 900;
             text-transform: uppercase;
             transform: rotate(8deg);
             opacity: 0.85;
-            letter-spacing: 3px; /* 增加字距讓它更有蓋章感 */
+            letter-spacing: 3px;
             border-radius: 4px;
         }
 
-
-        /* 上方資訊欄：左大頭貼、右表格 */
         .report-meta-row {
             display: flex;
             gap: 16px;
             margin-bottom: 18px;
         }
-        /* 左：相片區 */
         .report-photo-box {
             flex: 0 0 40%;
             display: flex;
@@ -555,7 +551,6 @@
             position: relative;
             padding: 8px;
         }
-        /* 模擬相片角落的 L 型裁切線 */
         .report-photo::before, .report-photo::after {
             content: "";
             position: absolute;
@@ -572,24 +567,20 @@
             height: 100%;
             object-fit: cover;
         }
-           .report-biometric {
+        .report-biometric {
             margin-top: 1px;
             display: flex;
             align-items: center;
-            justify-content: center; /* 恢復置中 */
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft JhengHei", sans-serif; /* 改為黑體 */
-            font-size: 25 px; /* 保持放大後的清晰字體 */
-            font-weight: 900; /* 特粗體 */
-            color: #000000; /* 純黑色 */
-            border: 1px solid #000000; /* 刪掉外框 */
+            justify-content: center;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft JhengHei", sans-serif;
+            font-size: 14px;
+            font-weight: 900;
+            color: #000000;
+            border: 1px solid #000000;
             padding: 4px 0;
-            background: transparent; /* 刪掉背景色 */
+            background: transparent;
         }
 
-
-
-
-              /* 修正後的經典表格：左欄全面套用灰底 */
         .report-table {
             flex: 1;
             border-collapse: collapse;
@@ -601,21 +592,18 @@
             padding: 8px 10px;
             vertical-align: middle;
         }
-        /* 表格左半邊（審查項目、核心屬性等）全面灰底 */
-                .report-table td:first-child {
-            width: 90px; /* 固定左欄寬度，防止「主要出沒地」擠壓換行 */
-            white-space: nowrap; /* 強制文字不換行 */
+        .report-table td:first-child {
+            width: 90px;
+            white-space: nowrap;
             background: #f5f5f7;
             font-weight: 700;
             color: #333333;
-            width: 32%;
             text-align: center;
         }
         .report-table .td-val {
             font-weight: 700;
             color: #000000;
         }
-        /* 危險等級進度條 */
         .danger-bar-container {
             display: flex;
             align-items: center;
@@ -633,7 +621,6 @@
             background: #ff2d55;
         }
 
-        /* 區段標題（SECTION 02 刪除了括號中文） */
         .section-divider {
             font-size: 9px;
             font-weight: 800;
@@ -646,8 +633,6 @@
             text-transform: uppercase;
         }
 
-
-        /* 診斷內文區 */
         .report-text-block {
             font-size: 13.5px;
             line-height: 1.6;
@@ -655,14 +640,12 @@
             text-align: justify;
             position: relative;
         }
-        /* 內文姓名高亮 */
         .highlight-name {
-            background: #fef08a; /* 螢光黃底色高亮 */
+            background: #fef08a;
             font-weight: 800;
             padding: 1px 4px;
         }
        
-        /* 監聽對話紀錄區 */
         .quote-log-box {
             background: #f8f9fa;
             border: 1px solid #e5e5ea;
@@ -678,14 +661,13 @@
             margin-bottom: 2px;
         }
         .quote-log-content {
-            font-size:16px;
+            font-size: 16px;
             font-weight: 900;
             line-height: 1.5;
-            font-style: italic; /* 讓對話維持斜體更有紀錄感 */
+            font-style: italic;
             color: #111;
         }
 
-        /* 衍生特徵因子標籤 */
         .report-tags-grid {
             display: flex;
             flex-wrap: wrap;
@@ -700,7 +682,6 @@
             background: #ffffff;
         }
 
-        /* 底部公文宣告與紅色實體章印 */
         .report-footer {
             margin-top: 24px;
             display: flex;
@@ -714,7 +695,6 @@
             color: #777777;
             line-height: 1.4;
         }
-        /* 💥 紅色復古圓形建功畢聯會章 */
         .stamp-red-seal {
             width: 52px;
             height: 52px;
@@ -736,167 +716,38 @@
         }
 
         /* =========================================================
-           📱 調整隨之對應的 IG 限動 9:16 匯出樣式調整
+           📱 IG 限動 9:16 匯出樣式
            ========================================================= */
         .profile-card.ig-story {
             width: 540px;
             height: 960px;
             border: none;
             padding: 32px 28px;
+            /* 匯出時取消縮放 */
+            transform: none !important;
         }
         .profile-card.ig-story .report-top-bar { font-size: 12px; padding: 8px 14px; margin-bottom: 24px; }
-        .profile-card.ig-story .report-title { font-size: 32px; }resul
+        .profile-card.ig-story .report-title { font-size: 32px; }
         .profile-card.ig-story .report-subtitle { font-size: 14px; }
-                .profile-card.ig-story .stamp-top-secret { font-size: 26px; padding: 8px 20px; top: 20px; right: 20px; }
-
+        .profile-card.ig-story .stamp-top-secret { font-size: 26px; padding: 8px 20px; top: 20px; right: 20px; }
         .profile-card.ig-story .report-meta-row { gap: 24px; margin-bottom: 24px; }
+        .profile-card.ig-story .report-biometric { font-size: 18px; }
         .profile-card.ig-story .report-table { font-size: 14.5px; }
         .profile-card.ig-story .report-table td { padding: 11px 14px; }
         .profile-card.ig-story .section-divider { font-size: 12px; margin: 26px 0 14px; }
         .profile-card.ig-story .report-text-block { font-size: 16px; line-height: 1.7; }
-        
         .profile-card.ig-story .quote-log-box { padding: 14px 16px; margin-top: 18px; font-size: 14.5px; }
         .profile-card.ig-story .quote-log-label { font-size: 11px; }
+        .profile-card.ig-story .quote-log-content { font-size: 18px; }
         .profile-card.ig-story .report-tag-item { font-size: 14px; padding: 6px 14px; }
         .profile-card.ig-story .report-tags-grid { gap: 10px; }
         .profile-card.ig-story .report-footer { margin-top: 40px; }
         .profile-card.ig-story .report-footer-meta { font-size: 11px; }
         .profile-card.ig-story .stamp-red-seal { width: 72px; height: 72px; font-size: 11px; }
 
-
-        /* =========================================================
-           📱 IG 限動 9:16 匯出模式（540 × 960 → scale 2 → 1080 × 1920）
-           匯出時動態為 #profile-card-box 加上 .ig-story
-           ========================================================= */
-        .profile-card.ig-story {
-            width: 540px;
-            height: 960px;
-            border-radius: 0;
-            border: none;
-            display: flex;
-            flex-direction: column;
-            background: #ffffff;
-            position: relative;
-            box-shadow: none;
-            animation: none;
-        }
-        .profile-card.ig-story .id-card-strip {
-            padding: 20px 28px;
-        }
-        .profile-card.ig-story .id-card-dots span {
-            width: 14px; height: 14px;
-        }
-        .profile-card.ig-story .id-card-filename {
-            font-size: 15px;
-            margin-right: 64px;
-        }
-        .profile-card.ig-story .id-card-row {
-            padding: 28px 28px 22px;
-            gap: 22px;
-            flex: 0 0 auto;
-        }
-        .profile-card.ig-story .id-info {
-            justify-content: flex-start;
-            gap: 14px;
-        }
-        .profile-card.ig-story .id-photo {
-            flex: 0 0 200px;
-            aspect-ratio: 3 / 4;
-        }
-        .profile-card.ig-story .id-photo::after {
-            font-size: 10px;
-            padding: 3px 9px;
-            bottom: 10px; right: 10px;
-        }
-        .profile-card.ig-story .id-badge {
-            font-size: 14px;
-            padding: 6px 14px;
-        }
-        .profile-card.ig-story .id-name {
-            font-size: 28px;
-            margin-top: 6px;
-        }
-        .profile-card.ig-story .id-name-en {
-            font-size: 12px;
-        }
-        .profile-card.ig-story .id-name-divider {
-            width: 48px;
-            height: 4px;
-        }
-        .profile-card.ig-story .id-fields {
-            gap: 8px 14px;
-            font-size: 14px;
-        }
-        .profile-card.ig-story .id-field-label {
-            font-size: 10.5px;
-        }
-        .profile-card.ig-story .id-field-val {
-            font-size: 14px;
-        }
-        .profile-card.ig-story .id-body {
-            padding: 0 28px 22px;
-            /* 不要 flex 撐滿，讓內容自然堆疊 */
-        }
-        /* IG 限動版：底部留白處的水印裝飾大字（中央偏下） */
-        .profile-card.ig-story::after {
-            content: "BUILT TO GRADUATE · 2026";
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 130px;
-            text-align: center;
-            font-family: 'SF Mono', Menlo, monospace;
-            font-size: 17px;
-            font-weight: 800;
-            letter-spacing: 0.22em;
-            color: transparent;
-            background: linear-gradient(90deg,
-                rgba(255, 45, 85, 0.22),
-                rgba(175, 82, 222, 0.28),
-                rgba(88, 86, 214, 0.22));
-            -webkit-background-clip: text;
-            background-clip: text;
-            pointer-events: none;
-            z-index: 1;
-        }
-        .profile-card.ig-story .id-divider {
-            margin-bottom: 18px;
-        }
-        .profile-card.ig-story .id-desc {
-            font-size: 15.5px;
-            line-height: 1.62;
-            margin-bottom: 16px;
-            /* IG 不裁切，全文顯示 */
-            display: block;
-            -webkit-line-clamp: unset;
-            overflow: visible;
-        }
-        .profile-card.ig-story .id-quote {
-            font-size: 15px;
-            padding: 13px 16px;
-            margin-bottom: 16px;
-        }
-        .profile-card.ig-story .id-tag {
-            font-size: 13px;
-            padding: 5px 12px;
-        }
-        .profile-card.ig-story .id-tags-row {
-            gap: 7px;
-            margin-bottom: 14px;
-        }
-        .profile-card.ig-story .id-footer-strip {
-            padding: 14px 28px;
-            font-size: 12px;
-            margin-top: auto;
-        }
-        .profile-card.ig-story .export-only {
-            text-align: center;
-            font-size: 11px;
-            color: var(--label-tertiary);
-            padding: 8px 28px 0;
-            font-weight: 500;
-            letter-spacing: 0.02em;
-        }
+        /* 匯出浮水印（平常隱藏） */
+        .export-only { display: none; }
+        .profile-card.exporting .export-only { display: block; }
 
         .action-box {
             display: flex;
@@ -919,7 +770,6 @@
             overflow: hidden;
         }
         .export-btn { 
-            /* IG 招牌橘粉紫漸層 */
             background: linear-gradient(135deg, #FEDA77 0%, #F58529 18%, #DD2A7B 45%, #8134AF 70%, #515BD4 100%);
             background-size: 220% 220%;
             color: white;
@@ -940,7 +790,6 @@
             50% { background-position: 100% 50%; }
         }
         .export-btn::before {
-            /* 滑光 shimmer */
             content: "";
             position: absolute;
             top: 0; left: -100%;
@@ -1024,7 +873,84 @@
             letter-spacing: -0.01em;
         }
         .toast.show { transform: translateX(-50%) translateY(0); }
-        
+
+        /* 🔧 FIX3: 預覽 modal — 匯出後直接顯示成像在這裡，使用者可長按整張 */
+        .preview-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.88);
+            z-index: 10001;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            animation: previewFade 0.3s ease;
+        }
+        .preview-overlay.show { display: flex; }
+        @keyframes previewFade {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .preview-overlay .preview-hint {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-align: center;
+            line-height: 1.5;
+            padding: 10px 18px;
+            background: rgba(255,255,255,0.12);
+            border-radius: 50px;
+            backdrop-filter: blur(20px);
+        }
+        .preview-overlay .preview-img {
+            max-width: 100%;
+            max-height: 65vh;
+            border-radius: 12px;
+            box-shadow: 0 12px 48px rgba(0,0,0,0.5);
+            -webkit-touch-callout: default;  /* iOS 開啟長按選單 */
+            -webkit-user-select: auto;
+            user-select: auto;
+        }
+        .preview-overlay .preview-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+            max-width: 380px;
+        }
+        .preview-overlay button {
+            flex: 1;
+            min-width: 130px;
+            padding: 13px 16px;
+            border-radius: 14px;
+            border: none;
+            font-size: 14.5px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            letter-spacing: -0.005em;
+        }
+        .preview-overlay .btn-share {
+            background: linear-gradient(135deg, #F58529, #DD2A7B 50%, #8134AF);
+            color: #fff;
+        }
+        .preview-overlay .btn-download {
+            background: rgba(255,255,255,0.95);
+            color: #000;
+        }
+        .preview-overlay .btn-close {
+            background: rgba(255,255,255,0.18);
+            color: #fff;
+            backdrop-filter: blur(20px);
+            flex: 0 0 auto;
+            min-width: 80px;
+        }
     </style>
 </head>
 <body>
@@ -1106,6 +1032,17 @@
 
     <div id="toast" class="toast"></div>
 
+    <!-- 🔧 FIX3: 匯出後顯示完整大圖，使用者可長按整張圖 -->
+    <div id="preview-overlay" class="preview-overlay">
+        <div class="preview-hint">👇 長按下方圖片，選「儲存影像」即可存到相簿</div>
+        <img id="preview-img" class="preview-img" alt="鑑定報告預覽">
+        <div class="preview-actions">
+            <button class="btn-share" id="preview-share-btn" onclick="window.jgQuiz.previewShare()">📤 系統分享</button>
+            <button class="btn-download" onclick="window.jgQuiz.previewDownload()">⬇️ 下載</button>
+            <button class="btn-close" onclick="window.jgQuiz.previewClose()">關閉</button>
+        </div>
+    </div>
+
 <script>
 (function() {
     const questions = [
@@ -1180,12 +1117,14 @@
         currentQuestionIndex: 0,
         selectedScores: [],
         userName: "建功人",
+        _lastBlob: null,
+        _lastDataUrl: null,
+        _lastFileName: null,
 
         selectIdentity: function(type) {
             const input = document.getElementById('user-name-input');
             const inputName = input.value.trim();
             if(!inputName) {
-                // 沒填名字 → 提示 + 抖動 + 紅光暈
                 showToast('🙋 請先填入你的畢業大名 / 暱稱', 2200);
                 input.classList.add('shake-error');
                 input.focus();
@@ -1207,7 +1146,6 @@
             this.showQuestion();
         },
 
-        // 監聽姓名輸入，動態切換貼紙按鈕的可按狀態
         refreshNameGate: function() {
             const input = document.getElementById('user-name-input');
             const hasName = !!input.value.trim();
@@ -1272,7 +1210,9 @@
             q.options.forEach((opt, idx) => {
                 const btn = document.createElement('button');
                 btn.className = 'option-btn';
-                btn.innerText = opt.text;
+                // 🔧 FIX1: 把文字包在 .btn-label 裡，flex 排版確保不被圓圈擋
+                btn.innerHTML = `<span class="btn-label"></span>`;
+                btn.querySelector('.btn-label').textContent = opt.text;
                 btn.style.animation = `pageSlide 0.4s cubic-bezier(0.32, 0.72, 0, 1) ${0.1 + idx * 0.08}s backwards`;
                 btn.onclick = () => this.selectOption(btn, opt.score);
                 optionsBox.appendChild(btn);
@@ -1323,12 +1263,8 @@
 
             const cardBox = document.getElementById('profile-card-box');
 
-                        // 此段請直接蓋掉原先 showResult 裡的 cardBox.innerHTML 賦值區塊：
-                        // 請用這段完全覆蓋 showResult 裡的 cardBox.innerHTML 區塊：
-                        // 根據動物原本的 bg 顏色（例如 #FFD700 等），動態生成一個 12% 透明度的淺色背景供欄位與標籤使用
-            const lightThemeBg = `${finalResult.bg}50`; // 這裡維持給 Hashtag 用（20 代表 12% 透明度）
-            const tableLeftBg = `${finalResult.bg}40`;  // 這裡專門給「表格左欄」用（把 40 改大就會變深，改小就會變淺！）
-
+            const lightThemeBg = `${finalResult.bg}50`;
+            const tableLeftBg = `${finalResult.bg}40`;
 
             cardBox.innerHTML = `
                 <div class="report-top-bar">
@@ -1352,7 +1288,7 @@
                         </div>
                     </div>
                     
-                                                           <table class="report-table">
+                    <table class="report-table">
                         <tr>
                             <td style="background-color: ${tableLeftBg} !important; font-weight: bold; color: #222;">觀測代號</td>
                             <td class="td-val" style="font-family:'SF Mono',monospace; font-size:11px;">${finalResult.meta.code}</td>
@@ -1381,8 +1317,6 @@
                             <td class="td-val" style="font-size:11px; line-height:1.2;">${finalResult.meta.place}</td>
                         </tr>
                     </table>
-
-
                 </div>
 
                 <div class="section-divider">SECTION 01 // BEHAVIORAL DIAGNOSIS </div>
@@ -1411,16 +1345,44 @@
                 <div class="export-only" id="export-watermark"></div>
             `;
 
-
-
-            // 把卡片底色變數設給卡片本體，供 IG 模式背景使用
             cardBox.style.setProperty('--hero-bg', finalResult.bg);
+
+            // 🔧 FIX2: 結算卡渲染完後，量測高度，若超過手機螢幕就等比縮放
+            requestAnimationFrame(() => {
+                this.fitCardToScreen();
+            });
 
             setTimeout(fireConfetti, 200);
         },
 
+        // 🔧 FIX2: 結算卡等比縮放到一個螢幕內
+        fitCardToScreen: function() {
+            const card = document.getElementById('profile-card-box');
+            if(!card) return;
+
+            // 重置 scale 以取得原始尺寸
+            card.style.transform = 'none';
+            const naturalH = card.offsetHeight;
+
+            // 預留空間：偵測小標 ~30 + 兩顆按鈕 ~140 + footer ~70 + padding 60
+            const reservedH = 300;
+            const availableH = window.innerHeight - reservedH;
+
+            if (naturalH > availableH && availableH > 0) {
+                const ratio = availableH / naturalH;
+                // 設下限避免縮到看不清
+                const scale = Math.max(0.6, ratio);
+                card.style.transform = `scale(${scale})`;
+                card.style.transformOrigin = 'top center';
+                // scale 後實際佔的高度會變小，但 DOM 仍佔原本高度 → 用負 margin 補
+                card.style.marginBottom = `${-(naturalH * (1 - scale)) + 12}px`;
+            } else {
+                card.style.transform = 'none';
+                card.style.marginBottom = '12px';
+            }
+        },
+
         // 🌟 匯出為 IG 限動 9:16 高畫質 PNG (1080×1920)
-        // 流程：html2canvas → toBlob → 試 Web Share API (iOS 會跳「儲存影像」) → 失敗就下載 PNG
         exportToImage: async function() {
             const targetNode = document.getElementById('profile-card-box');
             const btn = document.getElementById('export-btn-ig');
@@ -1434,17 +1396,21 @@
             btn.innerHTML = '<span class="btn-icon">⏳</span><span class="btn-text">正在生成...</span>';
             showToast('📱 正在生成高畫質報告...', 4000);
 
-            // 加上匯出時專屬浮水印
             const watermark = document.getElementById('export-watermark');
             if(watermark) {
                 watermark.innerHTML = `
-                    <div style="font-weight: 600; color: rgba(60, 60, 67, 0.7); margin-bottom: 2px;">${this.userName} 的專屬畢業鑑定報告</div>
+                    <div style="font-weight: 600; color: rgba(60, 60, 67, 0.7); margin-bottom: 2px; text-align:center; padding-top:8px; font-size:10px;">${this.userName} 的專屬畢業鑑定報告</div>
                 `;
             }
 
+            // 🔧 暫時取消 scale 縮放，讓 html2canvas 截到完整卡片
+            const oldTransform = targetNode.style.transform;
+            const oldMarginBottom = targetNode.style.marginBottom;
+            targetNode.style.transform = 'none';
+            targetNode.style.marginBottom = '0';
+
             targetNode.classList.add('exporting', 'ig-story');
 
-            // 等動畫穩定 + 所有圖片載入完
             await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
             const allImgs = targetNode.querySelectorAll('img');
             await Promise.all(Array.from(allImgs).map(img => {
@@ -1459,7 +1425,7 @@
 
             try {
                 const canvas = await html2canvas(targetNode, {
-                    scale: 2,                              // 540×2 = 1080（IG 限動標準）
+                    scale: 2,
                     backgroundColor: '#FFFFFF',
                     useCORS: true,
                     allowTaint: true,
@@ -1484,55 +1450,77 @@
                     }
                 });
 
-                // 先轉成 Blob 以便走 Web Share API
                 const blob = await new Promise((resolve, reject) => {
                     canvas.toBlob(b => b ? resolve(b) : reject(new Error('toBlob failed')), 'image/png', 1.0);
                 });
                 const fileName = `${this.userName}_建功畢業鑑定報告.png`;
-                const file = new File([blob], fileName, { type: 'image/png' });
+                const dataUrl = canvas.toDataURL('image/png', 1.0);
 
-                // 嘗試 Web Share API（行動裝置原生分享：iOS 可選「儲存影像」直入相簿）
-                let shared = false;
-                if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                    try {
-                        await navigator.share({
-                            files: [file],
-                            title: '我的建功畢業鑑定報告',
-                            text: `${this.userName} 的 2026 建功畢業鑑定報告 ✨`
-                        });
-                        shared = true;
-                        showToast('✅ 分享完成！', 2000);
-                    } catch (shareErr) {
-                        // 使用者按取消也會丟錯，這時不 fallback（避免又下載一次）
-                        if (shareErr && shareErr.name === 'AbortError') {
-                            shared = true;     // 視為已處理
-                            showToast('已取消', 1500);
-                        } else {
-                            console.warn('Web Share 失敗，fallback 到下載:', shareErr);
-                        }
-                    }
-                }
+                this._lastBlob = blob;
+                this._lastDataUrl = dataUrl;
+                this._lastFileName = fileName;
 
-                // Fallback：下載 PNG（手機 Safari 長按可儲存至相簿，桌面則直接下載）
-                if (!shared) {
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = fileName;
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                    setTimeout(() => URL.revokeObjectURL(url), 1000);
-                    showToast('✅ 已下載！手機可長按圖片儲存至相簿', 3000);
-                }
+                // 🔧 FIX3: 開預覽 overlay，讓使用者可長按整張圖
+                this.previewOpen(dataUrl);
+                showToast('✅ 生成完成！', 1500);
             } catch (err) {
                 console.error('匯出失敗:', err);
                 showToast('⚠️ 匯出失敗，請再試一次', 2500);
             } finally {
                 targetNode.classList.remove('exporting', 'ig-story');
+                // 還原 scale
+                targetNode.style.transform = oldTransform;
+                targetNode.style.marginBottom = oldMarginBottom;
                 btn.disabled = false;
                 btn.innerHTML = oldHtml;
             }
+        },
+
+        // 🔧 FIX3: 預覽相關函式
+        previewOpen: function(dataUrl) {
+            const overlay = document.getElementById('preview-overlay');
+            const img = document.getElementById('preview-img');
+            img.src = dataUrl;
+            overlay.classList.add('show');
+
+            // 沒支援 Web Share API 就隱藏分享按鈕
+            const file = this._lastBlob && this._lastFileName
+                ? new File([this._lastBlob], this._lastFileName, { type: 'image/png' })
+                : null;
+            const canShare = file && navigator.canShare && navigator.canShare({ files: [file] });
+            document.getElementById('preview-share-btn').style.display = canShare ? '' : 'none';
+        },
+        previewClose: function() {
+            document.getElementById('preview-overlay').classList.remove('show');
+        },
+        previewShare: async function() {
+            if(!this._lastBlob) return;
+            const file = new File([this._lastBlob], this._lastFileName, { type: 'image/png' });
+            try {
+                await navigator.share({
+                    files: [file],
+                    title: '我的建功畢業鑑定報告',
+                    text: `${this.userName} 的 2026 建功畢業鑑定報告 ✨`
+                });
+                showToast('✅ 分享完成！', 1500);
+            } catch (e) {
+                if(e && e.name !== 'AbortError') {
+                    console.warn('share err:', e);
+                    showToast('分享失敗，請改用下載', 2000);
+                }
+            }
+        },
+        previewDownload: function() {
+            if(!this._lastBlob) return;
+            const url = URL.createObjectURL(this._lastBlob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = this._lastFileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+            showToast('✅ 已下載！', 1500);
         },
 
         resetQuiz: function() {
@@ -1541,9 +1529,20 @@
             document.getElementById('result-page').className = 'hidden';
             document.getElementById('quiz-page').className = 'hidden';
             document.getElementById('start-page').className = '';
+            // 還原 card 的 transform/margin
+            const card = document.getElementById('profile-card-box');
+            if(card) { card.style.transform = ''; card.style.marginBottom = ''; }
             ImageEngine.setWelcomeImage();
         }
     };
+
+    // 視窗大小變化時重新計算結算卡縮放
+    window.addEventListener('resize', () => {
+        if(document.getElementById('result-page') && 
+           document.getElementById('result-page').className !== 'hidden') {
+            window.jgQuiz.fitCardToScreen();
+        }
+    });
 
     window.onload = function() {
         ImageEngine.setWelcomeImage();
