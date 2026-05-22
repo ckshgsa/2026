@@ -1474,6 +1474,15 @@ body {
 
 
     const ImageEngine = {
+        preloadAll: function() {
+    const exts = ['png', 'jpeg', 'jpg'];
+    for (let i = 1; i <= questions.length; i++) {
+        exts.forEach(ext => {
+            const img = new Image();
+            img.src = `問題${i}.${ext}`;
+        });
+    }
+        }
         setQuestionImage: function(index) {
     const imgTag = document.getElementById('quiz-img');
     if(!imgTag) return;
