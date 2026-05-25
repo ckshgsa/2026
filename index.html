@@ -1483,29 +1483,36 @@ body {
         },
         setQuestionImage: function(index) {
     const imgTag = document.getElementById('quiz-img');
-    if(!imgTag) return;
-    
-    // 先清空，避免顯示上一題的圖
-    imgTag.src = '';
-    imgTag.style.opacity = '0';
-    
+    if (!imgTag) return;
+
+    // 先移除所有舊監聽器（clone 是最乾淨的方式）
+    const newImg = imgTag.cloneNode(true);
+    imgTag.parentNode.replaceChild(newImg, imgTag);
+
+    newImg.style.opacity = '0';
+    newImg.style.transition = 'opacity 0.3s ease';
+
     const qNum = index + 1;
-    const tryLoad = (src) => {
-        imgTag.src = src;
+    const exts = ['png', 'jpeg', 'jpg'];
+    let extIndex = 0;
+
+    const tryNext = () => {
+        if (extIndex >= exts.length) {
+            // 全部格式都失敗
+            newImg.style.opacity = '0';
+            return;
+        }
+        newImg.src = `問題${qNum}.${exts[extIndex++]}`;
     };
-    
-    imgTag.onload = () => {
-        imgTag.style.transition = 'opacity 0.3s ease';
-        imgTag.style.opacity = '1';
+
+    newImg.onload = () => {
+        newImg.style.opacity = '1';
     };
-    imgTag.onerror = function() {
-        const ext = this.src.match(/\.(\w+)$/)?.[1];
-        if (ext === 'png') tryLoad(`問題${qNum}.jpeg`);
-        else if (ext === 'jpeg') tryLoad(`問題${qNum}.jpg`);
-        else this.style.opacity = '0';
+    newImg.onerror = () => {
+        tryNext();
     };
-    
-    tryLoad(`問題${qNum}.png`);
+
+    tryNext();
 },
         setWelcomeImage: function() {
             const imgTag = document.getElementById('welcome-img');
