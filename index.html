@@ -1710,7 +1710,7 @@ const tied = ["A","B","C","D"].filter(k => counts[k] === maxCount);
 
 let maxScore = tied[0];
 if (tied.length > 1) {
-    const tieBreakOrder = [3, 4, 2, 1, 0];
+    const tieBreakOrder = [4, 0, 1, 2, 3];
     for (const i of tieBreakOrder) {
         const scoreObj = this.selectedScores[i];
         if (!scoreObj) continue;
